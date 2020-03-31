@@ -10,13 +10,13 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    public class CreateOrderInteractor : ICreateOrderUseCase
+    public class CreateOrderUseCases : ICreateOrderUseCase
     {
         private IOrderRepository repository;
 
         private Cart cart;
 
-        public CreateOrderInteractor(IOrderRepository repoService, Cart cartService)
+        public CreateOrderUseCases(IOrderRepository repoService, Cart cartService)
         {
             repository = repoService;
             cart = cartService;

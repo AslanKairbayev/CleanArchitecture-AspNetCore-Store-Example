@@ -8,7 +8,7 @@ namespace ApplicationCore.Interfaces.Repositories
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        IQueryable<T> FindAll { get; }
+        IQueryable<T> GetAll { get; }
         T FindById(int entityId);
         void Create(T entity);
         void Delete(int entityId);

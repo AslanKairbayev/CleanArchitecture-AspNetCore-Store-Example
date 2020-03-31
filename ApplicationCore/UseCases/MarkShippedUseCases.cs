@@ -7,11 +7,11 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    public class MarkShippedInteractor : IMarkShippedUseCase
+    public class MarkShippedUseCases : IMarkShippedUseCase
     {
         private IOrderRepository repository;
 
-        public MarkShippedInteractor(IOrderRepository repo)
+        public MarkShippedUseCases(IOrderRepository repo)
         {
             repository = repo;
         }

@@ -9,13 +9,13 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    class RemoveFromCartInteractor : IRemoveFromCartUseCase
+    class RemoveFromCartUseCasescs : IRemoveFromCartUseCase
     {
         private IProductRepository prodRepository;
 
         private Cart cart;
 
-        public RemoveFromCartInteractor(IProductRepository prodRepo, Cart cartService)
+        public RemoveFromCartUseCasescs(IProductRepository prodRepo, Cart cartService)
         {
             prodRepository = prodRepo;
             cart = cartService;
