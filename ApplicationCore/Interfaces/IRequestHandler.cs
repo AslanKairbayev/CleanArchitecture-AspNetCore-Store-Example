@@ -11,6 +11,6 @@ namespace ApplicationCore.Interfaces
 
     public interface IRequestHandler<in TRequest, out TResponse>
     {
-        void Handle(TRequest request, IOutputPort<TResponse> outputPort);
+        bool Handle(TRequest request, IOutputPort<TResponse> outputPort);
     }
 }

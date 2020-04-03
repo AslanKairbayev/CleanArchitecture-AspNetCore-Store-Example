@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ApplicationCore.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ApplicationCore.DTO
 {
-    public class CreateOrderRequest
+    public class CreateOrderRequest : IRequest
     {        
         public string Name { get; set; }
         public string Line1 { get; set; }

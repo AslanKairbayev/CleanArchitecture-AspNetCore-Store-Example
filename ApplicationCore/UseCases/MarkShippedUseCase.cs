@@ -7,18 +7,18 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    public class MarkShippedUseCases : IMarkShippedUseCase
+    public class MarkShippedUseCase : IMarkShippedUseCase
     {
         private IOrderRepository repository;
 
-        public MarkShippedUseCases(IOrderRepository repo)
+        public MarkShippedUseCase(IOrderRepository repo)
         {
             repository = repo;
         }
 
         public void Handle(int orderId)
         {
-            Order order = repository.FindById(orderId);
+            Order order = repository.GetById(orderId);
             if (order != null)
             {
                 order.Shipped = true;

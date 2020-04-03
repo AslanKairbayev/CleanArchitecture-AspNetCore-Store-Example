@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ApplicationCore.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ApplicationCore.Dto.UseCaseRequests
 {
-    public class GetProductsRequest
+    public class GetProductsRequest : IRequest
     {
     }
 }

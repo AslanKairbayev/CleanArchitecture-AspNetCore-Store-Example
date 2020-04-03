@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ApplicationCore.Dto.UseCaseResponses
 {
-    public class GetProductsResponse
+    public class GetProductsByParamResponse
     {
         public IEnumerable<ProductDto> Products { get; set; }
-    }    
+    }
 }

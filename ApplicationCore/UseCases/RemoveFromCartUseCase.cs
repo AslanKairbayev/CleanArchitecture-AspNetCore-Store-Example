@@ -23,7 +23,7 @@ namespace ApplicationCore.UseCases
 
         public void Handle(int productId)
         {
-            Product product = prodRepository.FindById(productId);
+            Product product = prodRepository.GetById(productId);
 
             if (product != null)
             {

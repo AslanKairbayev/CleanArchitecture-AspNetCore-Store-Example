@@ -6,10 +6,10 @@ using System.Text;
 
 namespace ApplicationCore.Interfaces.Repositories
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IGenericRepository<T> where T : BaseEntity
     {
-        IQueryable<T> GetAll { get; }
-        T FindById(int entityId);
+        IEnumerable<T> GetAll { get; }
+        T GetById(int entityId);
         void Create(T entity);
         void Delete(int entityId);
     }

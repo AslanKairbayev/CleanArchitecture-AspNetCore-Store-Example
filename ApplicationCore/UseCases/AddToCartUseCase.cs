@@ -9,13 +9,13 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    public class AddToCartUseCases : IAddToCartUseCase
+    public class AddToCartUseCase : IAddToCartUseCase
     {
         private IProductRepository prodRepository;
 
         private Cart cart;
 
-        public AddToCartUseCases(IProductRepository prodRepo, Cart cartService)
+        public AddToCartUseCase(IProductRepository prodRepo, Cart cartService)
         {
             prodRepository = prodRepo;
             cart = cartService;
@@ -23,7 +23,7 @@ namespace ApplicationCore.UseCases
 
         public void Handle(int productId)
         {
-            Product product = prodRepository.FindById(productId);
+            Product product = prodRepository.GetById(productId);
             
             if (product != null)
             {

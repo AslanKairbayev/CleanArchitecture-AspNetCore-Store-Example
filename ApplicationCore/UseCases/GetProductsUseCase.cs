@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Dto.UseCaseRequests;
+﻿using ApplicationCore.Dto;
+using ApplicationCore.Dto.UseCaseRequests;
 using ApplicationCore.Dto.UseCaseResponses;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.Repositories;
@@ -10,15 +11,15 @@ using System.Text;
 
 namespace ApplicationCore.Interactors
 {
-    public class GetAllProductsUseCases : IGetAllProductsUseCase
+    public class GetProductsUseCase : IGetProductsUseCase
     {
         private IProductRepository repository;
 
-        public GetAllProductsUseCases(IProductRepository repo)
+        public GetProductsUseCase(IProductRepository repo)
         {
             repository = repo;
         }
-        public void Handle(GetProductsRequest request, IOutputPort<GetProductsResponse> outputPort)
+        public bool Handle(GetProductsRequest request, IOutputPort<GetProductsResponse> outputPort)
         {
             var products = repository.GetAll.ToList();
 
@@ -30,6 +31,8 @@ namespace ApplicationCore.Interactors
             }
 
             outputPort.Handle(new GetProductsResponse { Products = productsDto });
+
+            return true;
         }
     }
 }
