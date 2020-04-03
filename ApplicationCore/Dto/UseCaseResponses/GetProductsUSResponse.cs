@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ApplicationCore.Dto.UseCaseResponses
 {
-    public class GetProductsResponse
+    public class GetProductsUSResponse
     {
         public IEnumerable<ProductDto> Products { get; set; }
     }    

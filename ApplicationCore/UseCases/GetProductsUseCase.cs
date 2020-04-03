@@ -19,7 +19,7 @@ namespace ApplicationCore.Interactors
         {
             repository = repo;
         }
-        public bool Handle(GetProductsRequest request, IOutputPort<GetProductsResponse> outputPort)
+        public bool Handle(GetProductsRequest request, IOutputPort<GetProductsUSResponse> outputPort)
         {
             var products = repository.GetAll.ToList();
 
@@ -30,7 +30,7 @@ namespace ApplicationCore.Interactors
                 productsDto.Add(new ProductDto(p.Id, p.Name, p.Description, p.Price));
             }
 
-            outputPort.Handle(new GetProductsResponse { Products = productsDto });
+            outputPort.Handle(new GetProductsUSResponse { Products = productsDto });
 
             return true;
         }

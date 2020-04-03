@@ -22,7 +22,7 @@ namespace ApplicationCore.UnitTests
             var mockUserRepository = new Mock<IProductRepository>();
             mockUserRepository
               .Setup(m => m.GetProductsByPaginationAndCategory(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
-              .Returns(new GetProductsByPaginationAndCategoryResponse(new List<Product>(), true));
+              .Returns(new GetProductsResponse(new List<Product>(), true));
 
             var useCase = new GetProductsByParamUseCase(mockUserRepository.Object);
 

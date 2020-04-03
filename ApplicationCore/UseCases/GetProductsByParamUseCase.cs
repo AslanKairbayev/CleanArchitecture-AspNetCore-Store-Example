@@ -30,7 +30,7 @@ namespace ApplicationCore.UseCases
                 products.Add(new ProductDto(p.Id, p.Name, p.Description, p.Price));
             }
 
-            outputPort.Handle(new GetProductsByParamResponse { Products = products });
+            outputPort.Handle(new GetProductsByParamResponse(products));
 
             return response.Success;
         }

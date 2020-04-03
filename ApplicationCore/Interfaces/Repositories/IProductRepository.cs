@@ -9,7 +9,7 @@ namespace ApplicationCore.Interfaces.Repositories
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
-        GetProductsByPaginationAndCategoryResponse GetProductsByPaginationAndCategory(int page, int pageSize, string category);
+        GetProductsResponse GetProductsByPaginationAndCategory(int page, int pageSize, string category);
         void Update(Product product);
     }
 }

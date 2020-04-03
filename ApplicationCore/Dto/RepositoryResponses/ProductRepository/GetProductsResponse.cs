@@ -6,11 +6,11 @@ using System.Text;
 
 namespace ApplicationCore.Dto.RepositoryResponses.ProductRepository
 {
-    public class GetProductsByPaginationAndCategoryResponse : BaseRepositoryResponse
+    public class GetProductsResponse : BaseRepositoryResponse
     {
         public IEnumerable<Product> Products { get; }
 
-        public GetProductsByPaginationAndCategoryResponse( IEnumerable<Product> products, bool success = false) : base(success)
+        public GetProductsResponse( IEnumerable<Product> products, bool success = false) : base(success)
         {
             Products = products; 
         }

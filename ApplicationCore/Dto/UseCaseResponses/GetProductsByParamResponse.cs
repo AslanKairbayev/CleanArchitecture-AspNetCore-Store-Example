@@ -7,5 +7,10 @@ namespace ApplicationCore.Dto.UseCaseResponses
     public class GetProductsByParamResponse
     {
         public IEnumerable<ProductDto> Products { get; set; }
+
+        public GetProductsByParamResponse(IEnumerable<ProductDto> products)
+        {
+            Products = products;
+        }
     }
 }
