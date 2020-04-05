@@ -29,11 +29,11 @@ namespace ApplicationCore.UseCases
 
             if (product != null)
             {
-                cartRepository.AddItem(product, 1);
+                var response = cartRepository.AddItem(product, 1);
 
-                outputPort.Handle(new AddToCartResponse(true));
+                outputPort.Handle(response.Success ? new AddToCartResponse(true) : null);
 
-                return true;
+                return response.Success;
             }
 
             return false;

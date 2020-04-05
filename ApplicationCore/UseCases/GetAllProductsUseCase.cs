@@ -22,7 +22,7 @@ namespace ApplicationCore.Interactors
         }
         public bool Handle(GetAllProductsRequest request, IOutputPort<GetAllProductsResponse> outputPort)
         {
-            var products = repository.Products;
+            var products = repository.GetAllProducts;
 
             if (products.Count() != 0)
             {

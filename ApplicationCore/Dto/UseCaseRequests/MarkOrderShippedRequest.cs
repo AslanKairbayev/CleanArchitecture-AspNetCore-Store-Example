@@ -6,13 +6,8 @@ using System.Text;
 
 namespace ApplicationCore.Dto.UseCaseRequests
 {
-    public class AddToCartRequest : IRequest<AddToCartResponse>
+    public class MarkOrderShippedRequest : IRequest<MarkOrderShippedResponse>
     {
-        public int ProductId { get; set; }
-
-        public AddToCartRequest(int productId)
-        {
-            ProductId = productId;
-        }
+        public int OrderId { get; set; }
     }
 }

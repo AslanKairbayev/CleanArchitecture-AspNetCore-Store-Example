@@ -17,12 +17,12 @@ namespace ApplicationCore.UnitTests
         [Fact]
         public void Can_Get_All_Products()
         {
-            var mockUserRepository = new Mock<IProductRepository>();
-            mockUserRepository
-              .Setup(m => m.Products)
+            var mockProductRepository = new Mock<IProductRepository>();
+            mockProductRepository
+              .Setup(m => m.GetAllProducts)
               .Returns(new List<Product>() { new Product { } });
 
-            var useCase = new GetAllProductsUseCase(mockUserRepository.Object);
+            var useCase = new GetAllProductsUseCase(mockProductRepository.Object);
 
             var mockOutputPort = new Mock<IOutputPort<GetAllProductsResponse>>();
 

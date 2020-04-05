@@ -18,18 +18,18 @@ namespace ApplicationCore.UnitTests
         [Fact]
         public void Can_Get_Products_By_Param()
         {         
-            var mockUserRepository = new Mock<IProductRepository>();
-            mockUserRepository
+            var mockProductRepository = new Mock<IProductRepository>();
+            mockProductRepository
               .Setup(m => m.GetProductsByPaginationAndCategory(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
               .Returns(new List<Product>() { new Product { } });
 
-            var useCase = new GetProductsByParamUseCase(mockUserRepository.Object);
+            var useCase = new GetProductsByParamUseCase(mockProductRepository.Object);
 
             var mockOutputPort = new Mock<IOutputPort<GetProductsByParamResponse>>();
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<GetProductsByParamResponse>()));
 
-            var response = useCase.Handle(new GetProductsByParamRequest(1, 4, ""), mockOutputPort.Object);
+            var response = useCase.Handle(new GetProductsByParamRequest(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()), mockOutputPort.Object);
 
             Assert.True(response);
         }

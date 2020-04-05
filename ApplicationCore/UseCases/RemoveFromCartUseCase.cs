@@ -29,11 +29,11 @@ namespace ApplicationCore.UseCases
 
             if (product != null)
             {
-                cartRepository.RemoveLine(product);
+                var response = cartRepository.RemoveLine(product);
 
-                outputPort.Handle(new RemoveFromCartResponse(true));
+                outputPort.Handle(response.Success ? new RemoveFromCartResponse(true) : null);
 
-                return true;
+                return response.Success;
             }
 
             return false;

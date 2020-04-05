@@ -11,6 +11,6 @@ namespace ApplicationCore.Interfaces.Repositories
     {
         Order GetOrderById(int orderId);
         CreateOrderResponse Create(Order order);
-        void Update(Order order);
+        UpdateOrderResponse Update(Order order);
     }
 }
