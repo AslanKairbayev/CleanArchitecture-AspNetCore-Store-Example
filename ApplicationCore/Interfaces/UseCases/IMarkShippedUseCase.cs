@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ApplicationCore.Interfaces.UseCases
 {
-    public interface IMarkShippedUseCase : IRequestHandler<int>
+    public interface IMarkShippedUseCase
     {
     }
 }

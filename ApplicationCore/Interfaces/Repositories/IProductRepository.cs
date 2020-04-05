@@ -1,5 +1,4 @@
-﻿using ApplicationCore.Dto.RepositoryResponses.ProductRepository;
-using ApplicationCore.Entities;
+﻿using ApplicationCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +6,11 @@ using System.Text;
 
 namespace ApplicationCore.Interfaces.Repositories
 {
-    public interface IProductRepository : IGenericRepository<Product>
+    public interface IProductRepository
     {
-        GetProductsResponse GetProductsByPaginationAndCategory(int page, int pageSize, string category);
+        IEnumerable<Product> Products { get; }
+        IEnumerable<Product> GetProductsByPaginationAndCategory(int page, int pageSize, string category);
+        Product GetProductById(int productId);        
         void Update(Product product);
     }
 }

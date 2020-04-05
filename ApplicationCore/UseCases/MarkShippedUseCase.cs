@@ -18,7 +18,7 @@ namespace ApplicationCore.UseCases
 
         public void Handle(int orderId)
         {
-            Order order = repository.GetById(orderId);
+            Order order = repository.GetOrderById(orderId);
             if (order != null)
             {
                 order.Shipped = true;

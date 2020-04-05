@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ApplicationCore.Interfaces
 {
-    public interface IRequest
+    public interface IRequest<out TResponse>
     {
     }
 }

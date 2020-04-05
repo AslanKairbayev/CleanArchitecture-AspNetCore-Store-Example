@@ -1,11 +1,12 @@
-﻿using ApplicationCore.Interfaces;
+﻿using ApplicationCore.Dto.UseCaseResponses;
+using ApplicationCore.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ApplicationCore.Dto.UseCaseRequests
 {
-    public class GetProductsByParamRequest : IRequest
+    public class GetProductsByParamRequest : IRequest<GetProductsByParamResponse>
     {        
         public int Page { get; set; }
         public int PageSize { get; set; }

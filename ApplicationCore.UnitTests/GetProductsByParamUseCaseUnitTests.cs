@@ -1,5 +1,4 @@
-﻿using ApplicationCore.Dto.RepositoryResponses.ProductRepository;
-using ApplicationCore.Dto.UseCaseRequests;
+﻿using ApplicationCore.Dto.UseCaseRequests;
 using ApplicationCore.Dto.UseCaseResponses;
 using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
@@ -22,7 +21,7 @@ namespace ApplicationCore.UnitTests
             var mockUserRepository = new Mock<IProductRepository>();
             mockUserRepository
               .Setup(m => m.GetProductsByPaginationAndCategory(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
-              .Returns(new GetProductsResponse(new List<Product>(), true));
+              .Returns(new List<Product>() { new Product { } });
 
             var useCase = new GetProductsByParamUseCase(mockUserRepository.Object);
 

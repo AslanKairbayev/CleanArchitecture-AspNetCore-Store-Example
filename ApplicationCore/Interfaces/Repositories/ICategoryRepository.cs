@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ApplicationCore.Interfaces.Repositories
 {
-    public interface ICategoryRepository : IGenericRepository<Category>
+    public interface ICategoryRepository
     {
         void Update(Category category);
     }

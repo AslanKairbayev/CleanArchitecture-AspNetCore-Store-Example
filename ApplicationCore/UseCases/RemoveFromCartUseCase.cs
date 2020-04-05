@@ -1,4 +1,6 @@
-﻿using ApplicationCore.DTO;
+﻿using ApplicationCore.Dto.UseCaseRequests;
+using ApplicationCore.Dto.UseCaseResponses;
+using ApplicationCore.DTO;
 using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.Repositories;
@@ -9,26 +11,32 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    class RemoveFromCartUseCasescs : IRemoveFromCartUseCase
+    public class RemoveFromCartUseCase : IRemoveFromCartUseCase
     {
-        private IProductRepository prodRepository;
+        private IProductRepository productRepository;
 
-        private Cart cart;
+        private ICartRepository cartRepository;
 
-        public RemoveFromCartUseCasescs(IProductRepository prodRepo, Cart cartService)
+        public RemoveFromCartUseCase(IProductRepository repo, ICartRepository cart)
         {
-            prodRepository = prodRepo;
-            cart = cartService;
+            productRepository = repo;
+            cartRepository = cart;
         }
 
-        public void Handle(int productId)
+        public bool Handle(RemoveFromCartRequest request, IOutputPort<RemoveFromCartResponse> outputPort)
         {
-            Product product = prodRepository.GetById(productId);
+            Product product = productRepository.GetProductById(request.ProductId);
 
             if (product != null)
             {
-                cart.RemoveLine(product);
+                cartRepository.RemoveLine(product);
+
+                outputPort.Handle(new RemoveFromCartResponse(true));
+
+                return true;
             }
+
+            return false;
         }
     }
 }

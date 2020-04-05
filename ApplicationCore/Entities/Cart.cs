@@ -40,7 +40,5 @@ namespace ApplicationCore.Entities
 
         public virtual IEnumerable<CartLine> Lines =>
             lineCollection;
-
-    }
-    
+    }    
 }

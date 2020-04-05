@@ -5,13 +5,13 @@ using System.Text;
 
 namespace ApplicationCore.Dto.UseCaseResponses
 {
-    public class GetProductsByParamResponse : ResponseMessage
+    public class GetAllProductsResponse : ResponseMessage
     {
         public IEnumerable<ProductDto> Products { get; set; }
 
-        public GetProductsByParamResponse(IEnumerable<ProductDto> products, bool success = false, string message = null) : base(success, message)
+        public GetAllProductsResponse(IEnumerable<ProductDto> products, bool success = false, string message = null) : base(success, message)
         {
             Products = products;
         }
-    }
+    }    
 }
