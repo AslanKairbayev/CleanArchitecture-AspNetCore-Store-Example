@@ -1,13 +1,12 @@
-﻿using ApplicationCore.Dto.UseCaseResponses;
-using ApplicationCore.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ApplicationCore.DTO
+namespace ApplicationCore.Dto
 {
-    public class CheckoutRequest : IRequest<CheckoutResponse>
-    {        
+    public class OrderDto
+    {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Line1 { get; set; }
         public string Line2 { get; set; }
@@ -17,9 +16,12 @@ namespace ApplicationCore.DTO
         public string Zip { get; set; }
         public string Country { get; set; }
         public bool GiftWrap { get; set; }
+        public bool Shipped { get; set; }
+        public ICollection<CartLineDto> Lines { get; set; }
 
-        public CheckoutRequest(string name, string line1, string city, string state, string country, string zip = null, string line2 = null, string line3 = null, bool giftWrap = false)
+        public OrderDto(int id, string name, string line1, string line2, string line3, string city, string state, string country, string zip,  bool giftWrap, bool shipped, ICollection<CartLineDto> lines)
         {
+            Id = id;
             Name = name;
             Line1 = line1;
             Line2 = line2;
@@ -29,6 +31,8 @@ namespace ApplicationCore.DTO
             Zip = zip;
             Country = country;
             GiftWrap = giftWrap;
+            Shipped = shipped;
+            Lines = lines;
         }
     }
 }
