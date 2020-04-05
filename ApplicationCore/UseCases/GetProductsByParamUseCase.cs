@@ -32,7 +32,7 @@ namespace ApplicationCore.UseCases
                     productsDto.Add(new ProductDto(p.Id, p.Name, p.Description, p.Price));
                 }
 
-                outputPort.Handle(new GetProductsByParamResponse(productsDto));
+                outputPort.Handle(new GetProductsByParamResponse(productsDto, true));
 
                 return true;
             }            

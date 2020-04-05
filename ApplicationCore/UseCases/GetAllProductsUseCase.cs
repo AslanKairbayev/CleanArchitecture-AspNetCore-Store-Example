@@ -33,7 +33,7 @@ namespace ApplicationCore.Interactors
                     productsDto.Add(new ProductDto(p.Id, p.Name, p.Description, p.Price));
                 }
 
-                outputPort.Handle(new GetAllProductsResponse(productsDto));
+                outputPort.Handle(new GetAllProductsResponse(productsDto, true));
 
                 return true;
             }

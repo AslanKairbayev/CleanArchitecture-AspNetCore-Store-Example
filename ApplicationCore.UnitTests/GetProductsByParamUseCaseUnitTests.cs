@@ -33,5 +33,24 @@ namespace ApplicationCore.UnitTests
 
             Assert.True(response);
         }
+
+        [Fact]
+        public void Can_Get_Products_By_Param_When_Products_Empty()
+        {
+            var mockProductRepository = new Mock<IProductRepository>();
+            mockProductRepository
+              .Setup(m => m.GetProductsByPaginationAndCategory(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()))
+              .Returns(new List<Product>());
+
+            var useCase = new GetProductsByParamUseCase(mockProductRepository.Object);
+
+            var mockOutputPort = new Mock<IOutputPort<GetProductsByParamResponse>>();
+
+            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<GetProductsByParamResponse>()));
+
+            var response = useCase.Handle(new GetProductsByParamRequest(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<string>()), mockOutputPort.Object);
+
+            Assert.False(response);
+        }
     }
 }
