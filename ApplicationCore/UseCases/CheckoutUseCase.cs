@@ -25,7 +25,8 @@ namespace ApplicationCore.UseCases
 
         public bool Handle(CheckoutRequest request, IOutputPort<CheckoutResponse> outputPort)
         {
-            if (cartRepository.Lines.Count() != 0)
+            if (!string.IsNullOrEmpty(request.Name) && !string.IsNullOrEmpty(request.Line1) && !string.IsNullOrEmpty(request.City) 
+                && !string.IsNullOrEmpty(request.State) && !string.IsNullOrEmpty(request.Country) && cartRepository.Lines.Count() != 0)
             {
                 var response = orderRepository.Create(new Order
                 {

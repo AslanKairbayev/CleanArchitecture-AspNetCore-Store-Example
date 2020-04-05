@@ -19,7 +19,7 @@ namespace ApplicationCore.DTO
         public bool GiftWrap { get; set; }
         public ICollection<CartLineDTO> Lines { get; set; }
 
-        public CheckoutRequest(string name, string line1, string line2, string line3, string city, string state, string zip, string country, bool giftWrap = false)
+        public CheckoutRequest(string name, string line1, string city, string state, string country, string zip = null, string line2 = null, string line3 = null, bool giftWrap = false)
         {
             Name = name;
             Line1 = line1;

@@ -35,7 +35,7 @@ namespace ApplicationCore.UnitTests
         }
 
         [Fact]
-        public void Can_Get_Products_By_Param_When_Products_Empty()
+        public void Can_Get_Products_By_Param_When_Products_Are_Empty()
         {
             var mockProductRepository = new Mock<IProductRepository>();
             mockProductRepository

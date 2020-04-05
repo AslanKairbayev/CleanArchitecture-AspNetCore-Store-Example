@@ -34,7 +34,7 @@ namespace ApplicationCore.UnitTests
         }
 
         [Fact]
-        public void Cant_Get_All_Products_When_Products_Empty()
+        public void Cant_Get_All_Products_When_Products_Are_Empty()
         {
             var mockProductRepository = new Mock<IProductRepository>();
             mockProductRepository
