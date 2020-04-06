@@ -31,10 +31,12 @@ namespace ApplicationCore.UseCases
             {
                 var response = cartRepository.RemoveLine(product);
 
-                outputPort.Handle(response.Success ? new RemoveFromCartResponse(true) : null);
+                outputPort.Handle(response.Success ? new RemoveFromCartResponse(true) : new RemoveFromCartResponse(false, "Operation failed"));
 
                 return response.Success;
             }
+
+            outputPort.Handle(new RemoveFromCartResponse(false, $"Unknown ProductId - {request.ProductId}"));
 
             return false;
         }

@@ -35,7 +35,9 @@ namespace ApplicationCore.UseCases
                 outputPort.Handle(new GetProductsByParamResponse(productsDto, true));
 
                 return true;
-            }            
+            }
+
+            outputPort.Handle(new GetProductsByParamResponse(null, false, "Operation failed"));
 
             return false;
         }

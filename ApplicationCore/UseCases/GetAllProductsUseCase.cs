@@ -38,6 +38,8 @@ namespace ApplicationCore.Interactors
                 return true;
             }
 
+            outputPort.Handle(new GetAllProductsResponse(null, false, "Operation failed"));
+
             return false;
         }
     }

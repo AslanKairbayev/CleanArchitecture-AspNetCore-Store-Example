@@ -31,10 +31,12 @@ namespace ApplicationCore.UseCases
             {
                 var response = cartRepository.AddItem(product, 1);
 
-                outputPort.Handle(response.Success ? new AddToCartResponse(true) : null);
+                outputPort.Handle(response.Success ? new AddToCartResponse(true) : new AddToCartResponse(false, "Operation failed"));
 
                 return response.Success;
             }
+
+            outputPort.Handle(new AddToCartResponse(false, $"Unknown ProductId - {request.ProductId}"));
 
             return false;
         }

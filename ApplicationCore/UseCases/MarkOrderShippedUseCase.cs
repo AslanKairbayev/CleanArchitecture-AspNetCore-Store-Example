@@ -29,10 +29,12 @@ namespace ApplicationCore.UseCases
 
                 var response = repository.Update(order);
 
-                outputPort.Handle(response.Success ? new MarkOrderShippedResponse(true) : null);
+                outputPort.Handle(response.Success ? new MarkOrderShippedResponse(true) : new MarkOrderShippedResponse(false, "Operation failed"));
 
                 return response.Success;
             }
+
+            outputPort.Handle(new MarkOrderShippedResponse(false, $"Unknown OrderId - {request.OrderId}"));
 
             return false;
         }

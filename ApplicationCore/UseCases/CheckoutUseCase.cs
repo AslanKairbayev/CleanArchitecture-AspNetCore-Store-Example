@@ -42,10 +42,12 @@ namespace ApplicationCore.UseCases
                     Lines = cartRepository.Lines.ToArray()
                 });
 
-                outputPort.Handle(response.Success ? new CheckoutResponse(response.Id, true) : null);
+                outputPort.Handle(response.Success ? new CheckoutResponse(response.Id, true) : new CheckoutResponse(0, false, "Operation failed"));
 
                 return response.Success;
             }
+
+            outputPort.Handle(new CheckoutResponse(0, false, "Invalid request"));
 
             return false;
         }

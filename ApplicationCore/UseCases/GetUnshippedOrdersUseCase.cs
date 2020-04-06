@@ -45,6 +45,8 @@ namespace ApplicationCore.UseCases
                 return true;
             }
 
+            outputPort.Handle(new GetUnshippedOrdersResponse(null, false, "Operation failed"));
+
             return false;
         }
     }
