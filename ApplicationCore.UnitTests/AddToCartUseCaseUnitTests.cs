@@ -13,7 +13,7 @@ using Xunit;
 
 namespace ApplicationCore.UnitTests
 {
-    public class AddToCartUseCaseUnitTest
+    public class AddToCartUseCaseUnitTests
     {
         [Fact]
         public void Can_Add_To_Cart()
