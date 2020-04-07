@@ -7,6 +7,6 @@ namespace ApplicationCore.Interfaces.Repositories
 {
     public interface ICategoryRepository
     {
-        void Update(Category category);
+        IEnumerable<Category> GetAllCategories { get; }
     }
 }

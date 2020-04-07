@@ -44,6 +44,8 @@ namespace ApplicationCore.UseCases
 
                 outputPort.Handle(response.Success ? new CheckoutResponse(response.Id, true) : new CheckoutResponse(0, false, "Operation failed"));
 
+                cartRepository.Clear();
+
                 return response.Success;
             }
 
