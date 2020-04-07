@@ -19,7 +19,7 @@ namespace ApplicationCore.UnitTests
         {
             var mockProductRepository = new Mock<IProductRepository>();
             mockProductRepository
-              .Setup(m => m.GetAllProducts)
+              .Setup(m => m.Products)
               .Returns(new List<Product>() { new Product { } });
 
             var useCase = new GetAllProductsUseCase(mockProductRepository.Object);
@@ -38,7 +38,7 @@ namespace ApplicationCore.UnitTests
         {
             var mockProductRepository = new Mock<IProductRepository>();
             mockProductRepository
-              .Setup(m => m.GetAllProducts)
+              .Setup(m => m.Products)
               .Returns(new List<Product>());
 
             var useCase = new GetAllProductsUseCase(mockProductRepository.Object);

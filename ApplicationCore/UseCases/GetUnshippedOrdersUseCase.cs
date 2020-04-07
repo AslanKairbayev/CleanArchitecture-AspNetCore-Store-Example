@@ -22,7 +22,7 @@ namespace ApplicationCore.UseCases
 
         public bool Handle(GetUnshippedOrdersRequest request, IOutputPort<GetUnshippedOrdersResponse> outputPort)
         {
-            var orders = repository.GetUnshippedOrders;
+            var orders = repository.UnshippedOrders;
 
             if (orders.Count() != 0)
             {

@@ -20,7 +20,7 @@ namespace ApplicationCore.UnitTests
             var mockOrderRepository = new Mock<IOrderRepository>();
 
             mockOrderRepository
-              .Setup(m => m.GetUnshippedOrders)
+              .Setup(m => m.UnshippedOrders)
               .Returns(new List<Order>() { new Order() { Lines = new List<CartLine>() } });
 
             var useCase = new GetUnshippedOrdersUseCase(mockOrderRepository.Object);
@@ -40,7 +40,7 @@ namespace ApplicationCore.UnitTests
             var mockOrderRepository = new Mock<IOrderRepository>();
 
             mockOrderRepository
-              .Setup(m => m.GetUnshippedOrders)
+              .Setup(m => m.UnshippedOrders)
               .Returns(new List<Order>() { });
 
             var useCase = new GetUnshippedOrdersUseCase(mockOrderRepository.Object);

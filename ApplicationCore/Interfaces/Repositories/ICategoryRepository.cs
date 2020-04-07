@@ -7,6 +7,6 @@ namespace ApplicationCore.Interfaces.Repositories
 {
     public interface ICategoryRepository
     {
-        IEnumerable<Category> GetAllCategories { get; }
+        IEnumerable<Category> Categories { get; }
     }
 }

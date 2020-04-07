@@ -4,9 +4,9 @@ using System.Text;
 
 namespace ApplicationCore.Entities
 {
-    public class Order : BaseEntity
+    public class Order 
     {
-        public ICollection<CartLine> Lines { get; set; }
+        public int Id { get; set; }        
         public bool Shipped { get; set; }
         public string Name { get; set; }
         public string Line1 { get; set; }
@@ -17,5 +17,6 @@ namespace ApplicationCore.Entities
         public string Zip { get; set; }
         public string Country { get; set; }
         public bool GiftWrap { get; set; }
+        public ICollection<CartLine> Lines { get; set; }
     }
 }
