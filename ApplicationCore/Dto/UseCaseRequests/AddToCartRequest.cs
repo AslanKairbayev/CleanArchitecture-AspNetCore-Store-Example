@@ -8,7 +8,7 @@ namespace ApplicationCore.Dto.UseCaseRequests
 {
     public class AddToCartRequest : IRequest<AddToCartResponse>
     {
-        public int ProductId { get; set; }
+        public int ProductId { get; }
 
         public AddToCartRequest(int productId)
         {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ApplicationCore.Dto.RepositoryResponses.OrderRepository
 {
-    public class UpdateOrderResponse : BaseRepositoryResponse
+    public sealed class UpdateOrderResponse : BaseRepositoryResponse
     {
         public UpdateOrderResponse(bool success = false) : base(success)
         {

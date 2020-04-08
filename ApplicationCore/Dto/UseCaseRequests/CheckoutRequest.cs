@@ -8,15 +8,15 @@ namespace ApplicationCore.DTO
 {
     public class CheckoutRequest : IRequest<CheckoutResponse>
     {        
-        public string Name { get; set; }
-        public string Line1 { get; set; }
-        public string Line2 { get; set; }
-        public string Line3 { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Zip { get; set; }
-        public string Country { get; set; }
-        public bool GiftWrap { get; set; }
+        public string Name { get; }
+        public string Line1 { get; }
+        public string Line2 { get; }
+        public string Line3 { get; }
+        public string City { get; }
+        public string State { get; }
+        public string Zip { get; }
+        public string Country { get; }
+        public bool GiftWrap { get; }
 
         public CheckoutRequest(string name, string line1, string city, string state, string country, string zip = null, string line2 = null, string line3 = null, bool giftWrap = false)
         {

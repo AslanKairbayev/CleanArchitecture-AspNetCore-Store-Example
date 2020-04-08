@@ -11,9 +11,9 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    public class GetAllCategoriesUseCase : IGetAllCategoriesUseCase
+    public sealed class GetAllCategoriesUseCase : IGetAllCategoriesUseCase
     {
-        private ICategoryRepository repository;
+        private readonly ICategoryRepository repository;
 
         public GetAllCategoriesUseCase(ICategoryRepository repo)
         {

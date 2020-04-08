@@ -4,11 +4,11 @@ using System.Text;
 
 namespace ApplicationCore.Dto
 {
-    public class CategoryDto
+    public sealed class CategoryDto
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public int Id { get;}
+        public string Name { get; }
+        public string Description { get; }
 
         public CategoryDto(int id, string name, string description)
         {

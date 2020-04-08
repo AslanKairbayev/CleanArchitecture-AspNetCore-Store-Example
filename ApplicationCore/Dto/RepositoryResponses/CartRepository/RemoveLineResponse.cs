@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ApplicationCore.Dto.RepositoryResponses.CartRepository
 {
-    public class RemoveLineResponse : BaseRepositoryResponse
+    public sealed class RemoveLineResponse : BaseRepositoryResponse
     {
         public RemoveLineResponse(bool success = false) : base(success)
         {

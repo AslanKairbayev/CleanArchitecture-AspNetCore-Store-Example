@@ -7,7 +7,7 @@ namespace ApplicationCore.Dto.UseCaseResponses
 {
     public class GetAllCategoriesResponse : ResponseMessage
     {
-        public IEnumerable<CategoryDto> Categories { get; set; }
+        public IEnumerable<CategoryDto> Categories { get; }
 
         public GetAllCategoriesResponse(IEnumerable<CategoryDto> categories, bool success = false, string message = null) : base(success, message)
         {

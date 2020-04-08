@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ApplicationCore.Dto.RepositoryResponses.ProductRepository
 {
-    public class UpdateProductResponse : BaseRepositoryResponse
+    public sealed class UpdateProductResponse : BaseRepositoryResponse
     {
         public UpdateProductResponse(bool success = false) : base(success)
         {

@@ -11,9 +11,9 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    public class GetUnshippedOrdersUseCase : IGetUnshippedOrdersUseCase
+    public sealed class GetUnshippedOrdersUseCase : IGetUnshippedOrdersUseCase
     {
-        private IOrderRepository repository;
+        private readonly IOrderRepository repository;
 
         public GetUnshippedOrdersUseCase(IOrderRepository repo)
         {

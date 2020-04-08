@@ -12,9 +12,9 @@ using System.Text;
 
 namespace ApplicationCore.Interactors
 {
-    public class GetAllProductsUseCase : IGetAllProductsUseCase
+    public sealed class GetAllProductsUseCase : IGetAllProductsUseCase
     {
-        private IProductRepository repository;
+        private readonly IProductRepository repository;
 
         public GetAllProductsUseCase(IProductRepository repo)
         {

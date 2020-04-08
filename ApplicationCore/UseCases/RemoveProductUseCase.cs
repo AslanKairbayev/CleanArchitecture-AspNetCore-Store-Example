@@ -9,7 +9,7 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    public class RemoveProductUseCase : IRemoveProductUseCase
+    public sealed class RemoveProductUseCase : IRemoveProductUseCase
     {
         private IProductRepository repository;
 
@@ -26,7 +26,7 @@ namespace ApplicationCore.UseCases
 
                 if (product != null)
                 {
-                    var response = repository.Delete(product.Id);
+                    var response = repository.Delete(product);
 
                     outputPort.Handle(response.Success ? new RemoveProductResponse(true) : new RemoveProductResponse(false, "Operation failed"));
 

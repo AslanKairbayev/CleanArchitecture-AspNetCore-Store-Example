@@ -8,7 +8,7 @@ namespace ApplicationCore.Dto.UseCaseRequests
 {
     public class RemoveFromCartRequest : IRequest<RemoveFromCartResponse>
     {
-        public int ProductId { get; set; }
+        public int ProductId { get; }
 
         public RemoveFromCartRequest(int productId)
         {

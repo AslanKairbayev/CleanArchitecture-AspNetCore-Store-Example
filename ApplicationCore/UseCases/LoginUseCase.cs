@@ -9,9 +9,9 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    public class LoginUseCase : ILoginUseCase
+    public sealed class LoginUseCase : ILoginUseCase
     {
-        private IUserRepository repository;
+        private readonly IUserRepository repository;
 
         public LoginUseCase(IUserRepository repo)
         {

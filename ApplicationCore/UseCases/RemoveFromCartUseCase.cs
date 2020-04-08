@@ -11,11 +11,11 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    public class RemoveFromCartUseCase : IRemoveFromCartUseCase
+    public sealed class RemoveFromCartUseCase : IRemoveFromCartUseCase
     {
-        private IProductRepository productRepository;
+        private readonly IProductRepository productRepository;
 
-        private ICartRepository cartRepository;
+        private readonly ICartRepository cartRepository;
 
         public RemoveFromCartUseCase(IProductRepository repo, ICartRepository cart)
         {

@@ -7,7 +7,7 @@ namespace ApplicationCore.Dto.UseCaseResponses
 {
     public class AddNewProductResponse : ResponseMessage
     {
-        public int Id { get; set; }
+        public int Id { get; }
         public AddNewProductResponse(int id, bool success = false, string message = null) : base(success, message)
         {
             Id = Id;

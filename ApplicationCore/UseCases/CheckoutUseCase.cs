@@ -11,11 +11,11 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    public class CheckoutUseCase : ICheckoutUseCase
+    public sealed class CheckoutUseCase : ICheckoutUseCase
     {
-        private IOrderRepository orderRepository;
+        private readonly IOrderRepository orderRepository;
 
-        private ICartRepository cartRepository;
+        private readonly ICartRepository cartRepository;
 
         public CheckoutUseCase(IOrderRepository repo, ICartRepository cart)
         {

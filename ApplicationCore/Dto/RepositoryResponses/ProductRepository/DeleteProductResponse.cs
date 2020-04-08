@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ApplicationCore.Dto.RepositoryResponses.ProductRepository
 {
-    public class DeleteProductResponse : BaseRepositoryResponse
+    public sealed class DeleteProductResponse : BaseRepositoryResponse
     {
         public DeleteProductResponse(bool success = false) : base(success)
         {

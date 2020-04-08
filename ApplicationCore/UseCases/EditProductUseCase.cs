@@ -10,9 +10,9 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    public class EditProductUseCase : IEditProductUseCase
+    public sealed class EditProductUseCase : IEditProductUseCase
     {
-        private IProductRepository repository;
+        private readonly IProductRepository repository;
 
         public EditProductUseCase(IProductRepository repo)
         {

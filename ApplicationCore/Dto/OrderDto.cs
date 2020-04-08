@@ -4,19 +4,19 @@ using System.Text;
 
 namespace ApplicationCore.Dto
 {
-    public class OrderDto
+    public sealed class OrderDto
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Line1 { get; set; }
-        public string Line2 { get; set; }
-        public string Line3 { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Zip { get; set; }
-        public string Country { get; set; }
-        public bool GiftWrap { get; set; }
-        public bool Shipped { get; set; }
+        public int Id { get;  }
+        public string Name { get; }
+        public string Line1 { get; }
+        public string Line2 { get; }
+        public string Line3 { get; }
+        public string City { get; }
+        public string State { get; }
+        public string Zip { get; }
+        public string Country { get; }
+        public bool GiftWrap { get; }
+        public bool Shipped { get; }
         public ICollection<CartLineDto> Lines { get; set; }
 
         public OrderDto(int id, string name, string line1, string line2, string line3, string city, string state, string country, string zip,  bool giftWrap, bool shipped, ICollection<CartLineDto> lines)

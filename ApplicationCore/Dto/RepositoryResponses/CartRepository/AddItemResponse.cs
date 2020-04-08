@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ApplicationCore.Dto.RepositoryResponses.CartRepository
 {
-    public class AddItemResponse : BaseRepositoryResponse
+    public sealed class AddItemResponse : BaseRepositoryResponse
     {
         public AddItemResponse(bool success = false) : base(success)
         {

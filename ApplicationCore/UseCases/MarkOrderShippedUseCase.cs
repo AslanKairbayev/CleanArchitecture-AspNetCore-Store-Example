@@ -10,9 +10,9 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    public class MarkOrderShippedUseCase : IMarkOrderShippedUseCase
+    public sealed class MarkOrderShippedUseCase : IMarkOrderShippedUseCase
     {
-        private IOrderRepository repository;
+        private readonly IOrderRepository repository;
 
         public MarkOrderShippedUseCase(IOrderRepository repo)
         {

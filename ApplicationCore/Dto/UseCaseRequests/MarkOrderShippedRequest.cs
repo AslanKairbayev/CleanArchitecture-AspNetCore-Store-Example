@@ -8,6 +8,11 @@ namespace ApplicationCore.Dto.UseCaseRequests
 {
     public class MarkOrderShippedRequest : IRequest<MarkOrderShippedResponse>
     {
-        public int OrderId { get; set; }
+        public int OrderId { get; }
+
+        public MarkOrderShippedRequest(int orderId)
+        {
+            OrderId = orderId;
+        }
     }
 }

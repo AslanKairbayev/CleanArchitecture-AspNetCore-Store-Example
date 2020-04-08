@@ -8,7 +8,7 @@ namespace ApplicationCore.Dto.UseCaseRequests
 {
     public class RemoveProductRequest : IRequest<RemoveProductResponse>
     {
-        public int? ProductId { get; set; }
+        public int? ProductId { get; }
 
         public RemoveProductRequest(int? productId)
         {

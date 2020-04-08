@@ -11,9 +11,9 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    public class GetProductsByParamUseCase : IGetProductsByParamUseCase
+    public sealed class GetProductsByParamUseCase : IGetProductsByParamUseCase
     {
-        private IProductRepository repository;
+        private readonly IProductRepository repository;
 
         public GetProductsByParamUseCase(IProductRepository repo)
         {

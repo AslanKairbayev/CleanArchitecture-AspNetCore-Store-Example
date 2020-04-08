@@ -15,6 +15,6 @@ namespace ApplicationCore.Interfaces.Repositories
         Product GetProductById(int productId);
         CreateProductResponse Create(Product product);
         UpdateProductResponse Update(Product product);
-        DeleteProductResponse Delete(int productId);
+        DeleteProductResponse Delete(Product product);
     }
 }

@@ -8,9 +8,9 @@ namespace ApplicationCore.Dto.UseCaseRequests
 {
     public class GetProductsByParamRequest : IRequest<GetProductsByParamResponse>
     {        
-        public int Page { get; set; }
-        public int PageSize { get; set; }
-        public string Category { get; set; }
+        public int Page { get;}
+        public int PageSize { get; }
+        public string Category { get; }
 
         public GetProductsByParamRequest(int page, int pageSize, string category)
         {

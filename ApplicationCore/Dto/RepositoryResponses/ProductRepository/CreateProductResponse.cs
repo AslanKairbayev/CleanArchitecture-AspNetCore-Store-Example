@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ApplicationCore.Dto.RepositoryResponses.ProductRepository
 {
-    public class CreateProductResponse : BaseRepositoryResponse
+    public sealed class CreateProductResponse : BaseRepositoryResponse
     {
-        public int Id { get; set; }
+        public int Id { get; }
         public CreateProductResponse(int id, bool success = false) : base(success)
         {
             Id = id;

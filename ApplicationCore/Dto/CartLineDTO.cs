@@ -4,11 +4,11 @@ using System.Text;
 
 namespace ApplicationCore.Dto
 {
-    public class CartLineDto
+    public sealed class CartLineDto
     {
-        public int Id { get; set; }
-        public ProductDto ProductDto { get; set; }
-        public int Quantity { get; set; }
+        public int Id { get; }
+        public ProductDto ProductDto { get; }
+        public int Quantity { get; }
 
         public CartLineDto(int id, ProductDto productDto, int quantity)
         {
