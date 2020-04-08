@@ -21,7 +21,7 @@ namespace ApplicationCore.UnitTests
             var mockProductRepository = new Mock<IProductRepository>();
 
             mockProductRepository
-              .Setup(m => m.Delete(It.IsAny<int>()))
+              .Setup(m => m.Delete(It.IsAny<Product>()))
               .Returns(new DeleteProductResponse(true));
 
             mockProductRepository
@@ -45,7 +45,7 @@ namespace ApplicationCore.UnitTests
             var mockProductRepository = new Mock<IProductRepository>();
 
             mockProductRepository
-              .Setup(m => m.Delete(It.IsAny<int>()))
+              .Setup(m => m.Delete(It.IsAny<Product>()))
               .Returns(new DeleteProductResponse(true));
 
             mockProductRepository
@@ -69,7 +69,7 @@ namespace ApplicationCore.UnitTests
             var mockProductRepository = new Mock<IProductRepository>();
 
             mockProductRepository
-              .Setup(m => m.Delete(It.IsAny<int>()))
+              .Setup(m => m.Delete(It.IsAny<Product>()))
               .Returns(new DeleteProductResponse(true));
 
             mockProductRepository

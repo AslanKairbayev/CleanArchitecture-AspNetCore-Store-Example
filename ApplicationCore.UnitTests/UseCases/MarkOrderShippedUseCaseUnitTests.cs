@@ -34,7 +34,7 @@ namespace ApplicationCore.UnitTests
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<MarkOrderShippedResponse>()));
 
-            var response = useCase.Handle(new MarkOrderShippedRequest(), mockOutputPort.Object);
+            var response = useCase.Handle(new MarkOrderShippedRequest(It.IsAny<int>()), mockOutputPort.Object);
 
             Assert.True(response);
         }
@@ -58,7 +58,7 @@ namespace ApplicationCore.UnitTests
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<MarkOrderShippedResponse>()));
 
-            var response = useCase.Handle(new MarkOrderShippedRequest(), mockOutputPort.Object);
+            var response = useCase.Handle(new MarkOrderShippedRequest(It.IsAny<int>()), mockOutputPort.Object);
 
             Assert.False(response);
         }
