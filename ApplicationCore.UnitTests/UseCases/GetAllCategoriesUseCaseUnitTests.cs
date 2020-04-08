@@ -23,13 +23,13 @@ namespace ApplicationCore.UnitTests
               .Setup(m => m.Categories)
               .Returns(new List<Category>() { new Category { } });
 
-            var useCase = new GetAllCategoriesUseCase(mockCategoryRepository.Object);
+            var useCase = new GetCategoriesUseCase(mockCategoryRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<GetAllCategoriesResponse>>();
+            var mockOutputPort = new Mock<IOutputPort<GetCategoriesResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<GetAllCategoriesResponse>()));
+            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<GetCategoriesResponse>()));
 
-            var response = useCase.Handle(new GetAllCategoriesRequest(), mockOutputPort.Object);
+            var response = useCase.Handle(new GetCategoriesRequest(), mockOutputPort.Object);
 
             Assert.True(response);
         }
@@ -43,13 +43,13 @@ namespace ApplicationCore.UnitTests
               .Setup(m => m.Categories)
               .Returns(new List<Category>() { });
 
-            var useCase = new GetAllCategoriesUseCase(mockCategoryRepository.Object);
+            var useCase = new GetCategoriesUseCase(mockCategoryRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<GetAllCategoriesResponse>>();
+            var mockOutputPort = new Mock<IOutputPort<GetCategoriesResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<GetAllCategoriesResponse>()));
+            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<GetCategoriesResponse>()));
 
-            var response = useCase.Handle(new GetAllCategoriesRequest(), mockOutputPort.Object);
+            var response = useCase.Handle(new GetCategoriesRequest(), mockOutputPort.Object);
 
             Assert.False(response);
         }

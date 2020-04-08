@@ -19,16 +19,16 @@ namespace ApplicationCore.UnitTests
         {
             var mockProductRepository = new Mock<IProductRepository>();
             mockProductRepository
-              .Setup(m => m.Products)
+              .Setup(m => m.ProductsWithCategories)
               .Returns(new List<Product>() { new Product { } });
 
-            var useCase = new GetAllProductsUseCase(mockProductRepository.Object);
+            var useCase = new GetProductsWithCategoriesUseCase(mockProductRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<GetAllProductsResponse>>();
+            var mockOutputPort = new Mock<IOutputPort<GetProductsWithCategoriesResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<GetAllProductsResponse>()));
+            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<GetProductsWithCategoriesResponse>()));
 
-            var response = useCase.Handle(new GetAllProductsRequest(), mockOutputPort.Object);
+            var response = useCase.Handle(new GetProductsWithCategoriesRequest(), mockOutputPort.Object);
 
             Assert.True(response);
         }
@@ -38,16 +38,16 @@ namespace ApplicationCore.UnitTests
         {
             var mockProductRepository = new Mock<IProductRepository>();
             mockProductRepository
-              .Setup(m => m.Products)
+              .Setup(m => m.ProductsWithCategories)
               .Returns(new List<Product>());
 
-            var useCase = new GetAllProductsUseCase(mockProductRepository.Object);
+            var useCase = new GetProductsWithCategoriesUseCase(mockProductRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<GetAllProductsResponse>>();
+            var mockOutputPort = new Mock<IOutputPort<GetProductsWithCategoriesResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<GetAllProductsResponse>()));
+            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<GetProductsWithCategoriesResponse>()));
 
-            var response = useCase.Handle(new GetAllProductsRequest(), mockOutputPort.Object);
+            var response = useCase.Handle(new GetProductsWithCategoriesRequest(), mockOutputPort.Object);
 
             Assert.False(response);
         }

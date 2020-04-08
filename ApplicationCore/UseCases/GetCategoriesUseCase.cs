@@ -11,15 +11,15 @@ using System.Text;
 
 namespace ApplicationCore.UseCases
 {
-    public sealed class GetAllCategoriesUseCase : IGetAllCategoriesUseCase
+    public sealed class GetCategoriesUseCase : IGetCategoriesUseCase
     {
         private readonly ICategoryRepository repository;
 
-        public GetAllCategoriesUseCase(ICategoryRepository repo)
+        public GetCategoriesUseCase(ICategoryRepository repo)
         {
             repository = repo;
         }
-        public bool Handle(GetAllCategoriesRequest request, IOutputPort<GetAllCategoriesResponse> outputPort)
+        public bool Handle(GetCategoriesRequest request, IOutputPort<GetCategoriesResponse> outputPort)
         {
             var categories = repository.Categories;
 
@@ -32,12 +32,12 @@ namespace ApplicationCore.UseCases
                     categoriesDto.Add(new CategoryDto(c.Id, c.Name, c.Description));
                 }
 
-                outputPort.Handle(new GetAllCategoriesResponse(categoriesDto, true));
+                outputPort.Handle(new GetCategoriesResponse(categoriesDto, true));
 
                 return true;
             }
 
-            outputPort.Handle(new GetAllCategoriesResponse(null, false, "Operation failed"));
+            outputPort.Handle(new GetCategoriesResponse(null, false, "Operation failed"));
 
             return false;
         }

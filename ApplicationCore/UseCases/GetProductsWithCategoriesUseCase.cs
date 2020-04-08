@@ -12,17 +12,17 @@ using System.Text;
 
 namespace ApplicationCore.Interactors
 {
-    public sealed class GetAllProductsUseCase : IGetAllProductsUseCase
+    public sealed class GetProductsWithCategoriesUseCase : IGetProductsWithCategoriesUseCase
     {
         private readonly IProductRepository repository;
 
-        public GetAllProductsUseCase(IProductRepository repo)
+        public GetProductsWithCategoriesUseCase(IProductRepository repo)
         {
             repository = repo;
         }
-        public bool Handle(GetAllProductsRequest request, IOutputPort<GetAllProductsResponse> outputPort)
+        public bool Handle(GetProductsWithCategoriesRequest request, IOutputPort<GetProductsWithCategoriesResponse> outputPort)
         {
-            var products = repository.Products;
+            var products = repository.ProductsWithCategories;
 
             if (products.Count() != 0)
             {
@@ -30,15 +30,15 @@ namespace ApplicationCore.Interactors
 
                 foreach (var p in products)
                 {
-                    productsDto.Add(new ProductDto(p.Id, p.Name, p.Description, p.Price));
+                    productsDto.Add(new ProductDto(p.Id, p.Name, p.Description, p.Price, new CategoryDto(p.Category.Id, p.Category.Name, p.Category.Description)));
                 }
 
-                outputPort.Handle(new GetAllProductsResponse(productsDto, true));
+                outputPort.Handle(new GetProductsWithCategoriesResponse(productsDto, true));
 
                 return true;
             }
 
-            outputPort.Handle(new GetAllProductsResponse(null, false, "Operation failed"));
+            outputPort.Handle(new GetProductsWithCategoriesResponse(null, false, "Operation failed"));
 
             return false;
         }

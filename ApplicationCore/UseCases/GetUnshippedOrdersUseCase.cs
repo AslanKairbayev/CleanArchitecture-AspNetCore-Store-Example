@@ -34,7 +34,7 @@ namespace ApplicationCore.UseCases
 
                     foreach (var l in o.Lines)
                     {
-                        linesDto.Add(new CartLineDto(l.Id, new ProductDto(l.Product.Id, l.Product.Name, l.Product.Description, l.Product.Price), l.Quantity));
+                        linesDto.Add(new CartLineDto(l.Id, new ProductDto(l.Product.Id, l.Product.Name, l.Product.Description, l.Product.Price, null), l.Quantity));
                     }
 
                     ordersDto.Add(new OrderDto(o.Id, o.Name, o.Line1, o.Line2, o.Line3, o.City, o.State, o.Country, o.Zip, o.GiftWrap, o.Shipped, linesDto));

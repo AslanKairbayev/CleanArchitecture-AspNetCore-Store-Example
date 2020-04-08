@@ -29,7 +29,7 @@ namespace ApplicationCore.UseCases
 
                 foreach (var p in products)
                 {
-                    productsDto.Add(new ProductDto(p.Id, p.Name, p.Description, p.Price));
+                    productsDto.Add(new ProductDto(p.Id, p.Name, p.Description, p.Price, null));
                 }
 
                 outputPort.Handle(new GetProductsByParamResponse(productsDto, true));

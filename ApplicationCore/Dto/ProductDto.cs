@@ -10,13 +10,15 @@ namespace ApplicationCore.Dto
         public string Name { get; }
         public string Description { get; }
         public decimal Price { get; }
+        public CategoryDto Category { get; }
 
-        public ProductDto(int id, string name, string description, decimal price)
+        public ProductDto(int id, string name, string description, decimal price, CategoryDto category)
         {
             Id = id;
             Name = name;
             Description = description;
             Price = price;
+            Category = category;
         }
     }
 }

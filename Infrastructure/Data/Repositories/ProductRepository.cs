@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Dto.RepositoryResponses.ProductRepository;
 using ApplicationCore.Entities;
 using ApplicationCore.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Infrastructure.Data.Repositories
             context = ctx;
         }
 
-        public IEnumerable<Product> Products => context.Products.ToList();
+        public IEnumerable<Product> ProductsWithCategories => context.Products.Include(i => i.Category).ToList();
 
         public IEnumerable<Product> GetProductsByPaginationAndCategory(int page, int pageSize, string category)
         {

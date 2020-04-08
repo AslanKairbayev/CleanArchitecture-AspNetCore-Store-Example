@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ApplicationCore.Interfaces.UseCases
 {
-    public interface IGetAllCategoriesUseCase : IRequestHandler<GetAllCategoriesRequest, GetAllCategoriesResponse>
+    public interface IGetProductsWithCategoriesUseCase : IRequestHandler<GetProductsWithCategoriesRequest, GetProductsWithCategoriesResponse>
     {
     }
 }
