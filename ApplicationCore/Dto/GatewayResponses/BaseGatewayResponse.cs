@@ -4,11 +4,11 @@ using System.Text;
 
 namespace ApplicationCore.Dto.Repository
 {
-    public abstract class BaseRepositoryResponse
+    public abstract class BaseGatewayResponse
     {
         public bool Success { get; }
 
-        protected BaseRepositoryResponse(bool success = false)
+        protected BaseGatewayResponse(bool success = false)
         {
             Success = success;
         }

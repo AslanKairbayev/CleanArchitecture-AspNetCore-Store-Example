@@ -20,7 +20,7 @@ namespace ApplicationCore.UnitTests
             var mockProductRepository = new Mock<IProductRepository>();
             mockProductRepository
               .Setup(m => m.ProductsWithCategories)
-              .Returns(new List<Product>() { new Product { } });
+              .Returns(new List<Product>() { new Product { Category = new Category { } } });
 
             var useCase = new GetProductsWithCategoriesUseCase(mockProductRepository.Object);
 

@@ -5,12 +5,11 @@ using System.Text;
 
 namespace ApplicationCore.Dto.RepositoryResponses.ProductRepository
 {
-    public sealed class CreateProductResponse : BaseRepositoryResponse
+    public sealed class DeleteProductResponse : BaseGatewayResponse
     {
-        public int Id { get; }
-        public CreateProductResponse(int id, bool success = false) : base(success)
+        public DeleteProductResponse(bool success = false) : base(success)
         {
-            Id = id;
+
         }
     }
 }

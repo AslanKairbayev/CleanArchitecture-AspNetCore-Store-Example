@@ -5,11 +5,11 @@ using System.Text;
 
 namespace ApplicationCore.Dto.RepositoryResponses.CartRepository
 {
-    public sealed class RemoveLineResponse : BaseRepositoryResponse
+    public sealed class AddItemResponse : BaseGatewayResponse
     {
-        public RemoveLineResponse(bool success = false) : base(success)
+        public AddItemResponse(bool success = false) : base(success)
         {
-
+            
         }
     }
 }

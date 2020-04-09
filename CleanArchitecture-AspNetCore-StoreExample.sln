@@ -7,11 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9967C19C-DAE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{31D33EDE-F50D-4A72-8FF9-00358ED805F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "ApplicationCore\ApplicationCore.csproj", "{6A610781-B63F-4CE8-8531-AB1C9C595F2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "ApplicationCore\Core.csproj", "{6A610781-B63F-4CE8-8531-AB1C9C595F2C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore.UnitTests", "ApplicationCore.UnitTests\ApplicationCore.UnitTests.csproj", "{95CFED47-8DFB-4DD7-952A-5EDACE5A6010}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.UnitTests", "ApplicationCore.UnitTests\Core.UnitTests.csproj", "{95CFED47-8DFB-4DD7-952A-5EDACE5A6010}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{CBF21D9C-6BF8-484E-AE8C-61153D8C2AA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{CBF21D9C-6BF8-484E-AE8C-61153D8C2AA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

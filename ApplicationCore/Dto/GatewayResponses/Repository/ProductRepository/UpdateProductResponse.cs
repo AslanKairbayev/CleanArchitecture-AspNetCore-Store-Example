@@ -5,11 +5,11 @@ using System.Text;
 
 namespace ApplicationCore.Dto.RepositoryResponses.ProductRepository
 {
-    public sealed class DeleteProductResponse : BaseRepositoryResponse
+    public sealed class UpdateProductResponse : BaseGatewayResponse
     {
-        public DeleteProductResponse(bool success = false) : base(success)
+        public UpdateProductResponse(bool success = false) : base(success)
         {
-
+            
         }
     }
 }

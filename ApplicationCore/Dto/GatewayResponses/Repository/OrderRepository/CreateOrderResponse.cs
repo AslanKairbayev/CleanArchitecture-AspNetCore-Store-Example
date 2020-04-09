@@ -5,11 +5,12 @@ using System.Text;
 
 namespace ApplicationCore.Dto.RepositoryResponses.OrderRepository
 {
-    public sealed class MarkShippedResponse : BaseRepositoryResponse
+    public sealed class CreateOrderResponse : BaseGatewayResponse
     {
-        public MarkShippedResponse(bool success = false) : base(success)
+        public int Id { get; }
+        public CreateOrderResponse(int id, bool success = false) : base(success)
         {
-            
+            Id = id;
         }
     }
 }

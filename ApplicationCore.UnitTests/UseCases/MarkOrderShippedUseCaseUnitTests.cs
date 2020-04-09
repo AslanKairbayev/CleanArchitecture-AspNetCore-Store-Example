@@ -25,7 +25,7 @@ namespace ApplicationCore.UnitTests
                 .Returns(new Order());
 
             mockOrderRepository
-                .Setup(repo => repo.Update(It.IsAny<Order>()))
+                .Setup(repo => repo.MarkShipped(It.IsAny<int>()))
                 .Returns(new MarkShippedResponse(true));
 
             var useCase = new MarkOrderShippedUseCase(mockOrderRepository.Object);
@@ -49,7 +49,7 @@ namespace ApplicationCore.UnitTests
                 .Returns(It.IsAny<Order>());
 
             mockOrderRepository
-                .Setup(repo => repo.Update(It.IsAny<Order>()))
+                .Setup(repo => repo.MarkShipped(It.IsAny<int>()))
                 .Returns(new MarkShippedResponse(true));
 
             var useCase = new MarkOrderShippedUseCase(mockOrderRepository.Object);
