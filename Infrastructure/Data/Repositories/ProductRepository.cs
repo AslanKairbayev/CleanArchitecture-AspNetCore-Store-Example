@@ -36,9 +36,15 @@ namespace Infrastructure.Data.Repositories
         public CreateProductResponse Create(Product product)
         {
             context.Products.Add(product);
-            context.SaveChanges();
 
-            return new CreateProductResponse(product.Id, true);
+            var changes = context.SaveChanges();
+
+            if (changes != 0)
+            {
+                return new CreateProductResponse(product.Id, true);
+            }
+
+            return new CreateProductResponse(0);             
         }
 
         public UpdateProductResponse Update(Product product)
