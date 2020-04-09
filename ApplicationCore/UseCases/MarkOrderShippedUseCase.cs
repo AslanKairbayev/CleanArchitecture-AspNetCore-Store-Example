@@ -25,9 +25,7 @@ namespace ApplicationCore.UseCases
 
             if (order != null)
             {
-                order.Shipped = true;
-
-                var response = repository.Update(order);
+                var response = repository.MarkShipped(order.Id);
 
                 outputPort.Handle(response.Success ? new MarkOrderShippedResponse(true) : new MarkOrderShippedResponse(false, "Operation failed"));
 

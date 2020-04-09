@@ -9,9 +9,9 @@ namespace ApplicationCore.Interfaces.Repositories
 {
     public interface IOrderRepository
     {
-        IEnumerable<Order> UnshippedOrders { get; }
+        IEnumerable<Order> UnshippedOrdersWithLines { get; }
         Order GetOrderById(int orderId);
         CreateOrderResponse Create(Order order);
-        UpdateOrderResponse Update(Order order);
+        MarkShippedResponse MarkShipped(int orderId);
     }
 }

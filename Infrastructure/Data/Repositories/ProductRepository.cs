@@ -45,13 +45,11 @@ namespace Infrastructure.Data.Repositories
         {
             Product dbEntry = GetProductById(product.Id);
 
-            if (dbEntry != null)
-            {
-                dbEntry.Name = product.Name;
-                dbEntry.Description = product.Description;
-                dbEntry.Price = product.Price;
-                dbEntry.CategoryId = product.CategoryId;
-            }
+            dbEntry.Name = product.Name;
+            dbEntry.Description = product.Description;
+            dbEntry.Price = product.Price;
+            dbEntry.CategoryId = product.CategoryId;
+
             context.SaveChanges();
 
             return new UpdateProductResponse(true);

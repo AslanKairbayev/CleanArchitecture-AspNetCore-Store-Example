@@ -11,7 +11,7 @@ namespace ApplicationCore.Interfaces.Repositories
         IEnumerable<CartLine> Lines { get; }
         AddItemResponse AddItem(Product product, int quantity);
         RemoveLineResponse RemoveLine(Product product);
-        void ComputeTotalValue();
+        decimal ComputeTotalValue();
         void Clear();
     }
 }

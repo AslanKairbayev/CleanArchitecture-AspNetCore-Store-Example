@@ -20,21 +20,18 @@ namespace ApplicationCore.UseCases
 
         public bool Handle(RemoveProductRequest request, IOutputPort<RemoveProductResponse> outputPort)
         {
-            if (request.ProductId.HasValue)
+            var product = repository.GetProductById(request.ProductId);
+
+            if (product != null)
             {
-                var product = repository.GetProductById((int)request.ProductId);
+                var response = repository.Delete(product);
 
-                if (product != null)
-                {
-                    var response = repository.Delete(product);
+                outputPort.Handle(response.Success ? new RemoveProductResponse(true) : new RemoveProductResponse(false, "Operation failed"));
 
-                    outputPort.Handle(response.Success ? new RemoveProductResponse(true) : new RemoveProductResponse(false, "Operation failed"));
-
-                    return response.Success;
-                }                
+                return response.Success;
             }
 
-            outputPort.Handle(new RemoveProductResponse(false, "Invalid request"));
+            outputPort.Handle(new RemoveProductResponse(false, $"Unknown ProductId - {request.ProductId}"));
 
             return false;
         }

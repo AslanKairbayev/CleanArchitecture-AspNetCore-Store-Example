@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ApplicationCore.Dto.RepositoryResponses.OrderRepository
 {
-    public sealed class UpdateOrderResponse : BaseRepositoryResponse
+    public sealed class MarkShippedResponse : BaseRepositoryResponse
     {
-        public UpdateOrderResponse(bool success = false) : base(success)
+        public MarkShippedResponse(bool success = false) : base(success)
         {
             
         }
