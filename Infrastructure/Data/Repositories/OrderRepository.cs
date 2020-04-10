@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Repositories
 {
@@ -18,31 +19,34 @@ namespace Infrastructure.Data.Repositories
             context = ctx;
         }
 
-        public IEnumerable<Order> UnshippedOrdersWithLines => context.Orders
+        public async Task<IEnumerable<Order>> UnshippedOrdersWithLines()
+        { 
+            return await context.Orders
             .Where(w => !w.Shipped)
             .Include(i => i.Lines)
-            .ThenInclude(t => t.Product).ToList();
+            .ThenInclude(t => t.Product).ToListAsync();
+        } 
 
-        public Order GetOrderById(int orderId)
+        public async Task<Order> GetOrderById(int orderId)
         {
-            return context.Orders.FirstOrDefault(f => f.Id == orderId);
+            return await context.Orders.FirstOrDefaultAsync(f => f.Id == orderId);
         }
 
-        public CreateOrderResponse Create(Order order)
+        public async Task<CreateOrderResponse> Create(Order order)
         {
             context.Orders.Add(order);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return new CreateOrderResponse(order.Id, true);
         }        
 
-        public MarkShippedResponse MarkShipped(int orderId)
+        public async Task<MarkShippedResponse> MarkShipped(int orderId)
         {
-            Order dbEntry = GetOrderById(orderId);
+            Order dbEntry = await GetOrderById(orderId);
 
             dbEntry.Shipped = true;
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return new MarkShippedResponse(true);
         }

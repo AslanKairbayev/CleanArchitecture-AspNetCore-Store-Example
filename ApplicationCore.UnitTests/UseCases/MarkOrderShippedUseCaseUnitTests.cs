@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ApplicationCore.UnitTests
@@ -16,17 +17,17 @@ namespace ApplicationCore.UnitTests
     public class MarkOrderShippedUseCaseUnitTests
     {
         [Fact]
-        public void Can_Mark_Order_Shipped()
+        public async void Can_Mark_Order_Shipped()
         {
             var mockOrderRepository = new Mock<IOrderRepository>();
 
             mockOrderRepository
                 .Setup(repo => repo.GetOrderById(It.IsAny<int>()))
-                .Returns(new Order());
+                .Returns(Task.FromResult(new Order()));
 
             mockOrderRepository
                 .Setup(repo => repo.MarkShipped(It.IsAny<int>()))
-                .Returns(new MarkShippedResponse(true));
+                .Returns(Task.FromResult(new MarkShippedResponse(true)));
 
             var useCase = new MarkOrderShippedUseCase(mockOrderRepository.Object);
 
@@ -34,23 +35,23 @@ namespace ApplicationCore.UnitTests
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<MarkOrderShippedResponse>()));
 
-            var response = useCase.Handle(new MarkOrderShippedRequest(It.IsAny<int>()), mockOutputPort.Object);
+            var response = await useCase.Handle(new MarkOrderShippedRequest(It.IsAny<int>()), mockOutputPort.Object);
 
             Assert.True(response);
         }
 
         [Fact]
-        public void Cant_Mark_Order_Shipped_When_Order_Not_Found()
+        public async void Cant_Mark_Order_Shipped_When_Order_Not_Found()
         {
             var mockOrderRepository = new Mock<IOrderRepository>();
 
             mockOrderRepository
                 .Setup(repo => repo.GetOrderById(It.IsAny<int>()))
-                .Returns(It.IsAny<Order>());
+                .Returns(Task.FromResult(It.IsAny<Order>()));
 
             mockOrderRepository
                 .Setup(repo => repo.MarkShipped(It.IsAny<int>()))
-                .Returns(new MarkShippedResponse(true));
+                .Returns(Task.FromResult(new MarkShippedResponse(true)));
 
             var useCase = new MarkOrderShippedUseCase(mockOrderRepository.Object);
 
@@ -58,7 +59,7 @@ namespace ApplicationCore.UnitTests
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<MarkOrderShippedResponse>()));
 
-            var response = useCase.Handle(new MarkOrderShippedRequest(It.IsAny<int>()), mockOutputPort.Object);
+            var response = await useCase.Handle(new MarkOrderShippedRequest(It.IsAny<int>()), mockOutputPort.Object);
 
             Assert.False(response);
         }

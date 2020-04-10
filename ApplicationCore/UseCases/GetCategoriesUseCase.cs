@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.UseCases
 {
@@ -19,9 +20,9 @@ namespace ApplicationCore.UseCases
         {
             repository = repo;
         }
-        public bool Handle(GetCategoriesRequest request, IOutputPort<GetCategoriesResponse> outputPort)
+        public async Task<bool> Handle(GetCategoriesRequest request, IOutputPort<GetCategoriesResponse> outputPort)
         {
-            var categories = repository.Categories;
+            var categories = await repository.Categories();
 
             if (categories.Count() != 0)
             {

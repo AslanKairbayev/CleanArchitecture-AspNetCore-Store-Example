@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Repositories
 {
@@ -18,53 +19,52 @@ namespace Infrastructure.Data.Repositories
             context = ctx;
         }
 
-        public IEnumerable<Product> ProductsWithCategories => context.Products.Include(i => i.Category).ToList();
+        public async Task<IEnumerable<Product>> ProductsWithCategories()
+        { 
+            return await context.Products.Include(i => i.Category).ToListAsync();
+        } 
 
-        public IEnumerable<Product> GetProductsByPaginationAndCategory(int page, int pageSize, string category)
+        public async Task<IEnumerable<Product>> GetProductsByPaginationAndCategory(int page, int pageSize, string category)
         {
-            return context.Products
+            return await context.Products
                 .Where(p => category == null || p.Category.Name == category)
                 .OrderBy(p => p.Id)
                 .Skip((page - 1) * pageSize)
-                .Take(pageSize).ToList();
+                .Take(pageSize).ToListAsync();
         }
-        public Product GetProductById(int productId)
+        public async Task<Product> GetProductById(int productId)
         {
-            return context.Products.FirstOrDefault(f => f.Id == productId);
-        }
-
-        public CreateProductResponse Create(Product product)
-        {
-            context.Products.Add(product);
-
-            var changes = context.SaveChanges();
-
-            if (changes != 0)
-            {
-                return new CreateProductResponse(product.Id, true);
-            }
-
-            return new CreateProductResponse(0);             
+            return await context.Products.FirstOrDefaultAsync(f => f.Id == productId);
         }
 
-        public UpdateProductResponse Update(Product product)
+        public async Task<CreateProductResponse> Create(Product product)
         {
-            Product dbEntry = GetProductById(product.Id);
+             context.Products.Add(product);
+
+            await context.SaveChangesAsync();
+
+            return new CreateProductResponse(product.Id, true);             
+        }
+
+        public async Task<UpdateProductResponse> Update(Product product)
+        {
+            Product dbEntry = await GetProductById(product.Id);
 
             dbEntry.Name = product.Name;
             dbEntry.Description = product.Description;
             dbEntry.Price = product.Price;
             dbEntry.CategoryId = product.CategoryId;
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return new UpdateProductResponse(true);
         }
 
-        public DeleteProductResponse Delete(Product product)
+        public async Task<DeleteProductResponse> Delete(Product product)
         {
             context.Products.Remove(product);
-            context.SaveChanges();
+            
+            await context.SaveChangesAsync();
 
             return new DeleteProductResponse(true);
         }                    

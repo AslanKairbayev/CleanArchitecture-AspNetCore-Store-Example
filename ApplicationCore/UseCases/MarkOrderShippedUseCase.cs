@@ -7,6 +7,7 @@ using ApplicationCore.Interfaces.UseCases;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.UseCases
 {
@@ -19,20 +20,20 @@ namespace ApplicationCore.UseCases
             repository = repo;
         }
 
-        public bool Handle(MarkOrderShippedRequest request, IOutputPort<MarkOrderShippedResponse> outputPort)
+        public async Task<bool> Handle(MarkOrderShippedRequest request, IOutputPort<MarkOrderShippedResponse> outputPort)
         {
-            Order order = repository.GetOrderById(request.OrderId);
+            Order order = await repository.GetOrderById(request.OrderId);
 
             if (order != null)
             {
-                var response = repository.MarkShipped(order.Id);
+                var response = await repository.MarkShipped(order.Id);
 
                 outputPort.Handle(response.Success ? new MarkOrderShippedResponse(true) : new MarkOrderShippedResponse(false, "Operation failed"));
 
                 return response.Success;
             }
 
-            outputPort.Handle(new MarkOrderShippedResponse(false, $"Unknown OrderId - {request.OrderId}"));
+            outputPort.Handle(new MarkOrderShippedResponse(false, $"OrderId - {request.OrderId} not found"));
 
             return false;
         }

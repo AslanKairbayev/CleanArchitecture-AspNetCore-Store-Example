@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.Interfaces.Repositories
 {
     public interface ICategoryRepository
     {
-        IEnumerable<Category> Categories { get; }
+        Task<IEnumerable<Category>> Categories();
     }
 }

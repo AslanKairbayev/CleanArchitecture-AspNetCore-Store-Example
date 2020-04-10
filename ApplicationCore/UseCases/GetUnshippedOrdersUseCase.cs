@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.UseCases
 {
@@ -20,9 +21,9 @@ namespace ApplicationCore.UseCases
             repository = repo;
         }
 
-        public bool Handle(GetUnshippedOrdersRequest request, IOutputPort<GetUnshippedOrdersResponse> outputPort)
+        public async Task<bool> Handle(GetUnshippedOrdersRequest request, IOutputPort<GetUnshippedOrdersResponse> outputPort)
         {
-            var orders = repository.UnshippedOrdersWithLines;
+            var orders = await repository.UnshippedOrdersWithLines();
 
             if (orders.Count() != 0)
             {

@@ -5,17 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Repositories
 {
     public class CartRepository : ICartRepository
     {
-        private readonly List<CartLine> lineCollection = new List<CartLine>();
+        private readonly List<CartLine> lineCollection =  new List<CartLine>();
 
-        public virtual IEnumerable<CartLine> Lines =>
-            lineCollection;
+        public virtual async Task<IEnumerable<CartLine>> Lines() => await Task.FromResult(lineCollection);                  
 
-        public virtual AddItemResponse AddItem(Product product, int quantity)
+        public virtual async Task<AddItemResponse> AddItem(Product product, int quantity)
         {
             CartLine line = lineCollection
             .Where(p => p.Product.Id == product.Id)
@@ -34,19 +34,23 @@ namespace Infrastructure.Data.Repositories
                 line.Quantity += quantity;
             }
 
-            return new AddItemResponse(true);
+            return await Task.FromResult(new AddItemResponse(true));
         }
 
-        public virtual RemoveLineResponse RemoveLine(Product product)
+        public virtual async Task<RemoveLineResponse> RemoveLine(Product product)
         {
             lineCollection.RemoveAll(l => l.Product.Id == product.Id);
 
-            return new RemoveLineResponse(true);
+            return await Task.FromResult(new RemoveLineResponse(true));
         }
-        public virtual decimal ComputeTotalValue() =>
-            lineCollection.Sum(e => e.Product.Price * e.Quantity);
+        public virtual async Task<decimal> ComputeTotalValue() => await Task.FromResult(
+            lineCollection.Sum(e => e.Product.Price * e.Quantity));
 
-        public virtual void Clear() =>
-            lineCollection.Clear();               
+        public virtual async Task Clear()
+        {
+            lineCollection.Clear();
+            await Task.CompletedTask;
+        }
+                    
     }
 }

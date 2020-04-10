@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.UseCases
 {
@@ -23,12 +24,14 @@ namespace ApplicationCore.UseCases
             cartRepository = cart;
         }
 
-        public bool Handle(CheckoutRequest request, IOutputPort<CheckoutResponse> outputPort)
+        public async Task<bool> Handle(CheckoutRequest request, IOutputPort<CheckoutResponse> outputPort)
         {
+            var lines = await cartRepository.Lines();
+
             if (!string.IsNullOrEmpty(request.Name) && !string.IsNullOrEmpty(request.Line1) && !string.IsNullOrEmpty(request.City) 
-                && !string.IsNullOrEmpty(request.State) && !string.IsNullOrEmpty(request.Country) && cartRepository.Lines.Count() != 0)
+                && !string.IsNullOrEmpty(request.State) && !string.IsNullOrEmpty(request.Country) && lines.Count() != 0)
             {
-                var response = orderRepository.Create(new Order
+                var response = await orderRepository.Create(new Order
                 {
                     Name = request.Name,
                     Line1 = request.Line1,
@@ -39,12 +42,12 @@ namespace ApplicationCore.UseCases
                     Zip = request.Zip,
                     Country = request.Country,
                     GiftWrap = request.GiftWrap,
-                    Lines = cartRepository.Lines.ToArray()
+                    Lines = lines.ToList()
                 });
 
                 outputPort.Handle(response.Success ? new CheckoutResponse(response.Id, true) : new CheckoutResponse(0, false, "Operation failed"));
 
-                cartRepository.Clear();
+                await cartRepository.Clear();
 
                 return response.Success;
             }

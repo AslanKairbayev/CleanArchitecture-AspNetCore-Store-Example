@@ -4,14 +4,15 @@ using ApplicationCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.Interfaces.Repositories
 {
     public interface IOrderRepository
     {
-        IEnumerable<Order> UnshippedOrdersWithLines { get; }
-        Order GetOrderById(int orderId);
-        CreateOrderResponse Create(Order order);
-        MarkShippedResponse MarkShipped(int orderId);
+        Task<IEnumerable<Order>> UnshippedOrdersWithLines();
+        Task<Order> GetOrderById(int orderId);
+        Task<CreateOrderResponse> Create(Order order);
+        Task<MarkShippedResponse> MarkShipped(int orderId);
     }
 }

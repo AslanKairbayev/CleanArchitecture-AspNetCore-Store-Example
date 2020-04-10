@@ -6,6 +6,7 @@ using ApplicationCore.Interfaces.UseCases;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.UseCases
 {
@@ -18,15 +19,15 @@ namespace ApplicationCore.UseCases
             repository = repo;
         }
 
-        public bool Handle(LoginRequest request, IOutputPort<LoginResponse> outputPort)
+        public async Task<bool> Handle(LoginRequest request, IOutputPort<LoginResponse> outputPort)
         {
             if (!string.IsNullOrEmpty(request.UserName) && !string.IsNullOrEmpty(request.Password))
             {
-                var user = repository.FindByName(request.UserName);
+                var user = await repository.FindByName(request.UserName);
 
                 if (user != null)
                 {
-                    if (repository.CheckPassword(user, request.Password))
+                    if (await repository.CheckPassword(user, request.Password))
                     {
                         outputPort.Handle(new LoginResponse(true));
 

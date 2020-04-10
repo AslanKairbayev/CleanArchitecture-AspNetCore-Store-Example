@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.UseCases
 {
@@ -19,9 +20,9 @@ namespace ApplicationCore.UseCases
         {
             repository = repo;
         }
-        public bool Handle(GetProductsByParamRequest request, IOutputPort<GetProductsByParamResponse> outputPort)
+        public async Task<bool> Handle(GetProductsByParamRequest request, IOutputPort<GetProductsByParamResponse> outputPort)
         {
-            var products = repository.GetProductsByPaginationAndCategory(request.Page, request.PageSize, request.Category);
+            var products = await repository.GetProductsByPaginationAndCategory(request.Page, request.PageSize, request.Category);
 
             if (products.Count() != 0)
             {

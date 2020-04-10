@@ -5,16 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.Interfaces.Repositories
 {
     public interface IProductRepository
     {
-        IEnumerable<Product> ProductsWithCategories { get; }
-        IEnumerable<Product> GetProductsByPaginationAndCategory(int page, int pageSize, string category);
-        Product GetProductById(int productId);
-        CreateProductResponse Create(Product product);
-        UpdateProductResponse Update(Product product);
-        DeleteProductResponse Delete(Product product);
+        Task<IEnumerable<Product>> ProductsWithCategories();
+        Task<IEnumerable<Product>> GetProductsByPaginationAndCategory(int page, int pageSize, string category);
+        Task<Product> GetProductById(int productId);
+        Task<CreateProductResponse> Create(Product product);
+        Task<UpdateProductResponse> Update(Product product);
+        Task<DeleteProductResponse> Delete(Product product);
     }
 }

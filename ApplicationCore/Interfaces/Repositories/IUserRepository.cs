@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.Interfaces.Repositories
 {
     public interface IUserRepository
     {
-        User FindByName(string userName);
-        bool CheckPassword(User user, string password);
+        Task<User> FindByName(string userName);
+        Task<bool> CheckPassword(User user, string password);
     }
 }

@@ -7,6 +7,7 @@ using ApplicationCore.Interfaces.UseCases;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.UseCases
 {
@@ -19,11 +20,11 @@ namespace ApplicationCore.UseCases
             repository = repo;
         }
 
-        public bool Handle(AddNewProductRequest request, IOutputPort<AddNewProductResponse> outputPort)
+        public async Task<bool> Handle(AddNewProductRequest request, IOutputPort<AddNewProductResponse> outputPort)
         {
             if (!string.IsNullOrEmpty(request.Name) && !string.IsNullOrEmpty(request.Description) && request.Price.HasValue && request.CategoryId.HasValue)
             {
-                var response = repository.Create(new Product
+                var response =  await repository.Create(new Product
                 {
                     Name = request.Name,
                     Description = request.Description,

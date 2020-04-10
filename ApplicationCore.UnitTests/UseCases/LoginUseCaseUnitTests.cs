@@ -8,6 +8,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ApplicationCore.UnitTests
@@ -15,17 +16,17 @@ namespace ApplicationCore.UnitTests
     public class LoginUseCaseUnitTests
     {
         [Fact]
-        public void Can_Login()
+        public async void Can_Login()
         {
             var mockUserRepository = new Mock<IUserRepository>();
 
             mockUserRepository
                 .Setup(repo => repo.FindByName(It.IsAny<string>()))
-                .Returns(new User(It.IsAny<string>()));
+                .Returns(Task.FromResult(new User(It.IsAny<string>())));
 
             mockUserRepository
                 .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))
-                .Returns(true);
+                .Returns(Task.FromResult(true));
 
             var useCase = new LoginUseCase(mockUserRepository.Object);
 
@@ -33,23 +34,23 @@ namespace ApplicationCore.UnitTests
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<LoginResponse>()));
 
-            var response = useCase.Handle(new LoginRequest("userName", "password"), mockOutputPort.Object);
+            var response = await useCase.Handle(new LoginRequest("userName", "password"), mockOutputPort.Object);
 
             Assert.True(response);
         }
 
         [Fact]
-        public void Cant_Login_When_Invalid_Request()
+        public async void Cant_Login_When_Invalid_Request()
         {
             var mockUserRepository = new Mock<IUserRepository>();
 
             mockUserRepository
                 .Setup(repo => repo.FindByName(It.IsAny<string>()))
-                .Returns(new User(It.IsAny<string>()));
+                .Returns(Task.FromResult(new User(It.IsAny<string>())));
 
             mockUserRepository
                 .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))
-                .Returns(true);
+               .Returns(Task.FromResult(true));
 
             var useCase = new LoginUseCase(mockUserRepository.Object);
 
@@ -57,23 +58,23 @@ namespace ApplicationCore.UnitTests
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<LoginResponse>()));
 
-            var response = useCase.Handle(new LoginRequest("", "password"), mockOutputPort.Object);
+            var response = await useCase.Handle(new LoginRequest("", "password"), mockOutputPort.Object);
 
             Assert.False(response);
         }
 
         [Fact]
-        public void Cant_Login_When_User_Is_Not_Found()
+        public async void Cant_Login_When_User_Not_Found()
         {
             var mockUserRepository = new Mock<IUserRepository>();
 
             mockUserRepository
                 .Setup(repo => repo.FindByName(It.IsAny<string>()))
-                .Returns(It.IsAny<User>());
+               .Returns(Task.FromResult(It.IsAny<User>()));
 
             mockUserRepository
                 .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))
-                .Returns(true);
+                 .Returns(Task.FromResult(true));
 
             var useCase = new LoginUseCase(mockUserRepository.Object);
 
@@ -81,23 +82,23 @@ namespace ApplicationCore.UnitTests
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<LoginResponse>()));
 
-            var response = useCase.Handle(new LoginRequest("userName", "password"), mockOutputPort.Object);
+            var response = await useCase.Handle(new LoginRequest("userName", "password"), mockOutputPort.Object);
 
             Assert.False(response);
         }
 
         [Fact]
-        public void Cant_Login_When_Password_Incorrect()
+        public async void Cant_Login_When_Password_Incorrect()
         {
             var mockUserRepository = new Mock<IUserRepository>();
 
             mockUserRepository
                 .Setup(repo => repo.FindByName(It.IsAny<string>()))
-                .Returns(new User(It.IsAny<string>()));
+                .Returns(Task.FromResult(new User(It.IsAny<string>())));
 
             mockUserRepository
                 .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))
-                .Returns(false);
+                 .Returns(Task.FromResult(false));
 
             var useCase = new LoginUseCase(mockUserRepository.Object);
 
@@ -105,7 +106,7 @@ namespace ApplicationCore.UnitTests
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<LoginResponse>()));
 
-            var response = useCase.Handle(new LoginRequest("userName", "password"), mockOutputPort.Object);
+            var response = await useCase.Handle(new LoginRequest("userName", "password"), mockOutputPort.Object);
 
             Assert.False(response);
         }

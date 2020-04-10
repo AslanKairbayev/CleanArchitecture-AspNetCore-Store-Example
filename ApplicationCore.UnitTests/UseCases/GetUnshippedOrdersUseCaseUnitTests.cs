@@ -8,6 +8,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ApplicationCore.UnitTests
@@ -15,13 +16,13 @@ namespace ApplicationCore.UnitTests
     public class GetUnshippedOrdersUseCaseUnitTests
     {
         [Fact]
-        public void Can_Get_Unshipped_Orders()
+        public async void Can_Get_Unshipped_Orders()
         {
             var mockOrderRepository = new Mock<IOrderRepository>();
 
             mockOrderRepository
-              .Setup(m => m.UnshippedOrdersWithLines)
-              .Returns(new List<Order>() { new Order() { Lines = new List<CartLine>() } });
+              .Setup(m => m.UnshippedOrdersWithLines())
+              .Returns(GetUnshippedOrdersWithLines());
 
             var useCase = new GetUnshippedOrdersUseCase(mockOrderRepository.Object);
 
@@ -29,19 +30,19 @@ namespace ApplicationCore.UnitTests
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<GetUnshippedOrdersResponse>()));
 
-            var response = useCase.Handle(new GetUnshippedOrdersRequest(), mockOutputPort.Object);
+            var response = await useCase.Handle(new GetUnshippedOrdersRequest(), mockOutputPort.Object);
 
             Assert.True(response);
         }
 
         [Fact]
-        public void Cant_Get_Unshipped_Orders_When_Orders_Are_Empty()
+        public async void Cant_Get_Unshipped_Orders_When_No_Unshipped_Orders()
         {
             var mockOrderRepository = new Mock<IOrderRepository>();
 
             mockOrderRepository
-              .Setup(m => m.UnshippedOrdersWithLines)
-              .Returns(new List<Order>() { });
+              .Setup(m => m.UnshippedOrdersWithLines())
+              .Returns(GetEmptyUnshippedOrdersWithLines());
 
             var useCase = new GetUnshippedOrdersUseCase(mockOrderRepository.Object);
 
@@ -49,9 +50,24 @@ namespace ApplicationCore.UnitTests
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<GetUnshippedOrdersResponse>()));
 
-            var response = useCase.Handle(new GetUnshippedOrdersRequest(), mockOutputPort.Object);
+            var response = await useCase.Handle(new GetUnshippedOrdersRequest(), mockOutputPort.Object);
 
             Assert.False(response);
+        }
+
+        public async Task<IEnumerable<Order>> GetUnshippedOrdersWithLines()
+        {
+            var items = new List<Order>();
+
+            items.Add(new Order() {Lines = new List<CartLine>() { new CartLine() {Product = new Product() } } });
+
+            return await Task.FromResult(items);
+        }
+        public async Task<IEnumerable<Order>> GetEmptyUnshippedOrdersWithLines()
+        {
+            var items = new List<Order>();
+
+            return await Task.FromResult(items);
         }
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.Interactors
 {
@@ -20,9 +21,9 @@ namespace ApplicationCore.Interactors
         {
             repository = repo;
         }
-        public bool Handle(GetProductsWithCategoriesRequest request, IOutputPort<GetProductsWithCategoriesResponse> outputPort)
+        public async Task<bool> Handle(GetProductsWithCategoriesRequest request, IOutputPort<GetProductsWithCategoriesResponse> outputPort)
         {
-            var products = repository.ProductsWithCategories;
+            var products = await repository.ProductsWithCategories();
 
             if (products.Count() != 0)
             {

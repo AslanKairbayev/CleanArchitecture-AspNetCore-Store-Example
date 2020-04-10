@@ -6,6 +6,7 @@ using ApplicationCore.Interfaces.UseCases;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.UseCases
 {
@@ -18,20 +19,20 @@ namespace ApplicationCore.UseCases
             repository = repo;
         }
 
-        public bool Handle(RemoveProductRequest request, IOutputPort<RemoveProductResponse> outputPort)
+        public async Task<bool> Handle(RemoveProductRequest request, IOutputPort<RemoveProductResponse> outputPort)
         {
-            var product = repository.GetProductById(request.ProductId);
+            var product = await repository.GetProductById(request.ProductId);
 
             if (product != null)
             {
-                var response = repository.Delete(product);
+                var response = await repository.Delete(product);
 
                 outputPort.Handle(response.Success ? new RemoveProductResponse(true) : new RemoveProductResponse(false, "Operation failed"));
 
                 return response.Success;
             }
 
-            outputPort.Handle(new RemoveProductResponse(false, $"Unknown ProductId - {request.ProductId}"));
+            outputPort.Handle(new RemoveProductResponse(false, $"ProductId - {request.ProductId} not found"));
 
             return false;
         }

@@ -3,15 +3,16 @@ using ApplicationCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.Interfaces.Repositories
 {
     public interface ICartRepository
     {
-        IEnumerable<CartLine> Lines { get; }
-        AddItemResponse AddItem(Product product, int quantity);
-        RemoveLineResponse RemoveLine(Product product);
-        decimal ComputeTotalValue();
-        void Clear();
+        Task<IEnumerable<CartLine>> Lines();
+        Task<AddItemResponse> AddItem(Product product, int quantity);
+        Task<RemoveLineResponse> RemoveLine(Product product);
+        Task<decimal> ComputeTotalValue();
+        Task Clear();
     }
 }

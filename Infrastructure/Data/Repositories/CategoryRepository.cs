@@ -1,9 +1,11 @@
 ﻿using ApplicationCore.Entities;
 using ApplicationCore.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Repositories
 {
@@ -13,6 +15,10 @@ namespace Infrastructure.Data.Repositories
 
         public CategoryRepository(ApplicationDbContext ctx) => context = ctx;
 
-        public IEnumerable<Category> Categories => context.Categories.ToList();
+        public async Task<IEnumerable<Category>> Categories()
+        { 
+            return await context.Categories.ToListAsync();
+        }
+        
     }
 }

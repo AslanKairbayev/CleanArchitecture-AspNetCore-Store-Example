@@ -9,6 +9,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ApplicationCore.UnitTests
@@ -16,12 +17,12 @@ namespace ApplicationCore.UnitTests
     public class AddNewProductUseCaseUnitTests
     {
         [Fact]
-        public void Can_Add_New_Product()
+        public async void Can_Add_New_Product()
         {
             var mockProductRepository = new Mock<IProductRepository>();
             mockProductRepository
               .Setup(m => m.Create(It.IsAny<Product>()))
-              .Returns(new CreateProductResponse(It.IsAny<int>(), true));
+              .Returns(Task.FromResult(new CreateProductResponse(It.IsAny<int>(), true)));
 
             var useCase = new AddNewProductUseCase(mockProductRepository.Object);
 
@@ -29,18 +30,18 @@ namespace ApplicationCore.UnitTests
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<AddNewProductResponse>()));
 
-            var response = useCase.Handle(new AddNewProductRequest("name", "description", It.IsAny<decimal>(), It.IsAny<int>()), mockOutputPort.Object);
+            var response = await useCase.Handle(new AddNewProductRequest("name", "description", It.IsAny<decimal>(), It.IsAny<int>()), mockOutputPort.Object);
 
             Assert.True(response);
         }
 
         [Fact]
-        public void Cant_Add_New_Product_When_Request_Is_Invalid()
+        public async void Cant_Add_New_Product_When_Request_Is_Invalid()
         {
             var mockProductRepository = new Mock<IProductRepository>();
             mockProductRepository
               .Setup(m => m.Create(It.IsAny<Product>()))
-              .Returns(new CreateProductResponse(It.IsAny<int>(), true));
+              .Returns(Task.FromResult(new CreateProductResponse(It.IsAny<int>(), true)));
 
             var useCase = new AddNewProductUseCase(mockProductRepository.Object);
 
@@ -48,7 +49,7 @@ namespace ApplicationCore.UnitTests
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<AddNewProductResponse>()));
 
-            var response = useCase.Handle(new AddNewProductRequest("name", "description", null, It.IsAny<int>()), mockOutputPort.Object);
+            var response = await useCase.Handle(new AddNewProductRequest("name", "description", null, It.IsAny<int>()), mockOutputPort.Object);
 
             Assert.False(response);
         }

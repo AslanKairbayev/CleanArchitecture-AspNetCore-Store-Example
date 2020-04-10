@@ -8,6 +8,7 @@ using ApplicationCore.Interfaces.UseCases;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ApplicationCore.UseCases
 {
@@ -23,20 +24,20 @@ namespace ApplicationCore.UseCases
             cartRepository = cart;
         }
 
-        public bool Handle(RemoveFromCartRequest request, IOutputPort<RemoveFromCartResponse> outputPort)
+        public async Task<bool> Handle(RemoveFromCartRequest request, IOutputPort<RemoveFromCartResponse> outputPort)
         {
-            Product product = productRepository.GetProductById(request.ProductId);
+            Product product = await productRepository.GetProductById(request.ProductId);
 
             if (product != null)
             {
-                var response = cartRepository.RemoveLine(product);
+                var response = await cartRepository.RemoveLine(product);
 
                 outputPort.Handle(response.Success ? new RemoveFromCartResponse(true) : new RemoveFromCartResponse(false, "Operation failed"));
 
                 return response.Success;
             }
 
-            outputPort.Handle(new RemoveFromCartResponse(false, $"Unknown ProductId - {request.ProductId}"));
+            outputPort.Handle(new RemoveFromCartResponse(false, $"ProductId - {request.ProductId} not found"));
 
             return false;
         }
