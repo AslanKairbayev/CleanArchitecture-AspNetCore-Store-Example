@@ -24,7 +24,7 @@ namespace ApplicationCore.UseCases
         {
             var categories = await repository.Categories();
 
-            if (categories.Count() != 0)
+            if (categories.Any())
             {
                 var categoriesDto = new List<CategoryDto>();
 

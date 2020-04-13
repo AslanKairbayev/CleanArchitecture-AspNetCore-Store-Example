@@ -28,8 +28,15 @@ namespace ApplicationCore.UseCases
         {
             var lines = await cartRepository.Lines();
 
-            if (!string.IsNullOrEmpty(request.Name) && !string.IsNullOrEmpty(request.Line1) && !string.IsNullOrEmpty(request.City) 
-                && !string.IsNullOrEmpty(request.State) && !string.IsNullOrEmpty(request.Country) && lines.Count() != 0)
+            if (!lines.Any())
+            {
+                outputPort.Handle(new CheckoutResponse(0, false, "Cart is Empty"));
+
+                return false;
+            }
+
+            if (!string.IsNullOrEmpty(request.Name) && !string.IsNullOrEmpty(request.Line1) && !string.IsNullOrEmpty(request.City)
+                && !string.IsNullOrEmpty(request.State) && !string.IsNullOrEmpty(request.Country))
             {
                 var response = await orderRepository.Create(new Order
                 {
@@ -51,10 +58,12 @@ namespace ApplicationCore.UseCases
 
                 return response.Success;
             }
+            else
+            {
+                outputPort.Handle(new CheckoutResponse(0, false, "Invalid request"));
 
-            outputPort.Handle(new CheckoutResponse(0, false, "Invalid request"));
-
-            return false;
+                return false;
+            }            
         }
     }
 }

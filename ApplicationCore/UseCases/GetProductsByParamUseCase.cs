@@ -24,7 +24,7 @@ namespace ApplicationCore.UseCases
         {
             var products = await repository.GetProductsByPaginationAndCategory(request.Page, request.PageSize, request.Category);
 
-            if (products.Count() != 0)
+            if (products.Any())
             {
                 var productsDto = new List<ProductDto>();
 

@@ -25,7 +25,7 @@ namespace ApplicationCore.Interactors
         {
             var products = await repository.ProductsWithCategories();
 
-            if (products.Count() != 0)
+            if (products.Any())
             {
                 var productsDto = new List<ProductDto>();
 

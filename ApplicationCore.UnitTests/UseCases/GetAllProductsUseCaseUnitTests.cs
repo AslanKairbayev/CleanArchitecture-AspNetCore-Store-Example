@@ -57,7 +57,7 @@ namespace ApplicationCore.UnitTests
         {
             var items = new List<Product>();
 
-            items.Add(new Product() { Category = new Category() });
+            items.Add(new Product() { Category = new Category() });            
 
             return await Task.FromResult(items);
         }

@@ -25,7 +25,7 @@ namespace ApplicationCore.UseCases
         {
             var orders = await repository.UnshippedOrdersWithLines();
 
-            if (orders.Count() != 0)
+            if (orders.Any())
             {
                 var ordersDto = new List<OrderDto>();                
 
