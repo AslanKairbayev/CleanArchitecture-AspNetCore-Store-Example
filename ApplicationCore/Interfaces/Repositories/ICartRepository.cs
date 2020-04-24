@@ -1,11 +1,11 @@
-﻿using ApplicationCore.Dto.RepositoryResponses.CartRepository;
-using ApplicationCore.Entities;
+﻿using Core.Dto.RepositoryResponses.CartRepository;
+using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.Interfaces.Repositories
+namespace Core.Interfaces.Repositories
 {
     public interface ICartRepository
     {

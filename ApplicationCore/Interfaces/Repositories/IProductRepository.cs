@@ -1,13 +1,13 @@
-﻿using ApplicationCore.Dto.RepositoryResponses.ProductRepository;
-using ApplicationCore.Dto.UseCaseResponses;
-using ApplicationCore.Entities;
+﻿using Core.Dto.RepositoryResponses.ProductRepository;
+using Core.Dto.UseCaseResponses;
+using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.Interfaces.Repositories
+namespace Core.Interfaces.Repositories
 {
     public interface IProductRepository
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.Interfaces
+namespace Core.Interfaces
 {
     public interface IRequestHandler<in TRequest, out TResponse>
     {

@@ -1,10 +1,10 @@
-﻿using ApplicationCore.Dto.UseCaseResponses;
-using ApplicationCore.Interfaces;
+﻿using Core.Dto.UseCaseResponses;
+using Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ApplicationCore.Dto.UseCaseRequests
+namespace Core.Dto.UseCaseRequests
 {
     public class EditProductRequest : IRequest<EditProductResponse>
     {
@@ -12,15 +12,15 @@ namespace ApplicationCore.Dto.UseCaseRequests
         public string Name { get; }
         public string Description { get; }
         public decimal? Price { get; }
-        public int? CategoryId { get; }
+        public string Category { get; }
 
-        public EditProductRequest(int? id, string name, string description, decimal? price, int? categoryId)
+        public EditProductRequest(int? id, string name, string description, decimal? price, string category)
         {
             Id = id;
             Name = name;
             Description = description;
             Price = price;
-            CategoryId = categoryId;
+            Category = category;
         }
     }
 }

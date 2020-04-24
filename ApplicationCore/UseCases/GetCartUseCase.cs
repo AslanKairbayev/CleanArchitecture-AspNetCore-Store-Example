@@ -1,6 +1,6 @@
-﻿using ApplicationCore.Dto;
-using ApplicationCore.Interfaces;
-using ApplicationCore.Interfaces.Repositories;
+﻿using Core.Dto;
+using Core.Interfaces;
+using Core.Interfaces.Repositories;
 using Core.Dto.UseCaseRequests;
 using Core.Dto.UseCaseResponses;
 using Core.Interfaces.UseCases;

@@ -1,10 +1,10 @@
-﻿using ApplicationCore.Dto.UseCaseResponses;
-using ApplicationCore.Interfaces;
+﻿using Core.Dto.UseCaseResponses;
+using Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ApplicationCore.Dto.UseCaseRequests
+namespace Core.Dto.UseCaseRequests
 {
     public class RemoveFromCartRequest : IRequest<RemoveFromCartResponse>
     {

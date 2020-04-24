@@ -1,9 +1,9 @@
-﻿using ApplicationCore.DTO;
+﻿using Core.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ApplicationCore.Interfaces
+namespace Core.Interfaces
 {
     public interface IOutputPort<in TResponse>
     {

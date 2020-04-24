@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ApplicationCore.Dto
+namespace Core.Dto
 {
     public sealed class ProductDto
     {
@@ -10,9 +10,9 @@ namespace ApplicationCore.Dto
         public string Name { get; }
         public string Description { get; }
         public decimal Price { get; }
-        public CategoryDto Category { get; }
+        public string Category { get; }
 
-        public ProductDto(int id, string name, string description, decimal price, CategoryDto category)
+        public ProductDto(int id, string name, string description, decimal price, string category)
         {
             Id = id;
             Name = name;

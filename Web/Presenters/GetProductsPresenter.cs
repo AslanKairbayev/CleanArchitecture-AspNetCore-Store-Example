@@ -1,6 +1,6 @@
-﻿using ApplicationCore.Dto;
-using ApplicationCore.Dto.UseCaseResponses;
-using ApplicationCore.Interfaces;
+﻿using Core.Dto;
+using Core.Dto.UseCaseResponses;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

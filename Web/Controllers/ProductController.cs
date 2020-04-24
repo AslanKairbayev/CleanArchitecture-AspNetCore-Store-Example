@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ApplicationCore.Dto.UseCaseRequests;
-using ApplicationCore.Interfaces.UseCases;
+using Core.Dto.UseCaseRequests;
+using Core.Interfaces.UseCases;
 using Microsoft.AspNetCore.Mvc;
 using Web.Presenters;
 
@@ -20,9 +20,9 @@ namespace Web.Controllers
             _getProductsByParamPresenter = getProductsByParamPresenter;            
         }
 
-        public async Task<IActionResult> List(string category, int productPage)
+        public async Task<IActionResult> List(string category, int page)
         {
-            await _getProductsByParamUseCase.Handle(new GetProductsByParamRequest(productPage, 4, category), _getProductsByParamPresenter);
+            await _getProductsByParamUseCase.Handle(new GetProductsByParamRequest(page, category), _getProductsByParamPresenter);
 
             return View(_getProductsByParamPresenter.ProductsListViewModel);
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ApplicationCore.Interfaces
+namespace Core.Interfaces
 {
     public interface IRequest<out TResponse>
     {

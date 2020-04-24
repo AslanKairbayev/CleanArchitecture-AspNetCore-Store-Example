@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ApplicationCore.Dto.UseCaseRequests;
-using ApplicationCore.DTO;
-using ApplicationCore.Interfaces.UseCases;
+using Core.Dto.UseCaseRequests;
+using Core.DTO;
+using Core.Interfaces.UseCases;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models;

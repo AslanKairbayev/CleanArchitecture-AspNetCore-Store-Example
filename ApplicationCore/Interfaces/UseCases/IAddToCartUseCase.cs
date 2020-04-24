@@ -1,11 +1,11 @@
-﻿using ApplicationCore.Dto.UseCaseRequests;
-using ApplicationCore.Dto.UseCaseResponses;
-using ApplicationCore.DTO;
+﻿using Core.Dto.UseCaseRequests;
+using Core.Dto.UseCaseResponses;
+using Core.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ApplicationCore.Interfaces.UseCases
+namespace Core.Interfaces.UseCases
 {
     public interface IAddToCartUseCase : IRequestHandler<AddToCartRequest, AddToCartResponse>
     {

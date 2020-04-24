@@ -1,9 +1,9 @@
-﻿using ApplicationCore.Dto.Repository;
+﻿using Core.Dto.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ApplicationCore.Dto.RepositoryResponses.ProductRepository
+namespace Core.Dto.RepositoryResponses.ProductRepository
 {
     public sealed class UpdateProductResponse : BaseGatewayResponse
     {

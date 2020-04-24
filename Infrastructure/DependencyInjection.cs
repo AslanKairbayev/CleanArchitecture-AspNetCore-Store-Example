@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Interfaces.Repositories;
+﻿using Core.Interfaces.Repositories;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using Infrastructure.Identity;
@@ -27,12 +27,10 @@ namespace Infrastructure
             //    .AddEntityFrameworkStores<AppIdentityDbContext>();
 
             //services.AddTransient<IProductRepository, ProductRepository>();
-            //services.AddTransient<ICategoryRepository, CategoryRepository>();
             //services.AddTransient<IOrderRepository, OrderRepository>();
             //services.AddScoped<ICartRepository, CartRepository>();
 
             services.AddTransient<IProductRepository, FakeProductRepository>();
-            services.AddTransient<ICategoryRepository, FakeCategoryRepository>();
 
             return services;
         }

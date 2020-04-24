@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ApplicationCore.Dto.Repository
+namespace Core.Dto.Repository
 {
     public abstract class BaseGatewayResponse
     {

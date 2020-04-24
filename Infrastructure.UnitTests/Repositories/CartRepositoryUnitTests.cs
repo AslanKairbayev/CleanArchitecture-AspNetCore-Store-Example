@@ -1,5 +1,5 @@
-﻿using ApplicationCore.Entities;
-using ApplicationCore.Interfaces.Repositories;
+﻿using Core.Entities;
+using Core.Interfaces.Repositories;
 using Infrastructure.Data.Repositories;
 using Moq;
 using System;

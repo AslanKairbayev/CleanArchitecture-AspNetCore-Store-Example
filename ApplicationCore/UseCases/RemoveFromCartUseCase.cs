@@ -1,16 +1,16 @@
-﻿using ApplicationCore.Dto.UseCaseRequests;
-using ApplicationCore.Dto.UseCaseResponses;
-using ApplicationCore.DTO;
-using ApplicationCore.Entities;
-using ApplicationCore.Interfaces;
-using ApplicationCore.Interfaces.Repositories;
-using ApplicationCore.Interfaces.UseCases;
+﻿using Core.Dto.UseCaseRequests;
+using Core.Dto.UseCaseResponses;
+using Core.DTO;
+using Core.Entities;
+using Core.Interfaces;
+using Core.Interfaces.Repositories;
+using Core.Interfaces.UseCases;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.UseCases
+namespace Core.UseCases
 {
     public sealed class RemoveFromCartUseCase : IRemoveFromCartUseCase
     {

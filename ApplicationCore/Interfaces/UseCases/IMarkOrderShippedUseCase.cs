@@ -1,10 +1,10 @@
-﻿using ApplicationCore.Dto.UseCaseRequests;
-using ApplicationCore.Dto.UseCaseResponses;
+﻿using Core.Dto.UseCaseRequests;
+using Core.Dto.UseCaseResponses;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ApplicationCore.Interfaces.UseCases
+namespace Core.Interfaces.UseCases
 {
     public interface IMarkOrderShippedUseCase : IRequestHandler<MarkOrderShippedRequest, MarkOrderShippedResponse>
     {

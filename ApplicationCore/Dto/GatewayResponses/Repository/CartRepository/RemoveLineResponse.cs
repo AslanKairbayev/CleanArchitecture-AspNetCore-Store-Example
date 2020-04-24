@@ -1,9 +1,9 @@
-﻿using ApplicationCore.Dto.Repository;
+﻿using Core.Dto.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ApplicationCore.Dto.RepositoryResponses.CartRepository
+namespace Core.Dto.RepositoryResponses.CartRepository
 {
     public sealed class RemoveLineResponse : BaseGatewayResponse
     {

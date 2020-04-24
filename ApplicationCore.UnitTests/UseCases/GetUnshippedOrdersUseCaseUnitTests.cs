@@ -1,9 +1,9 @@
-﻿using ApplicationCore.Dto.UseCaseRequests;
-using ApplicationCore.Dto.UseCaseResponses;
-using ApplicationCore.Entities;
-using ApplicationCore.Interfaces;
-using ApplicationCore.Interfaces.Repositories;
-using ApplicationCore.UseCases;
+﻿using Core.Dto.UseCaseRequests;
+using Core.Dto.UseCaseResponses;
+using Core.Entities;
+using Core.Interfaces;
+using Core.Interfaces.Repositories;
+using Core.UseCases;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ApplicationCore.UnitTests
+namespace Core.UnitTests
 {
     public class GetUnshippedOrdersUseCaseUnitTests
     {

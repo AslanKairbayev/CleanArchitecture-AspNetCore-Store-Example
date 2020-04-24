@@ -1,15 +1,15 @@
-﻿using ApplicationCore.Dto.UseCaseRequests;
-using ApplicationCore.Dto.UseCaseResponses;
-using ApplicationCore.Entities;
-using ApplicationCore.Interfaces;
-using ApplicationCore.Interfaces.Repositories;
-using ApplicationCore.Interfaces.UseCases;
+﻿using Core.Dto.UseCaseRequests;
+using Core.Dto.UseCaseResponses;
+using Core.Entities;
+using Core.Interfaces;
+using Core.Interfaces.Repositories;
+using Core.Interfaces.UseCases;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.UseCases
+namespace Core.UseCases
 {
     public sealed class AddNewProductUseCase : IAddNewProductUseCase
     {
@@ -22,14 +22,14 @@ namespace ApplicationCore.UseCases
 
         public async Task<bool> Handle(AddNewProductRequest request, IOutputPort<AddNewProductResponse> outputPort)
         {
-            if (!string.IsNullOrEmpty(request.Name) && !string.IsNullOrEmpty(request.Description) && request.Price.HasValue && request.CategoryId.HasValue)
+            if (!string.IsNullOrEmpty(request.Name) && !string.IsNullOrEmpty(request.Description) && request.Price.HasValue && !string.IsNullOrEmpty(request.Category))
             {
                 var response =  await repository.Create(new Product
                 {
                     Name = request.Name,
                     Description = request.Description,
                     Price = (decimal)request.Price,
-                    CategoryId = (int)request.CategoryId
+                    Category = request.Category
                 }); 
 
                 outputPort.Handle(response.Success ? new AddNewProductResponse(response.Id, true) : new AddNewProductResponse(0, false, "Operation failed"));

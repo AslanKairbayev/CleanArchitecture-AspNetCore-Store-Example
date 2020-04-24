@@ -1,10 +1,10 @@
-﻿using ApplicationCore.Dto.RepositoryResponses.ProductRepository;
-using ApplicationCore.Dto.UseCaseRequests;
-using ApplicationCore.Dto.UseCaseResponses;
-using ApplicationCore.Entities;
-using ApplicationCore.Interfaces;
-using ApplicationCore.Interfaces.Repositories;
-using ApplicationCore.UseCases;
+﻿using Core.Dto.RepositoryResponses.ProductRepository;
+using Core.Dto.UseCaseRequests;
+using Core.Dto.UseCaseResponses;
+using Core.Entities;
+using Core.Interfaces;
+using Core.Interfaces.Repositories;
+using Core.UseCases;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ApplicationCore.UnitTests
+namespace Core.UnitTests
 {
     public class AddNewProductUseCaseUnitTests
     {
@@ -30,7 +30,7 @@ namespace ApplicationCore.UnitTests
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<AddNewProductResponse>()));
 
-            var response = await useCase.Handle(new AddNewProductRequest("name", "description", It.IsAny<decimal>(), It.IsAny<int>()), mockOutputPort.Object);
+            var response = await useCase.Handle(new AddNewProductRequest("name", "description", It.IsAny<decimal>(), It.IsAny<string>()), mockOutputPort.Object);
 
             Assert.True(response);
         }
@@ -49,7 +49,7 @@ namespace ApplicationCore.UnitTests
 
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<AddNewProductResponse>()));
 
-            var response = await useCase.Handle(new AddNewProductRequest("name", "description", null, It.IsAny<int>()), mockOutputPort.Object);
+            var response = await useCase.Handle(new AddNewProductRequest("name", "description", null, It.IsAny<string>()), mockOutputPort.Object);
 
             Assert.False(response);
         }

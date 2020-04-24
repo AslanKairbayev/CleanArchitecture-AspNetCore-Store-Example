@@ -1,5 +1,5 @@
-﻿using ApplicationCore.Entities;
-using ApplicationCore.Interfaces.Repositories;
+﻿using Core.Entities;
+using Core.Interfaces.Repositories;
 using Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;

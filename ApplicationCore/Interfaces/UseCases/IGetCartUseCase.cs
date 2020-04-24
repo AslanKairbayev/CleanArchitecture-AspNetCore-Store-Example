@@ -1,4 +1,4 @@
-﻿using ApplicationCore.Interfaces;
+﻿using Core.Interfaces;
 using Core.Dto.UseCaseRequests;
 using Core.Dto.UseCaseResponses;
 using System;

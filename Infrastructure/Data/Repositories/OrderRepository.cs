@@ -1,6 +1,6 @@
-﻿using ApplicationCore.Dto.RepositoryResponses.OrderRepository;
-using ApplicationCore.Entities;
-using ApplicationCore.Interfaces.Repositories;
+﻿using Core.Dto.RepositoryResponses.OrderRepository;
+using Core.Entities;
+using Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

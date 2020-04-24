@@ -1,10 +1,10 @@
-﻿using ApplicationCore.Entities;
+﻿using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.Interfaces.Repositories
+namespace Core.Interfaces.Repositories
 {
     public interface IUserRepository
     {

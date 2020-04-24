@@ -1,6 +1,6 @@
-﻿using ApplicationCore.Dto.RepositoryResponses.ProductRepository;
-using ApplicationCore.Entities;
-using ApplicationCore.Interfaces.Repositories;
+﻿using Core.Dto.RepositoryResponses.ProductRepository;
+using Core.Entities;
+using Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace Infrastructure.Data.Repositories
         public async Task<IEnumerable<Product>> GetProductsByPaginationAndCategory(int page, int pageSize, string category)
         {
             return await context.Products
-                .Where(p => category == null || p.Category.Name == category)
+                .Where(p => category == null || p.Category == category)
                 .OrderBy(p => p.Id)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize).ToListAsync();
@@ -36,7 +36,7 @@ namespace Infrastructure.Data.Repositories
         public async Task<int> CountProductsByCategory(string category)
         {
             return await context.Products
-                .Where(w => category == null || w.Category.Name == category)
+                .Where(w => category == null || w.Category == category)
                 .CountAsync();
         }
 
@@ -61,7 +61,7 @@ namespace Infrastructure.Data.Repositories
             dbEntry.Name = product.Name;
             dbEntry.Description = product.Description;
             dbEntry.Price = product.Price;
-            dbEntry.CategoryId = product.CategoryId;
+            dbEntry.Category = product.Category;
 
             await context.SaveChangesAsync();
 

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ApplicationCore.Dto.UseCaseRequests;
-using ApplicationCore.Interfaces.UseCases;
 using Core.Dto.UseCaseRequests;
 using Core.Interfaces.UseCases;
 using Microsoft.AspNetCore.Authorization;
@@ -20,16 +18,12 @@ namespace Web.Controllers
         private readonly GetProductsPresenter _getProductsPresenter;
         private readonly IGetProductDetailUseCase _getProductDetailUseCase;
         private readonly GetProductDetailPresenter _getProductDetailPresenter;
-        private readonly IGetCategoriesUseCase _getCategoriesUseCase;
-        private readonly GetCategoriesPresenter _getCategoriesPresenter;
         private readonly IRemoveProductUseCase _removeProductUseCase;
         private readonly RemoveProductPresenter _removeProductPresenter;
 
         public AdminController(IGetProductsUseCase getProductsUseCase, GetProductsPresenter getProductsPresenter, 
             IGetProductDetailUseCase getProductDetailUseCase,
             GetProductDetailPresenter getProductDetailPresenter,
-            IGetCategoriesUseCase getCategoriesUseCase,
-            GetCategoriesPresenter getCategoriesPresenter, 
             IRemoveProductUseCase removeProductUseCase,
             RemoveProductPresenter removeProductPresenter)
         {
@@ -37,8 +31,6 @@ namespace Web.Controllers
             _getProductsPresenter = getProductsPresenter;
             _getProductDetailUseCase = getProductDetailUseCase;
             _getProductDetailPresenter = getProductDetailPresenter;
-            _getCategoriesUseCase = getCategoriesUseCase;
-            _getCategoriesPresenter = getCategoriesPresenter;
             _removeProductUseCase = removeProductUseCase;
             _removeProductPresenter = removeProductPresenter;
         }
@@ -52,10 +44,6 @@ namespace Web.Controllers
 
         public async Task<ViewResult> Edit(int productId)
         {
-            await _getCategoriesUseCase.Handle(new GetCategoriesRequest(), _getCategoriesPresenter);
-
-            ViewBag.Categories = _getCategoriesPresenter.Categories;
-
             await _getProductDetailUseCase.Handle(new GetProductDetailRequest(productId), _getProductDetailPresenter);
 
             return View(_getProductDetailPresenter.ProductViewModel);

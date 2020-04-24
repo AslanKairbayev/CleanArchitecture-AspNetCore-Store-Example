@@ -1,6 +1,6 @@
-﻿using ApplicationCore.Dto.RepositoryResponses.ProductRepository;
-using ApplicationCore.Entities;
-using ApplicationCore.Interfaces.Repositories;
+﻿using Core.Dto.RepositoryResponses.ProductRepository;
+using Core.Entities;
+using Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,49 +15,93 @@ namespace Infrastructure.Data.Repositories
         public IQueryable<Product> Products => new List<Product> {
                     new Product
                     {
-                        Id = 1,
                         Name = "Kayak",
                         Description = "А boat for one person",
-                        CategoryId = 1,
+                        Category = "Watersports",
                         Price = 275
                     },
                     new Product
                     {
-                        Id = 2,
                         Name = "Lifejacket",
                         Description = "Protective and fashionaЫe",
-                        CategoryId = 1,
+                        Category = "Watersports",
                         Price = 48.95m
                     },
                     new Product
                     {
-                        Id = 3,
                         Name = "Soccer Ball",
                         Description = "FIFA-approved size and weight",
-                        CategoryId = 2,
+                        Category = "Soccer",
                         Price = 19.50m
                     },
                     new Product
                     {
-                        Id = 4,
                         Name = "Corner Flags",
                         Description = "Give your playing field а professional touch",
-                        CategoryId = 2,
+                        Category = "Soccer",
                         Price = 34.95m
                     },
                     new Product
                     {
-                        Id = 5,
                         Name = "Stadium",
                         Description = "Flat-packed 35, 000-seat stadium",
-                        CategoryId = 3,
+                        Category = "Soccer",
                         Price = 79500
-                    }                    
+                    },
+                    new Product
+                    {
+                        Name = "Thinking Сар",
+                        Description = "Improve brain efficiency Ьу 75i",
+                        Category = "Chess",
+                        Price = 16
+                    },
+                    new Product
+                    {
+                        Name = "Unsteady Chair",
+                        Description = "Secretly give your opponent а disadvantage",
+                        Category = "Chess",
+                        Price = 29.95m
+                    },
+                    new Product
+                    {
+                        Name = "Human Chess Board",
+                        Description = "А fun game for the family",
+                        Category = "Chess",
+                        Price = 75
+                    },
+                    new Product
+                    {
+                        Name = "Bling-Bling King",
+                        Description = "Gold-plated, diamond-studded King",
+                        Category = "Chess",
+                        Price = 1200
+                    }
         }.AsQueryable<Product>();
 
-        public Task<int> CountProductsByCategory(string category)
+        public Task<IEnumerable<Product>> GetProducts()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsByPaginationAndCategory(int page, int pageSize, string category)
+        {
+            return await Task.FromResult(Products
+                .Where(p => category == null || p.Category == category)
+                .OrderBy(p => p.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize).ToList());
+        }
+
+        public async Task<Product> GetProductById(int productId)
+        {
+            return await Task.FromResult(Products.FirstOrDefault(f => f.Id == productId));
+        }
+
+        public async Task<int> CountProductsByCategory(string category)
+        {
+            return await Task.FromResult(Products
+               .Where(w => category == null || w.Category == category)
+                .Count());
         }
 
         public Task<CreateProductResponse> Create(Product product)
@@ -68,26 +112,7 @@ namespace Infrastructure.Data.Repositories
         public Task<DeleteProductResponse> Delete(Product product)
         {
             throw new NotImplementedException();
-        }
-
-        public Task<Product> GetProductById(int productId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Product>> GetProducts()
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IEnumerable<Product>> GetProductsByPaginationAndCategory(int page, int pageSize, string category)
-        {
-           return await Products
-                .Where(p => category == null || p.Category.Name == category)
-                .OrderBy(p => p.Id)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize).ToListAsync();
-        }
+        }                     
 
         public Task<UpdateProductResponse> Update(Product product)
         {

@@ -1,6 +1,6 @@
-﻿using ApplicationCore.Dto.RepositoryResponses.CartRepository;
-using ApplicationCore.Entities;
-using ApplicationCore.Interfaces.Repositories;
+﻿using Core.Dto.RepositoryResponses.CartRepository;
+using Core.Entities;
+using Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

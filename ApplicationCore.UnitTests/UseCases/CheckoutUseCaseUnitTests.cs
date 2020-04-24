@@ -1,10 +1,10 @@
-﻿using ApplicationCore.Dto.RepositoryResponses.OrderRepository;
-using ApplicationCore.Dto.UseCaseResponses;
-using ApplicationCore.DTO;
-using ApplicationCore.Entities;
-using ApplicationCore.Interfaces;
-using ApplicationCore.Interfaces.Repositories;
-using ApplicationCore.UseCases;
+﻿using Core.Dto.RepositoryResponses.OrderRepository;
+using Core.Dto.UseCaseResponses;
+using Core.DTO;
+using Core.Entities;
+using Core.Interfaces;
+using Core.Interfaces.Repositories;
+using Core.UseCases;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ApplicationCore.UnitTests
+namespace Core.UnitTests
 {
     public class CheckoutUseCaseUnitTests
     {
