@@ -19,10 +19,10 @@ namespace Infrastructure.Data.Repositories
             context = ctx;
         }
 
-        public async Task<IEnumerable<Product>> ProductsWithCategories()
+        public async Task<IEnumerable<Product>> GetProducts()
         { 
-            return await context.Products.Include(i => i.Category).ToListAsync();
-        } 
+            return await context.Products.ToListAsync();
+        }
 
         public async Task<IEnumerable<Product>> GetProductsByPaginationAndCategory(int page, int pageSize, string category)
         {
@@ -32,6 +32,14 @@ namespace Infrastructure.Data.Repositories
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize).ToListAsync();
         }
+
+        public async Task<int> CountProductsByCategory(string category)
+        {
+            return await context.Products
+                .Where(w => category == null || w.Category.Name == category)
+                .CountAsync();
+        }
+
         public async Task<Product> GetProductById(int productId)
         {
             return await context.Products.FirstOrDefaultAsync(f => f.Id == productId);
@@ -67,6 +75,8 @@ namespace Infrastructure.Data.Repositories
             await context.SaveChangesAsync();
 
             return new DeleteProductResponse(true);
-        }                    
+        }
+
+        
     }
 }

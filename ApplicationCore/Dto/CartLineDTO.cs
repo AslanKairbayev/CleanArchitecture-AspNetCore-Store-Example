@@ -7,13 +7,13 @@ namespace ApplicationCore.Dto
     public sealed class CartLineDto
     {
         public int Id { get; }
-        public ProductDto ProductDto { get; }
+        public string ProductName { get; }
         public int Quantity { get; }
 
-        public CartLineDto(int id, ProductDto productDto, int quantity)
+        public CartLineDto(int id, string productName, int quantity)
         {
             Id = id;
-            ProductDto = productDto;
+            ProductName = productName;
             Quantity = quantity;
         }
     }

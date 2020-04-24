@@ -33,12 +33,14 @@ namespace ApplicationCore.UseCases
                     productsDto.Add(new ProductDto(p.Id, p.Name, p.Description, p.Price, null));
                 }
 
-                outputPort.Handle(new GetProductsByParamResponse(productsDto, true));
+                var totalItems = await repository.CountProductsByCategory(request.Category);
+
+                outputPort.Handle(new GetProductsByParamResponse(productsDto, request.Page, request.PageSize, totalItems, request.Category, true));
 
                 return true;
             }
 
-            outputPort.Handle(new GetProductsByParamResponse(null, false, "Operation failed"));
+            outputPort.Handle(new GetProductsByParamResponse());
 
             return false;
         }

@@ -11,8 +11,9 @@ namespace ApplicationCore.Interfaces.Repositories
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> ProductsWithCategories();
+        Task<IEnumerable<Product>> GetProducts();
         Task<IEnumerable<Product>> GetProductsByPaginationAndCategory(int page, int pageSize, string category);
+        Task<int> CountProductsByCategory(string category);
         Task<Product> GetProductById(int productId);
         Task<CreateProductResponse> Create(Product product);
         Task<UpdateProductResponse> Update(Product product);

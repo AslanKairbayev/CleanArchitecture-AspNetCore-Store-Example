@@ -13,17 +13,17 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Interactors
 {
-    public sealed class GetProductsWithCategoriesUseCase : IGetProductsWithCategoriesUseCase
+    public sealed class GetProductsUseCase : IGetProductsUseCase
     {
         private readonly IProductRepository repository;
 
-        public GetProductsWithCategoriesUseCase(IProductRepository repo)
+        public GetProductsUseCase(IProductRepository repo)
         {
             repository = repo;
         }
-        public async Task<bool> Handle(GetProductsWithCategoriesRequest request, IOutputPort<GetProductsWithCategoriesResponse> outputPort)
+        public async Task<bool> Handle(GetProductsRequest request, IOutputPort<GetProductsResponse> outputPort)
         {
-            var products = await repository.ProductsWithCategories();
+            var products = await repository.GetProducts();
 
             if (products.Any())
             {
@@ -34,12 +34,12 @@ namespace ApplicationCore.Interactors
                     productsDto.Add(new ProductDto(p.Id, p.Name, p.Description, p.Price, new CategoryDto(p.Category.Id, p.Category.Name, p.Category.Description)));
                 }
 
-                outputPort.Handle(new GetProductsWithCategoriesResponse(productsDto, true));
+                outputPort.Handle(new GetProductsResponse(productsDto, true));
 
                 return true;
             }
 
-            outputPort.Handle(new GetProductsWithCategoriesResponse(null, false, "Operation failed"));
+            outputPort.Handle(new GetProductsResponse(null, false, "Operation failed"));
 
             return false;
         }
