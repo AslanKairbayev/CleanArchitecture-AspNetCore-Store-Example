@@ -8,13 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Data.Repositories
+namespace Infrastructure.Data.FakeRepositories
 {
     public class FakeProductRepository : IProductRepository
     {
         public IQueryable<Product> Products => new List<Product> {
                     new Product
                     {
+                        Id = 1,
                         Name = "Kayak",
                         Description = "А boat for one person",
                         Category = "Watersports",
@@ -22,13 +23,15 @@ namespace Infrastructure.Data.Repositories
                     },
                     new Product
                     {
+                        Id = 2,
                         Name = "Lifejacket",
-                        Description = "Protective and fashionaЫe",
+                        Description = "Protective and fashinable",
                         Category = "Watersports",
                         Price = 48.95m
                     },
                     new Product
                     {
+                        Id = 3,
                         Name = "Soccer Ball",
                         Description = "FIFA-approved size and weight",
                         Category = "Soccer",
@@ -36,6 +39,7 @@ namespace Infrastructure.Data.Repositories
                     },
                     new Product
                     {
+                        Id = 4,
                         Name = "Corner Flags",
                         Description = "Give your playing field а professional touch",
                         Category = "Soccer",
@@ -43,6 +47,7 @@ namespace Infrastructure.Data.Repositories
                     },
                     new Product
                     {
+                        Id = 5,
                         Name = "Stadium",
                         Description = "Flat-packed 35, 000-seat stadium",
                         Category = "Soccer",
@@ -50,6 +55,7 @@ namespace Infrastructure.Data.Repositories
                     },
                     new Product
                     {
+                        Id = 6,
                         Name = "Thinking Сар",
                         Description = "Improve brain efficiency Ьу 75i",
                         Category = "Chess",
@@ -57,6 +63,7 @@ namespace Infrastructure.Data.Repositories
                     },
                     new Product
                     {
+                        Id = 7,
                         Name = "Unsteady Chair",
                         Description = "Secretly give your opponent а disadvantage",
                         Category = "Chess",
@@ -64,6 +71,7 @@ namespace Infrastructure.Data.Repositories
                     },
                     new Product
                     {
+                        Id = 8,
                         Name = "Human Chess Board",
                         Description = "А fun game for the family",
                         Category = "Chess",
@@ -71,6 +79,7 @@ namespace Infrastructure.Data.Repositories
                     },
                     new Product
                     {
+                        Id = 9,
                         Name = "Bling-Bling King",
                         Description = "Gold-plated, diamond-studded King",
                         Category = "Chess",
@@ -81,6 +90,14 @@ namespace Infrastructure.Data.Repositories
         public Task<IEnumerable<Product>> GetProducts()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<string>> GetCategories()
+        {
+            return await Task.FromResult(Products
+                .Select(s => s.Category)
+                .Distinct()
+                .OrderBy(o => o));
         }
 
         public async Task<IEnumerable<Product>> GetProductsByPaginationAndCategory(int page, int pageSize, string category)
@@ -118,5 +135,6 @@ namespace Infrastructure.Data.Repositories
         {
             throw new NotImplementedException();
         }
+        
     }
 }

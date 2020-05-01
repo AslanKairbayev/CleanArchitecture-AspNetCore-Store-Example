@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Web.Models.ViewModels
 {
-    public class CartindexViewModel
+    public class CartIndexViewModel
     {
         public IEnumerable<CartLineDto> Lines { get; set; }
+        public decimal TotalValue { get; set; }
         public string ReturnUrl { get; set; }
     }
 }

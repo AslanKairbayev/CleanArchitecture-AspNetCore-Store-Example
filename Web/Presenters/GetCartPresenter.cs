@@ -6,21 +6,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Web.Models;
 using Web.Models.ViewModels;
+using Core.Dto;
 
 namespace Web.Presenters
 {
     public sealed class GetCartPresenter : IOutputPort<GetCartResponse>
     {
-        public CartindexViewModel CartindexViewModel { get; }
+        public CartIndexViewModel CartIndexViewModel { get; }
 
         public GetCartPresenter()
         {
-            CartindexViewModel = new CartindexViewModel();
+            CartIndexViewModel = new CartIndexViewModel();
         }
 
         public void Handle(GetCartResponse response)
         {
-            CartindexViewModel.Lines = response.Lines;
+            CartIndexViewModel.Lines = response.Lines;
+            CartIndexViewModel.TotalValue = response.TotalValue;                     
         }
     }
 }

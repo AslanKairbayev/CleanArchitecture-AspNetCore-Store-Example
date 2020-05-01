@@ -1,4 +1,4 @@
-﻿@*@model Cart
+﻿@model CartIndexViewModel
 
 <div class="">
     @if (Model.Lines.Count() > 0)
@@ -6,7 +6,7 @@
         <small class="navbar-text">
             <b>Your cart:</b>
             @Model.Lines.Sum(x => x.Quantity) item(s)
-            @Model.ComputeTotalValue().ToString("c")
+            @Model.TotalValue.ToString("c")
         </small>
     }
     <a class="btn btn-sm btn-secondary navbar-btn"
@@ -14,4 +14,4 @@
        asp-route-returnurl="@ViewContext.HttpContext.Request.PathAndQuery()">
         <i class="fa fa-shopping-cart"></i>
     </a>
-</div>*@
+</div>

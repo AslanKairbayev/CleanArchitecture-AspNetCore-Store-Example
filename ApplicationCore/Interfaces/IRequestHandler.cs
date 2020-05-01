@@ -9,4 +9,9 @@ namespace Core.Interfaces
     {
         Task<bool> Handle(TRequest request, IOutputPort<TResponse> outputPort);
     }
+
+    public interface IRequestHandler<in TRequest>
+    {
+        Task<bool> Handle(TRequest request);
+    }
 }

@@ -16,56 +16,56 @@ namespace Core.UnitTests
 {
     public class RemoveFromCartUseCaseTests
     {
-        [Fact]
-        public async void Can_Remove_From_Cart()
-        {
-            var mockProductRepository = new Mock<IProductRepository>();
+        //[Fact]
+        //public async void Can_Remove_From_Cart()
+        //{
+        //    var mockProductRepository = new Mock<IProductRepository>();
 
-            mockProductRepository
-                .Setup(repo => repo.GetProductById(It.IsAny<int>()))
-                .Returns(Task.FromResult(new Product()));
+        //    mockProductRepository
+        //        .Setup(repo => repo.GetProductById(It.IsAny<int>()))
+        //        .Returns(Task.FromResult(new Product()));
 
-            var mockCartRepository = new Mock<ICartRepository>();
+        //    var mockCartRepository = new Mock<ICartRepository>();
 
-            mockCartRepository
-              .Setup(repo => repo.RemoveLine(It.IsAny<Product>()))
-              .Returns(Task.FromResult(new RemoveLineResponse(true)));
+        //    mockCartRepository
+        //      .Setup(repo => repo.RemoveLine(It.IsAny<Product>()))
+        //      .Returns(Task.FromResult(new RemoveLineResponse(true)));
 
-            var useCase = new RemoveFromCartUseCase(mockProductRepository.Object, mockCartRepository.Object);
+        //    var useCase = new RemoveFromCartUseCase(mockProductRepository.Object, mockCartRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<RemoveFromCartResponse>>();
+        //    var mockOutputPort = new Mock<IOutputPort<RemoveFromCartResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<RemoveFromCartResponse>()));
+        //    mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<RemoveFromCartResponse>()));
 
-            var response = await useCase.Handle(new RemoveFromCartRequest(It.IsAny<int>()), mockOutputPort.Object);
+        //    var response = await useCase.Handle(new RemoveFromCartRequest(It.IsAny<int>()), mockOutputPort.Object);
 
-            Assert.True(response);
-        }
+        //    Assert.True(response);
+        //}
 
-        [Fact]
-        public async void CanT_Remove_From_Cart_When_Product_Not_Found()
-        {
-            var mockProductRepository = new Mock<IProductRepository>();
+        //[Fact]
+        //public async void CanT_Remove_From_Cart_When_Product_Not_Found()
+        //{
+        //    var mockProductRepository = new Mock<IProductRepository>();
 
-            mockProductRepository
-                .Setup(repo => repo.GetProductById(It.IsAny<int>()))
-                .Returns(Task.FromResult(It.IsAny<Product>()));
+        //    mockProductRepository
+        //        .Setup(repo => repo.GetProductById(It.IsAny<int>()))
+        //        .Returns(Task.FromResult(It.IsAny<Product>()));
 
-            var mockCartRepository = new Mock<ICartRepository>();
+        //    var mockCartRepository = new Mock<ICartRepository>();
 
-            mockCartRepository
-              .Setup(repo => repo.RemoveLine(It.IsAny<Product>()))
-              .Returns(Task.FromResult(new RemoveLineResponse(true)));
+        //    mockCartRepository
+        //      .Setup(repo => repo.RemoveLine(It.IsAny<Product>()))
+        //      .Returns(Task.FromResult(new RemoveLineResponse(true)));
 
-            var useCase = new RemoveFromCartUseCase(mockProductRepository.Object, mockCartRepository.Object);
+        //    var useCase = new RemoveFromCartUseCase(mockProductRepository.Object, mockCartRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<RemoveFromCartResponse>>();
+        //    var mockOutputPort = new Mock<IOutputPort<RemoveFromCartResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<RemoveFromCartResponse>()));
+        //    mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<RemoveFromCartResponse>()));
 
-            var response = await useCase.Handle(new RemoveFromCartRequest(It.IsAny<int>()), mockOutputPort.Object);
+        //    var response = await useCase.Handle(new RemoveFromCartRequest(It.IsAny<int>()), mockOutputPort.Object);
 
-            Assert.False(response);
-        }
+        //    Assert.False(response);
+        //}
     }
 }

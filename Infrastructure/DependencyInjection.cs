@@ -1,6 +1,6 @@
 ﻿using Core.Interfaces.Repositories;
 using Infrastructure.Data;
-using Infrastructure.Data.Repositories;
+using Infrastructure.Data.FakeRepositories;
 using Infrastructure.Identity;
 using Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;

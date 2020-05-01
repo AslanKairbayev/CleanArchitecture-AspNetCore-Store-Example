@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core;
+using Core.Interfaces.Services;
+using Core.Services;
 using Infrastructure;
 using Infrastructure.Data;
 using Infrastructure.Identity;
@@ -13,7 +15,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Web.Models;
 using Web.Presenters;
+using Web.Services;
 
 namespace Web
 {
@@ -26,19 +30,24 @@ namespace Web
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {
-            //services.AddTransient<IProductRepository, ProductRepository>();
-            //services.AddTransient<ICategoryRepository, CategoryRepository>();
-            //services.AddScoped<Cart>(sp => SessioпCart.GetCart(sp));
-            services.AddCore(Configuration);
+        {            
+            services.AddCore();
             services.AddInfrastructure(Configuration); 
+            
+            services.AddScoped<GetProductsByParamPresenter>();
+            services.AddScoped<GetCategoriesPresenter>();
+            services.AddScoped<GetCartPresenter>();
+            services.AddScoped<AddToCartPresenter>();
+            services.AddScoped<RemoveFromCartPresenter>();
+
+            services.AddScoped<ICartService, SessionCartService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddTransient<GetProductsByParamPresenter>();
+
             services.AddMvc(mvcOtions =>
             {
                 mvcOtions.EnableEndpointRouting = false;
             });
-            services.AddMemoryCache();
+            services.AddDistributedMemoryCache();
             services.AddSession();
         }
 
@@ -48,18 +57,12 @@ namespace Web
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
             app.UseSession();
             app.UseAuthentication();
 
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Product}/{action=List}/{id?}");
-            //});
 
-            app.UseMvc(routes =>
-            {
+            app.UseMvc(routes => {
                 routes.MapRoute(
                     name: null,
                     template: "{category}/Page{productPage:int}",
@@ -68,17 +71,17 @@ namespace Web
                 routes.MapRoute(
                     name: null,
                     template: "Page{productPage:int}",
-                    defaults: new { controller = "Product", action = "List", page = 1 });
+                    defaults: new { controller = "Product", action = "List", productPage = 1 });
 
                 routes.MapRoute(
                     name: null,
                     template: "{category}",
-                    defaults: new { controller = "Product", action = "List", page = 1 });
+                    defaults: new { controller = "Product", action = "List", productPage = 1 });
 
                 routes.MapRoute(
                     name: null,
                     template: "",
-                    defaults: new { controller = "Product", action = "List", page = 1 });
+                    defaults: new { controller = "Product", action = "List", productPage = 1 });
 
                 routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });

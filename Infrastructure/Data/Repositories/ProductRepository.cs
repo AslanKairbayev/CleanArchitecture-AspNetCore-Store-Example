@@ -24,6 +24,14 @@ namespace Infrastructure.Data.Repositories
             return await context.Products.ToListAsync();
         }
 
+        public async Task<IEnumerable<string>> GetCategories()
+        {
+            return await Task.FromResult(context.Products
+                .Select(s => s.Category)
+                .Distinct()
+                .OrderBy(o => o));
+        }
+
         public async Task<IEnumerable<Product>> GetProductsByPaginationAndCategory(int page, int pageSize, string category)
         {
             return await context.Products
@@ -75,8 +83,6 @@ namespace Infrastructure.Data.Repositories
             await context.SaveChangesAsync();
 
             return new DeleteProductResponse(true);
-        }
-
-        
+        }        
     }
 }

@@ -3,6 +3,7 @@ using Core.DTO;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Interfaces.Repositories;
+using Core.Interfaces.Services;
 using Core.Interfaces.UseCases;
 using System;
 using System.Collections.Generic;
@@ -16,17 +17,17 @@ namespace Core.UseCases
     {
         private readonly IOrderRepository orderRepository;
 
-        private readonly ICartRepository cartRepository;
+        private readonly ICartService cartService;
 
-        public CheckoutUseCase(IOrderRepository repo, ICartRepository cart)
+        public CheckoutUseCase(IOrderRepository repo, ICartService cart)
         {
             orderRepository = repo;
-            cartRepository = cart;
+            cartService = cart;
         }
 
         public async Task<bool> Handle(CheckoutRequest request, IOutputPort<CheckoutResponse> outputPort)
         {
-            var lines = await cartRepository.Lines();
+            var lines = cartService.Lines;
 
             if (!lines.Any())
             {
@@ -49,13 +50,13 @@ namespace Core.UseCases
                     Zip = request.Zip,
                     Country = request.Country,
                     GiftWrap = request.GiftWrap,
-                    Lines = lines.ToList()
+                    //Lines = lines.ToList()
                 });
 
                 outputPort.Handle(response.Success ? new CheckoutResponse(response.Id, true) : new CheckoutResponse(0, false, "Operation failed"));
 
                 if (response.Success)
-                await cartRepository.Clear();
+                await cartService.Clear();
 
                 return response.Success;
             }

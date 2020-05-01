@@ -1,19 +1,18 @@
-﻿using System;
+﻿using Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Core.Dto
 {
-    public sealed class CartLineDto
+    public class CartLineDto
     {
-        public int Id { get; }
-        public string ProductName { get; }
-        public int Quantity { get; }
+        public ProductDto ProductDto { get; set; }
+        public int Quantity { get; set; }
 
-        public CartLineDto(int id, string productName, int quantity)
+        public CartLineDto(ProductDto product, int quantity)
         {
-            Id = id;
-            ProductName = productName;
+            ProductDto = product;
             Quantity = quantity;
         }
     }

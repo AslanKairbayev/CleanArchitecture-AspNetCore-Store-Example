@@ -23,11 +23,11 @@ namespace Infrastructure.Data.Repositories
 
             if (line == null)
             {
-                lineCollection.Add(new CartLine
+                lineCollection.Add(new CartLine()
                 {
                     Product = product,
                     Quantity = quantity
-                });
+                });;
             }
             else
             {

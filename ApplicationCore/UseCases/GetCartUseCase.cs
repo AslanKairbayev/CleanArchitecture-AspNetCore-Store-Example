@@ -9,39 +9,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Interfaces.Services;
+using Core.Services;
 
 namespace Core.UseCases
 {
     public class GetCartUseCase : IGetCartUseCase
     {
-        private readonly ICartRepository cartRepository;
+        private readonly ICartService  _cartService;
 
-        public GetCartUseCase(ICartRepository cart)
+        public GetCartUseCase(ICartService cartService)
         {
-            cartRepository = cart;
+            _cartService = cartService;
         }
         public async Task<bool> Handle(GetCartRequest request, IOutputPort<GetCartResponse> outputPort)
         {
-            var lines = await cartRepository.Lines();
+            var lines = _cartService.Lines;
 
             if (lines.Any())
             {
-                var linesDto = new List<CartLineDto>();
+                var totalValue = await _cartService.ComputeTotalValue();
 
-                foreach (var c in lines)
-                {
-                    linesDto.Add(new CartLineDto(c.Id, c.Product.Name, c.Quantity));
-                }
-
-                outputPort.Handle(new GetCartResponse(linesDto, true));
+                outputPort.Handle(new GetCartResponse(lines, totalValue, true));
 
                 return true;
             }
+            else
+            {
+                outputPort.Handle(new GetCartResponse(lines, 0, false, "Cart is Empty"));
 
-            outputPort.Handle(new GetCartResponse(null, false, "Cart is Empty"));
-
-            return false;
-
-        }
+                return false;
+            }
+}
     }
 }

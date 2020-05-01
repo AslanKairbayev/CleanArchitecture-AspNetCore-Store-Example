@@ -1,10 +1,13 @@
-﻿using Core.Dto.UseCaseRequests;
+﻿using Core.Dto;
+using Core.Dto.UseCaseRequests;
 using Core.Dto.UseCaseResponses;
 using Core.DTO;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Interfaces.Repositories;
+using Core.Interfaces.Services;
 using Core.Interfaces.UseCases;
+using Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,12 +19,12 @@ namespace Core.UseCases
     {
         private readonly IProductRepository productRepository;
 
-        private readonly ICartRepository cartRepository;
+        private readonly ICartService _cartService;
 
-        public AddToCartUseCase(IProductRepository repo, ICartRepository cart)
+        public AddToCartUseCase(IProductRepository repo, ICartService cartService)
         {
             productRepository = repo;
-            cartRepository = cart;
+            _cartService = cartService;
         }
 
         public async Task<bool> Handle(AddToCartRequest request, IOutputPort<AddToCartResponse> outputPort)
@@ -30,16 +33,18 @@ namespace Core.UseCases
 
             if (product != null)
             {
-                var response = await cartRepository.AddItem(product, 1);
+                await _cartService.AddItem(new ProductDto(product.Id, product.Name, product.Description, product.Price, null), 1);
 
-                outputPort.Handle(response.Success ? new AddToCartResponse(true) : new AddToCartResponse(false, "Operation failed"));
+                outputPort.Handle(new AddToCartResponse(true));
 
-                return response.Success;
+                return true;
             }
+            else
+            {
+                outputPort.Handle(new AddToCartResponse(false, $"ProductId - {request.ProductId} not found"));
 
-            outputPort.Handle(new AddToCartResponse(false, $"ProductId - {request.ProductId} not found"));
-
-            return false;
+                return false;
+            }            
         }
     }
 }
