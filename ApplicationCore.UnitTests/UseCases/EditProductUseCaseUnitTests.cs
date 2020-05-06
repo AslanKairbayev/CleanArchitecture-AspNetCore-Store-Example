@@ -29,13 +29,13 @@ namespace Core.UnitTests
               .Setup(m => m.GetProductById(It.IsAny<int>()))
               .Returns(Task.FromResult(new Product()));
 
-            var useCase = new EditProductUseCase(mockProductRepository.Object);
+            var useCase = new UpdateProductDetailUseCase(mockProductRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<EditProductResponse>>();
+            var mockOutputPort = new Mock<IOutputPort<UpdateProductDetailResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<EditProductResponse>()));
+            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<UpdateProductDetailResponse>()));
 
-            var response = await useCase.Handle(new EditProductRequest(It.IsAny<int>(),"name", "description", It.IsAny<decimal>(), It.IsAny<string>()), mockOutputPort.Object);
+            var response = await useCase.Handle(new UpdateProductDetailRequest(It.IsAny<int>(),"name", "description", It.IsAny<decimal>(), It.IsAny<string>()), mockOutputPort.Object);
 
             Assert.True(response);
         }
@@ -53,13 +53,13 @@ namespace Core.UnitTests
               .Setup(m => m.GetProductById(It.IsAny<int>()))
               .Returns(Task.FromResult(It.IsAny<Product>()));
 
-            var useCase = new EditProductUseCase(mockProductRepository.Object);
+            var useCase = new UpdateProductDetailUseCase(mockProductRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<EditProductResponse>>();
+            var mockOutputPort = new Mock<IOutputPort<UpdateProductDetailResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<EditProductResponse>()));
+            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<UpdateProductDetailResponse>()));
 
-            var response = await useCase.Handle(new EditProductRequest(It.IsAny<int>(), "name", "description", It.IsAny<decimal>(), It.IsAny<string>()), mockOutputPort.Object);
+            var response = await useCase.Handle(new UpdateProductDetailRequest(It.IsAny<int>(), "name", "description", It.IsAny<decimal>(), It.IsAny<string>()), mockOutputPort.Object);
 
             Assert.False(response);
         }
@@ -77,13 +77,13 @@ namespace Core.UnitTests
               .Setup(m => m.GetProductById(It.IsAny<int>()))
               .Returns(Task.FromResult(new Product()));
 
-            var useCase = new EditProductUseCase(mockProductRepository.Object);
+            var useCase = new UpdateProductDetailUseCase(mockProductRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<EditProductResponse>>();
+            var mockOutputPort = new Mock<IOutputPort<UpdateProductDetailResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<EditProductResponse>()));
+            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<UpdateProductDetailResponse>()));
 
-            var response = await useCase.Handle(new EditProductRequest(It.IsAny<int>(), "", "description", It.IsAny<decimal>(), It.IsAny<string>()), mockOutputPort.Object);
+            var response = await useCase.Handle(new UpdateProductDetailRequest(It.IsAny<int>(), "", "description", It.IsAny<decimal>(), It.IsAny<string>()), mockOutputPort.Object);
 
             Assert.False(response);
         }

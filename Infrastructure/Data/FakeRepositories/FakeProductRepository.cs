@@ -12,7 +12,7 @@ namespace Infrastructure.Data.FakeRepositories
 {
     public class FakeProductRepository : IProductRepository
     {
-        public IQueryable<Product> Products => new List<Product> {
+        private readonly List<Product> Products = new List<Product> {
                     new Product
                     {
                         Id = 1,
@@ -85,11 +85,11 @@ namespace Infrastructure.Data.FakeRepositories
                         Category = "Chess",
                         Price = 1200
                     }
-        }.AsQueryable<Product>();
+        };
 
-        public Task<IEnumerable<Product>> GetProducts()
+        public async Task<IEnumerable<Product>> GetProducts()
         {
-            throw new NotImplementedException();
+            return await Task.FromResult(Products);
         }
 
         public async Task<IEnumerable<string>> GetCategories()
@@ -106,7 +106,7 @@ namespace Infrastructure.Data.FakeRepositories
                 .Where(p => category == null || p.Category == category)
                 .OrderBy(p => p.Id)
                 .Skip((page - 1) * pageSize)
-                .Take(pageSize).ToList());
+                .Take(pageSize));
         }
 
         public async Task<Product> GetProductById(int productId)
@@ -121,19 +121,38 @@ namespace Infrastructure.Data.FakeRepositories
                 .Count());
         }
 
-        public Task<CreateProductResponse> Create(Product product)
+        public async Task<CreateProductGatewayResponse> Create(Product product)
         {
-            throw new NotImplementedException();
+            var id = Products.LastOrDefault().Id;
+
+            product.Id = ++id;
+
+            Products.Add(product);
+
+            return await Task.FromResult(new CreateProductGatewayResponse(product.Id, true));
         }
 
-        public Task<DeleteProductResponse> Delete(Product product)
+        public async Task<DeleteProductResponse> Delete(Product product)
         {
-            throw new NotImplementedException();
+            Products.Remove(product);
+
+            return await Task.FromResult(new DeleteProductResponse(true));
         }                     
 
-        public Task<UpdateProductResponse> Update(Product product)
+        public async Task<UpdateProductResponse> Update(Product product)
         {
-            throw new NotImplementedException();
+            foreach (var p in Products)
+            {
+                if (p.Id == product.Id)
+                {
+                    p.Name = product.Name;
+                    p.Description = product.Description;
+                    p.Price = product.Price;
+                    p.Category = product.Category;
+                }
+            }
+
+            return await Task.FromResult(new UpdateProductResponse(true));
         }
         
     }

@@ -6,15 +6,15 @@ using System.Text;
 
 namespace Core.Dto.UseCaseRequests
 {
-    public class EditProductRequest : IRequest<EditProductResponse>
+    public class UpdateProductDetailRequest : IRequest<UpdateProductDetailResponse>
     {
-        public int? Id { get; }
+        public int Id { get; set; }
         public string Name { get; }
         public string Description { get; }
-        public decimal? Price { get; }
+        public decimal Price { get; }
         public string Category { get; }
 
-        public EditProductRequest(int? id, string name, string description, decimal? price, string category)
+        public UpdateProductDetailRequest(int id, string name, string description, decimal price, string category)
         {
             Id = id;
             Name = name;

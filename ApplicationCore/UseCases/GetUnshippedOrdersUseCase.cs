@@ -25,10 +25,10 @@ namespace Core.UseCases
         {
             var orders = await repository.UnshippedOrdersWithLines();
 
-            if (orders.Any())
-            {
-                var ordersDto = new List<OrderDto>();                
+            var ordersDto = new List<OrderDto>();
 
+            if (orders.Any())
+            {                         
                 foreach (var o in orders)
                 {
                     var linesDto = new List<CartLineDto>();
@@ -46,7 +46,7 @@ namespace Core.UseCases
                 return true;
             }
 
-            outputPort.Handle(new GetUnshippedOrdersResponse(null, false, "No Unshipped Orders"));
+            outputPort.Handle(new GetUnshippedOrdersResponse(ordersDto, false, "No Unshipped Orders"));
 
             return false;
         }

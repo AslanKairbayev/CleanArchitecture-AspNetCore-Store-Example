@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Core.Dto.UseCaseResponses
 {
-    public class AddNewProductResponse : ResponseMessage
+    public class CreateProductResponse : ResponseMessage
     {
         public int Id { get; }
-        public AddNewProductResponse(int id, bool success = false, string message = null) : base(success, message)
+        public CreateProductResponse(int id, bool success = false, string message = null) : base(success, message)
         {
-            Id = Id;
+            Id = id;
         }
     }
 }

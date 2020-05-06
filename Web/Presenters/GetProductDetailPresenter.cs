@@ -11,19 +11,20 @@ namespace Web.Presenters
 {
     public class GetProductDetailPresenter : IOutputPort<GetProductDetailResponse>
     {
-        public ProductViewModel ProductViewModel { get; set; }
+        public EditProduct EditProductViewModel { get; set; }
 
         public GetProductDetailPresenter()
         {
-            ProductViewModel = new ProductViewModel();
+            EditProductViewModel = new EditProduct();
         }
 
         public void Handle(GetProductDetailResponse response)
         {
-            ProductViewModel.Id = response.Id;
-            ProductViewModel.Name = response.Name;
-            ProductViewModel.Description = response.Description;
-            ProductViewModel.Price = response.Price;
+            EditProductViewModel.Id = response.Id;
+            EditProductViewModel.Name = response.Name;
+            EditProductViewModel.Description = response.Description;
+            EditProductViewModel.Price = response.Price;
+            EditProductViewModel.Category = response.Category;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Core.Interfaces.Services;
+﻿using Core.Interactors;
+using Core.Interfaces.Services;
 using Core.Interfaces.UseCases;
 using Core.Services;
 using Core.UseCases;
@@ -15,12 +16,21 @@ namespace Core
         public static IServiceCollection AddCore(this IServiceCollection services)
         {
             services.AddScoped<IGetProductsByParamUseCase, GetProductsByParamUseCase>();
+            services.AddScoped<IGetProductsUseCase, GetProductsUseCase>();
+            services.AddScoped<IGetProductDetailUseCase, UpdateDetailUseCase>();
+            services.AddScoped<ICreateProductUseCase, CreateProductUseCase>();
+            services.AddScoped<IUpdateProductDetailUseCase, UpdateProductDetailUseCase>();
+            services.AddScoped<IRemoveProductUseCase, RemoveProductUseCase>();
+
             services.AddScoped<IGetCategoriesUseCase, GetCategoriesUseCase>();
 
-            //services.AddSingleton<ICartService, CartService>();
             services.AddScoped<IGetCartUseCase, GetCartUseCase>();
             services.AddScoped<IAddToCartUseCase, AddToCartUseCase>();
             services.AddScoped<IRemoveFromCartUseCase, RemoveFromCartUseCase>();
+
+            services.AddScoped<IGetUnshippedOrdersUseCase, GetUnshippedOrdersUseCase>();
+            services.AddScoped<ICheckoutUseCase, CheckoutUseCase>();
+            services.AddScoped<IMarkOrderShippedUseCase, MarkOrderShippedUseCase>();
 
             return services;
         }

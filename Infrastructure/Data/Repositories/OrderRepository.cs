@@ -40,11 +40,9 @@ namespace Infrastructure.Data.Repositories
             return new CreateOrderResponse(order.Id, true);
         }        
 
-        public async Task<MarkShippedResponse> MarkShipped(int orderId)
+        public async Task<MarkShippedResponse> MarkShipped(Order order)
         {
-            Order dbEntry = await GetOrderById(orderId);
-
-            dbEntry.Shipped = true;
+            order.Shipped = true;
 
             await context.SaveChangesAsync();
 

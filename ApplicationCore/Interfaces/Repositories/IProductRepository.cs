@@ -16,7 +16,7 @@ namespace Core.Interfaces.Repositories
         Task<IEnumerable<Product>> GetProductsByPaginationAndCategory(int page, int pageSize, string category);
         Task<int> CountProductsByCategory(string category);
         Task<Product> GetProductById(int productId);
-        Task<CreateProductResponse> Create(Product product);
+        Task<Dto.RepositoryResponses.ProductRepository.CreateProductGatewayResponse> Create(Product product);
         Task<UpdateProductResponse> Update(Product product);
         Task<DeleteProductResponse> Delete(Product product);
     }

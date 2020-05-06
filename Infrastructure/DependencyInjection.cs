@@ -30,7 +30,8 @@ namespace Infrastructure
             //services.AddTransient<IOrderRepository, OrderRepository>();
             //services.AddScoped<ICartRepository, CartRepository>();
 
-            services.AddTransient<IProductRepository, FakeProductRepository>();
+            services.AddSingleton<IProductRepository, FakeProductRepository>();
+            services.AddSingleton<IOrderRepository, FakeOrderRepository>();
 
             return services;
         }

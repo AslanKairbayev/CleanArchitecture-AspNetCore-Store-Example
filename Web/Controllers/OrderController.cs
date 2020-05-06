@@ -33,7 +33,7 @@ namespace Web.Controllers
             _checkoutPresenter = checkoutPresenter;            
         }
 
-        [Authorize]
+        //[Authorize]
         public async Task<ViewResult> List()
         {
             await _getUnshippedOrdersUseCase.Handle(new GetUnshippedOrdersRequest(), _getUnshippedOrdersPresenter);
@@ -42,7 +42,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> MarkShipped(int orderId)
         {
             await _markOrderShippedUseCase.Handle(new MarkOrderShippedRequest(orderId), _markOrderShippedPresenter);
@@ -54,13 +54,19 @@ namespace Web.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Checkout(OrderRequest order)
-        {
-            await _checkoutUseCase.Handle(new CheckoutRequest(
+        {           
+            if (ModelState.IsValid)
+            {
+                await _checkoutUseCase.Handle(new CheckoutRequest(
                 order.Name, order.Line1, order.State, order.City, order.Country, order.Zip, order.Line2, order.Line3, order.GiftWrap)
                 , _checkoutPresenter);
 
-            if (_checkoutPresenter.Success)
-            {
+                if (!_checkoutPresenter.Success)
+                {
+                    ModelState.AddModelError("", _checkoutPresenter.Message);
+                    return View(order);
+                }
+
                 return RedirectToAction(nameof(Completed));
             }
             else

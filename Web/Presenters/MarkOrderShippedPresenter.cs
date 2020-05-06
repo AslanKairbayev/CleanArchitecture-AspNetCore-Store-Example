@@ -12,7 +12,7 @@ namespace Web.Presenters
 
         public void Handle(MarkOrderShippedResponse response)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

@@ -53,13 +53,13 @@ namespace Infrastructure.Data.Repositories
             return await context.Products.FirstOrDefaultAsync(f => f.Id == productId);
         }
 
-        public async Task<CreateProductResponse> Create(Product product)
+        public async Task<CreateProductGatewayResponse> Create(Product product)
         {
              context.Products.Add(product);
 
             await context.SaveChangesAsync();
 
-            return new CreateProductResponse(product.Id, true);             
+            return new CreateProductGatewayResponse(product.Id, true);             
         }
 
         public async Task<UpdateProductResponse> Update(Product product)

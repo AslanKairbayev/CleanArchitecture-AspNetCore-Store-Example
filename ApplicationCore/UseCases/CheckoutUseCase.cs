@@ -27,45 +27,51 @@ namespace Core.UseCases
 
         public async Task<bool> Handle(CheckoutRequest request, IOutputPort<CheckoutResponse> outputPort)
         {
-            var lines = cartService.Lines;
+            var linesDto = cartService.Lines;
 
-            if (!lines.Any())
+            if (!linesDto.Any())
             {
-                outputPort.Handle(new CheckoutResponse(0, false, "Cart is Empty"));
+                outputPort.Handle(new CheckoutResponse(0, false, "Your Cart is Empty"));
 
                 return false;
             }
 
-            if (!string.IsNullOrEmpty(request.Name) && !string.IsNullOrEmpty(request.Line1) && !string.IsNullOrEmpty(request.City)
-                && !string.IsNullOrEmpty(request.State) && !string.IsNullOrEmpty(request.Country))
+            var lines = new List<CartLine>();
+
+            foreach (var l in linesDto)
             {
-                var response = await orderRepository.Create(new Order
-                {
-                    Name = request.Name,
-                    Line1 = request.Line1,
-                    Line2 = request.Line2,
-                    Line3 = request.Line3,
-                    City = request.City,
-                    State = request.State,
-                    Zip = request.Zip,
-                    Country = request.Country,
-                    GiftWrap = request.GiftWrap,
-                    //Lines = lines.ToList()
-                });
+                lines.Add(new CartLine() { Product = new Product() {
+                    Id = l.ProductDto.Id,
+                    Name = l.ProductDto.Name,
+                    Description = l.ProductDto.Description,
+                    Price = l.ProductDto.Price,
+                    Category = l.ProductDto.Category
+                }, 
+                    Quantity = l.Quantity });
+            }
 
-                outputPort.Handle(response.Success ? new CheckoutResponse(response.Id, true) : new CheckoutResponse(0, false, "Operation failed"));
+            var response = await orderRepository.Create(new Order
+            {
+                Name = request.Name,
+                Line1 = request.Line1,
+                Line2 = request.Line2,
+                Line3 = request.Line3,
+                City = request.City,
+                State = request.State,
+                Zip = request.Zip,
+                Country = request.Country,
+                GiftWrap = request.GiftWrap,
+                Lines = lines
+            });
 
-                if (response.Success)
+            outputPort.Handle(response.Success ? new CheckoutResponse(response.Id, true) : new CheckoutResponse(0, false, "Operation failed"));
+
+            if (response.Success)
                 await cartService.Clear();
 
-                return response.Success;
-            }
-            else
-            {
-                outputPort.Handle(new CheckoutResponse(0, false, "Invalid request"));
+            return response.Success;
 
-                return false;
-            }            
+
         }
     }
 }

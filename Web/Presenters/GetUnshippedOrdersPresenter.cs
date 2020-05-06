@@ -21,6 +21,8 @@ namespace Web.Presenters
         public void Handle(GetUnshippedOrdersResponse response)
         {
             UnshippedOrdersViewModel.Orders = response.Orders;
+            UnshippedOrdersViewModel.Success = response.Success;
+            UnshippedOrdersViewModel.Message = response.Message;
         }
     }
 }

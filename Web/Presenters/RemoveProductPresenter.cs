@@ -11,7 +11,7 @@ namespace Web.Presenters
     {
         public void Handle(RemoveProductResponse response)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

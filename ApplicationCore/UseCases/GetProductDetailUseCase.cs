@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Core.UseCases
 {
-    public class GetProductDetailUseCase : IGetProductDetailUseCase
+    public class UpdateDetailUseCase : IGetProductDetailUseCase
     {
         private readonly IProductRepository repository;
 
-        public GetProductDetailUseCase(IProductRepository repo)
+        public UpdateDetailUseCase(IProductRepository repo)
         {
             repository = repo;
         }
@@ -25,7 +25,7 @@ namespace Core.UseCases
 
             if (product != null)
             {
-                outputPort.Handle(new GetProductDetailResponse(product.Id, product.Name, product.Description, product.Price, true));
+                outputPort.Handle(new GetProductDetailResponse(product.Id, product.Name, product.Description, product.Price, product.Category, true));
 
                 return true;
             }

@@ -10,6 +10,6 @@ namespace Web.Models.ViewModels
     {
         public IEnumerable<CartLineDto> Lines { get; set; }
         public decimal TotalValue { get; set; }
-        public string ReturnUrl { get; set; }
+        public string ReturnUrl { get; set; }        
     }
 }

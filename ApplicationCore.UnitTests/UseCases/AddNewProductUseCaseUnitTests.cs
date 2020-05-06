@@ -22,15 +22,15 @@ namespace Core.UnitTests
             var mockProductRepository = new Mock<IProductRepository>();
             mockProductRepository
               .Setup(m => m.Create(It.IsAny<Product>()))
-              .Returns(Task.FromResult(new CreateProductResponse(It.IsAny<int>(), true)));
+              .Returns(Task.FromResult(new Dto.RepositoryResponses.ProductRepository.CreateProductGatewayResponse(It.IsAny<int>(), true)));
 
-            var useCase = new AddNewProductUseCase(mockProductRepository.Object);
+            var useCase = new CreateProductUseCase(mockProductRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<AddNewProductResponse>>();
+            var mockOutputPort = new Mock<IOutputPort<Dto.UseCaseResponses.CreateProductResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<AddNewProductResponse>()));
+            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<Dto.UseCaseResponses.CreateProductResponse>()));
 
-            var response = await useCase.Handle(new AddNewProductRequest("name", "description", It.IsAny<decimal>(), It.IsAny<string>()), mockOutputPort.Object);
+            var response = await useCase.Handle(new CreateProductRequest("name", "description", It.IsAny<decimal>(), It.IsAny<string>()), mockOutputPort.Object);
 
             Assert.True(response);
         }
@@ -41,15 +41,15 @@ namespace Core.UnitTests
             var mockProductRepository = new Mock<IProductRepository>();
             mockProductRepository
               .Setup(m => m.Create(It.IsAny<Product>()))
-              .Returns(Task.FromResult(new CreateProductResponse(It.IsAny<int>(), true)));
+              .Returns(Task.FromResult(new Dto.RepositoryResponses.ProductRepository.CreateProductGatewayResponse(It.IsAny<int>(), true)));
 
-            var useCase = new AddNewProductUseCase(mockProductRepository.Object);
+            var useCase = new CreateProductUseCase(mockProductRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<AddNewProductResponse>>();
+            var mockOutputPort = new Mock<IOutputPort<Dto.UseCaseResponses.CreateProductResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<AddNewProductResponse>()));
+            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<Dto.UseCaseResponses.CreateProductResponse>()));
 
-            var response = await useCase.Handle(new AddNewProductRequest("name", "description", null, It.IsAny<string>()), mockOutputPort.Object);
+            var response = await useCase.Handle(new CreateProductRequest("name", "description", null, It.IsAny<string>()), mockOutputPort.Object);
 
             Assert.False(response);
         }

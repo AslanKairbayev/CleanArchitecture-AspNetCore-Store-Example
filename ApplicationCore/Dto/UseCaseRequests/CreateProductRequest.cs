@@ -6,14 +6,14 @@ using System.Text;
 
 namespace Core.Dto.UseCaseRequests
 {
-    public class AddNewProductRequest : IRequest<AddNewProductResponse>
+    public class CreateProductRequest : IRequest<CreateProductResponse>
     {
         public string Name { get; }
         public string Description { get; }
-        public decimal? Price { get; }
+        public decimal Price { get; }
         public string Category { get; }
 
-        public AddNewProductRequest(string name, string description, decimal? price, string category)
+        public CreateProductRequest(string name, string description, decimal price, string category)
         {
             Name = name;
             Description = description;

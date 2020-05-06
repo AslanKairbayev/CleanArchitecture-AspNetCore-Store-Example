@@ -22,7 +22,7 @@ namespace Web.Presenters
         public void Handle(GetCartResponse response)
         {
             CartIndexViewModel.Lines = response.Lines;
-            CartIndexViewModel.TotalValue = response.TotalValue;                     
+            CartIndexViewModel.TotalValue = response.TotalValue;
         }
     }
 }
