@@ -1,6 +1,7 @@
 ﻿using Core.Interfaces.Repositories;
 using Infrastructure.Data;
 using Infrastructure.Data.FakeRepositories;
+using Infrastructure.Data.Repositories;
 using Infrastructure.Identity;
 using Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -17,21 +18,25 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            string connection = configuration.GetConnectionString("StoreExample");
+            
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(connection));
 
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //options.UseSqlServer(configuration.GetConnectionString("Data:StoreExample:ConnectionString")));
+            string identityConnection = configuration.GetConnectionString("StoreExampleIdentity");
 
-            //services.AddDbContext<AppIdentityDbContext>(options =>
-            //options.UseSqlServer(configuration.GetConnectionString("Data:StoreIdentityExample:ConnectionString")));
-            //services.AddIdentityCore<AppUser>()
-            //    .AddEntityFrameworkStores<AppIdentityDbContext>();
+            services.AddDbContext<AppIdentityDbContext>(options =>
+                options.UseSqlServer(identityConnection));
 
-            //services.AddTransient<IProductRepository, ProductRepository>();
-            //services.AddTransient<IOrderRepository, OrderRepository>();
-            //services.AddScoped<ICartRepository, CartRepository>();
+            services.AddIdentityCore<AppUser>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>();
 
-            services.AddSingleton<IProductRepository, FakeProductRepository>();
-            services.AddSingleton<IOrderRepository, FakeOrderRepository>();
+
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+
+            //services.AddSingleton<IProductRepository, FakeProductRepository>();
+            //services.AddSingleton<IOrderRepository, FakeOrderRepository>();
 
             return services;
         }

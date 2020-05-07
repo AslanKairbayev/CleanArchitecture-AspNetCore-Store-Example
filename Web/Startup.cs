@@ -96,8 +96,8 @@ namespace Web
                 routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });
 
-            //SeedData.EnsurePopulated(app);
-            //SeedIdentity.EnsurePopulated(app);
+            SeedData.EnsurePopulated(app);
+            SeedIdentity.EnsurePopulated(app);
         }
     }
 }

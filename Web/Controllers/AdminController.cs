@@ -71,18 +71,16 @@ namespace Web.Controllers
                 {
                     await _updateProductDetailUseCase.Handle(
                         new UpdateProductDetailRequest(product.Id, product.Name, product.Description, product.Price, product.Category),
-                        _updateProductDetailPresenter);
-
-                    TempData["message"] = $"{product.Name} has been updated";
+                        _updateProductDetailPresenter);                    
                 }
                 else
                 {
                     await _createProductUseCase.Handle(new CreateProductRequest(product.Name, product.Description, product.Price, product.Category),
                         _createProductPresenter);
-
-                    TempData["message"] = $"Product Id - {_createProductPresenter.ProductId} has been created";
                 }
-            
+
+                TempData["message"] = $"{product.Name} has been saved";
+
                 return RedirectToAction("Index");
             }
             else
@@ -108,6 +106,8 @@ namespace Web.Controllers
         public async Task<IActionResult> Delete(int productId)
         {
             await _removeProductUseCase.Handle(new RemoveProductRequest(productId), _removeProductPresenter);
+
+            TempData["message"] = $"Product Id - {productId} was deleted";
 
             return RedirectToAction("Index");
         }

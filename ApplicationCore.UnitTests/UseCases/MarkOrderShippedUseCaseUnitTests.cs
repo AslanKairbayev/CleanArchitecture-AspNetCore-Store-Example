@@ -16,52 +16,52 @@ namespace Core.UnitTests
 {
     public class MarkOrderShippedUseCaseUnitTests
     {
-        [Fact]
-        public async void Can_Mark_Order_Shipped()
-        {
-            var mockOrderRepository = new Mock<IOrderRepository>();
+        //[Fact]
+        //public async void Can_Mark_Order_Shipped()
+        //{
+        //    var mockOrderRepository = new Mock<IOrderRepository>();
 
-            mockOrderRepository
-                .Setup(repo => repo.GetOrderById(It.IsAny<int>()))
-                .Returns(Task.FromResult(new Order()));
+        //    mockOrderRepository
+        //        .Setup(repo => repo.GetOrderById(It.IsAny<int>()))
+        //        .Returns(Task.FromResult(new Order()));
 
-            mockOrderRepository
-                .Setup(repo => repo.MarkShipped(It.IsAny<int>()))
-                .Returns(Task.FromResult(new MarkShippedResponse(true)));
+        //    mockOrderRepository
+        //        .Setup(repo => repo.MarkShipped(It.IsAny<int>()))
+        //        .Returns(Task.FromResult(new MarkShippedResponse(true)));
 
-            var useCase = new MarkOrderShippedUseCase(mockOrderRepository.Object);
+        //    var useCase = new MarkOrderShippedUseCase(mockOrderRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<MarkOrderShippedResponse>>();
+        //    var mockOutputPort = new Mock<IOutputPort<MarkOrderShippedResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<MarkOrderShippedResponse>()));
+        //    mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<MarkOrderShippedResponse>()));
 
-            var response = await useCase.Handle(new MarkOrderShippedRequest(It.IsAny<int>()), mockOutputPort.Object);
+        //    var response = await useCase.Handle(new MarkOrderShippedRequest(It.IsAny<int>()), mockOutputPort.Object);
 
-            Assert.True(response);
-        }
+        //    Assert.True(response);
+        //}
 
-        [Fact]
-        public async void Cant_Mark_Order_Shipped_When_Order_Not_Found()
-        {
-            var mockOrderRepository = new Mock<IOrderRepository>();
+        //[Fact]
+        //public async void Cant_Mark_Order_Shipped_When_Order_Not_Found()
+        //{
+        //    var mockOrderRepository = new Mock<IOrderRepository>();
 
-            mockOrderRepository
-                .Setup(repo => repo.GetOrderById(It.IsAny<int>()))
-                .Returns(Task.FromResult(It.IsAny<Order>()));
+        //    mockOrderRepository
+        //        .Setup(repo => repo.GetOrderById(It.IsAny<int>()))
+        //        .Returns(Task.FromResult(It.IsAny<Order>()));
 
-            mockOrderRepository
-                .Setup(repo => repo.MarkShipped(It.IsAny<int>()))
-                .Returns(Task.FromResult(new MarkShippedResponse(true)));
+        //    mockOrderRepository
+        //        .Setup(repo => repo.MarkShipped(It.IsAny<int>()))
+        //        .Returns(Task.FromResult(new MarkShippedResponse(true)));
 
-            var useCase = new MarkOrderShippedUseCase(mockOrderRepository.Object);
+        //    var useCase = new MarkOrderShippedUseCase(mockOrderRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<MarkOrderShippedResponse>>();
+        //    var mockOutputPort = new Mock<IOutputPort<MarkOrderShippedResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<MarkOrderShippedResponse>()));
+        //    mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<MarkOrderShippedResponse>()));
 
-            var response = await useCase.Handle(new MarkOrderShippedRequest(It.IsAny<int>()), mockOutputPort.Object);
+        //    var response = await useCase.Handle(new MarkOrderShippedRequest(It.IsAny<int>()), mockOutputPort.Object);
 
-            Assert.False(response);
-        }
+        //    Assert.False(response);
+        //}
     }
 }

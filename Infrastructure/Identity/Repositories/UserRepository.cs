@@ -28,7 +28,7 @@ namespace Infrastructure.Identity.Repositories
         public async Task<bool> CheckPassword(User user, string password)
         {
             return await userManager.CheckPasswordAsync(
-                new AppUser {Id = user.Id, UserName = user.UserName, PasswordHash = user.PasswordHash }
+                new AppUser(user.UserName) {Id = user.Id, PasswordHash = user.PasswordHash }
                 , password);
         }
 
