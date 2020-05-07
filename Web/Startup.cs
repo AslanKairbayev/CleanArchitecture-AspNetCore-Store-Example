@@ -50,8 +50,11 @@ namespace Web
             services.AddScoped<CheckoutPresenter>();
             services.AddScoped<MarkOrderShippedPresenter>();
 
+            services.AddScoped<LoginPresenter>();
+
             services.AddScoped<ICartService, SessionCartService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 
             services.AddMvc(mvcOtions =>
             {
@@ -59,6 +62,7 @@ namespace Web
             });
             services.AddDistributedMemoryCache();
             services.AddSession();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

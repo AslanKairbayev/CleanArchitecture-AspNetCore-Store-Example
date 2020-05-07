@@ -21,22 +21,20 @@ namespace Core.UseCases
 
         public async Task<bool> Handle(LoginRequest request, IOutputPort<LoginResponse> outputPort)
         {
-            if (!string.IsNullOrEmpty(request.UserName) && !string.IsNullOrEmpty(request.Password))
+            var user = await repository.FindByName(request.UserName);
+
+            if (user != null)
             {
-                var user = await repository.FindByName(request.UserName);
-
-                if (user != null)
+                await repository.SignOut();
+                if (await repository.SignIn(user, request.Password))
                 {
-                    if (await repository.CheckPassword(user, request.Password))
-                    {
-                        outputPort.Handle(new LoginResponse(true));
+                    outputPort.Handle(new LoginResponse(true));
 
-                        return true;
-                    }
+                    return true;
                 }
             }
 
-            outputPort.Handle(new LoginResponse(false, "Invalid request"));
+            outputPort.Handle(new LoginResponse(false, $"User {request.UserName} not found"));
 
             return false;
         }

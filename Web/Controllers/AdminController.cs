@@ -13,7 +13,7 @@ using Web.Presenters;
 
 namespace Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly IGetProductsUseCase _getProductsUseCase;

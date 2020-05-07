@@ -9,6 +9,7 @@ namespace Core.Interfaces.Repositories
     public interface IUserRepository
     {
         Task<User> FindByName(string userName);
-        Task<bool> CheckPassword(User user, string password);
+        Task<bool> SignIn(User user, string password);
+        Task SignOut();
     }
 }

@@ -21,7 +21,6 @@ namespace Core
             services.AddScoped<ICreateProductUseCase, CreateProductUseCase>();
             services.AddScoped<IUpdateProductDetailUseCase, UpdateProductDetailUseCase>();
             services.AddScoped<IRemoveProductUseCase, RemoveProductUseCase>();
-
             services.AddScoped<IGetCategoriesUseCase, GetCategoriesUseCase>();
 
             services.AddScoped<IGetCartUseCase, GetCartUseCase>();
@@ -31,6 +30,9 @@ namespace Core
             services.AddScoped<IGetUnshippedOrdersUseCase, GetUnshippedOrdersUseCase>();
             services.AddScoped<ICheckoutUseCase, CheckoutUseCase>();
             services.AddScoped<IMarkOrderShippedUseCase, MarkOrderShippedUseCase>();
+
+            services.AddTransient<ILoginUseCase, LoginUseCase>();
+            services.AddTransient<ILogoutUseCase, LogoutUseCase>();
 
             return services;
         }

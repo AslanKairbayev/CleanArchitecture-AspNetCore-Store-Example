@@ -4,6 +4,7 @@ using Infrastructure.Data.FakeRepositories;
 using Infrastructure.Data.Repositories;
 using Infrastructure.Identity;
 using Infrastructure.Identity.Entities;
+using Infrastructure.Identity.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,22 +19,22 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            string connection = configuration.GetConnectionString("StoreExample");
-            
+            string connection = configuration.GetConnectionString("StoreExample");            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connection));
 
             string identityConnection = configuration.GetConnectionString("StoreExampleIdentity");
-
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(identityConnection));
 
-            services.AddIdentityCore<AppUser>()
-                .AddEntityFrameworkStores<AppIdentityDbContext>();
-
+            services.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
 
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
+
+            services.AddTransient<IUserRepository, UserRepository>();
+
 
             //services.AddSingleton<IProductRepository, FakeProductRepository>();
             //services.AddSingleton<IOrderRepository, FakeOrderRepository>();

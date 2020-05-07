@@ -33,7 +33,7 @@ namespace Web.Controllers
             _checkoutPresenter = checkoutPresenter;            
         }
 
-        //[Authorize]
+        [Authorize]
         public async Task<ViewResult> List()
         {
             await _getUnshippedOrdersUseCase.Handle(new GetUnshippedOrdersRequest(), _getUnshippedOrdersPresenter);
@@ -42,7 +42,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> MarkShipped(int orderId)
         {
             await _markOrderShippedUseCase.Handle(new MarkOrderShippedRequest(orderId), _markOrderShippedPresenter);

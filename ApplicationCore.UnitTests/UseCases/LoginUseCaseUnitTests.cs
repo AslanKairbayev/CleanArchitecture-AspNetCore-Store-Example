@@ -15,100 +15,100 @@ namespace Core.UnitTests
 {
     public class LoginUseCaseUnitTests
     {
-        [Fact]
-        public async void Can_Login()
-        {
-            var mockUserRepository = new Mock<IUserRepository>();
+        //[Fact]
+        //public async void Can_Login()
+        //{
+        //    var mockUserRepository = new Mock<IUserRepository>();
 
-            mockUserRepository
-                .Setup(repo => repo.FindByName(It.IsAny<string>()))
-                .Returns(Task.FromResult(new User(It.IsAny<string>())));
+        //    mockUserRepository
+        //        .Setup(repo => repo.FindByName(It.IsAny<string>()))
+        //        .Returns(Task.FromResult(new User(It.IsAny<string>())));
 
-            mockUserRepository
-                .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))
-                .Returns(Task.FromResult(true));
+        //    mockUserRepository
+        //        .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))
+        //        .Returns(Task.FromResult(true));
 
-            var useCase = new LoginUseCase(mockUserRepository.Object);
+        //    var useCase = new LoginUseCase(mockUserRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<LoginResponse>>();
+        //    var mockOutputPort = new Mock<IOutputPort<LoginResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<LoginResponse>()));
+        //    mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<LoginResponse>()));
 
-            var response = await useCase.Handle(new LoginRequest("userName", "password"), mockOutputPort.Object);
+        //    var response = await useCase.Handle(new LoginRequest("userName", "password"), mockOutputPort.Object);
 
-            Assert.True(response);
-        }
+        //    Assert.True(response);
+        //}
 
-        [Fact]
-        public async void Cant_Login_When_Invalid_Request()
-        {
-            var mockUserRepository = new Mock<IUserRepository>();
+        //[Fact]
+        //public async void Cant_Login_When_Invalid_Request()
+        //{
+        //    var mockUserRepository = new Mock<IUserRepository>();
 
-            mockUserRepository
-                .Setup(repo => repo.FindByName(It.IsAny<string>()))
-                .Returns(Task.FromResult(new User(It.IsAny<string>())));
+        //    mockUserRepository
+        //        .Setup(repo => repo.FindByName(It.IsAny<string>()))
+        //        .Returns(Task.FromResult(new User(It.IsAny<string>())));
 
-            mockUserRepository
-                .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))
-               .Returns(Task.FromResult(true));
+        //    mockUserRepository
+        //        .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))
+        //       .Returns(Task.FromResult(true));
 
-            var useCase = new LoginUseCase(mockUserRepository.Object);
+        //    var useCase = new LoginUseCase(mockUserRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<LoginResponse>>();
+        //    var mockOutputPort = new Mock<IOutputPort<LoginResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<LoginResponse>()));
+        //    mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<LoginResponse>()));
 
-            var response = await useCase.Handle(new LoginRequest("", "password"), mockOutputPort.Object);
+        //    var response = await useCase.Handle(new LoginRequest("", "password"), mockOutputPort.Object);
 
-            Assert.False(response);
-        }
+        //    Assert.False(response);
+        //}
 
-        [Fact]
-        public async void Cant_Login_When_User_Not_Found()
-        {
-            var mockUserRepository = new Mock<IUserRepository>();
+        //[Fact]
+        //public async void Cant_Login_When_User_Not_Found()
+        //{
+        //    var mockUserRepository = new Mock<IUserRepository>();
 
-            mockUserRepository
-                .Setup(repo => repo.FindByName(It.IsAny<string>()))
-               .Returns(Task.FromResult(It.IsAny<User>()));
+        //    mockUserRepository
+        //        .Setup(repo => repo.FindByName(It.IsAny<string>()))
+        //       .Returns(Task.FromResult(It.IsAny<User>()));
 
-            mockUserRepository
-                .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))
-                 .Returns(Task.FromResult(true));
+        //    mockUserRepository
+        //        .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))
+        //         .Returns(Task.FromResult(true));
 
-            var useCase = new LoginUseCase(mockUserRepository.Object);
+        //    var useCase = new LoginUseCase(mockUserRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<LoginResponse>>();
+        //    var mockOutputPort = new Mock<IOutputPort<LoginResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<LoginResponse>()));
+        //    mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<LoginResponse>()));
 
-            var response = await useCase.Handle(new LoginRequest("userName", "password"), mockOutputPort.Object);
+        //    var response = await useCase.Handle(new LoginRequest("userName", "password"), mockOutputPort.Object);
 
-            Assert.False(response);
-        }
+        //    Assert.False(response);
+        //}
 
-        [Fact]
-        public async void Cant_Login_When_Password_Incorrect()
-        {
-            var mockUserRepository = new Mock<IUserRepository>();
+        //[Fact]
+        //public async void Cant_Login_When_Password_Incorrect()
+        //{
+        //    var mockUserRepository = new Mock<IUserRepository>();
 
-            mockUserRepository
-                .Setup(repo => repo.FindByName(It.IsAny<string>()))
-                .Returns(Task.FromResult(new User(It.IsAny<string>())));
+        //    mockUserRepository
+        //        .Setup(repo => repo.FindByName(It.IsAny<string>()))
+        //        .Returns(Task.FromResult(new User(It.IsAny<string>())));
 
-            mockUserRepository
-                .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))
-                 .Returns(Task.FromResult(false));
+        //    mockUserRepository
+        //        .Setup(repo => repo.CheckPassword(It.IsAny<User>(), It.IsAny<string>()))
+        //         .Returns(Task.FromResult(false));
 
-            var useCase = new LoginUseCase(mockUserRepository.Object);
+        //    var useCase = new LoginUseCase(mockUserRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<LoginResponse>>();
+        //    var mockOutputPort = new Mock<IOutputPort<LoginResponse>>();
 
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<LoginResponse>()));
+        //    mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<LoginResponse>()));
 
-            var response = await useCase.Handle(new LoginRequest("userName", "password"), mockOutputPort.Object);
+        //    var response = await useCase.Handle(new LoginRequest("userName", "password"), mockOutputPort.Object);
 
-            Assert.False(response);
-        }
+        //    Assert.False(response);
+        //}
     }
 }
