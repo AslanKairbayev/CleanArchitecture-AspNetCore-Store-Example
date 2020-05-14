@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Core.UseCases
 {
-    public class UpdateDetailUseCase : IGetProductDetailUseCase
+    public class GetProductDetailUseCase : IGetProductDetailUseCase
     {
         private readonly IProductRepository repository;
 
-        public UpdateDetailUseCase(IProductRepository repo)
+        public GetProductDetailUseCase(IProductRepository repo)
         {
             repository = repo;
         }

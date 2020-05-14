@@ -27,24 +27,18 @@ namespace Core.UseCases
             _cartService = cartService;
         }
 
-        public async Task<bool> Handle(AddToCartRequest request, IOutputPort<AddToCartResponse> outputPort)
+        public async Task<bool> Handle(AddToCartRequest request)
         {
             Product product = await productRepository.GetProductById(request.ProductId);
 
-            if (product != null)
+            if (product == null)
             {
-                await _cartService.AddItem(new ProductDto(product.Id, product.Name, product.Description, product.Price, null), 1);
-
-                outputPort.Handle(new AddToCartResponse(true));
-
-                return true;
-            }
-            else
-            {
-                outputPort.Handle(new AddToCartResponse(false, $"ProductId - {request.ProductId} not found"));
-
                 return false;
-            }            
+            }
+
+            await _cartService.AddItem(new ProductDto(product.Id, product.Name, product.Description, product.Price, product.Category), 1);
+
+            return true;
         }
     }
 }

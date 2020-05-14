@@ -17,18 +17,16 @@ namespace Web.Controllers
         private readonly IGetUnshippedOrdersUseCase _getUnshippedOrdersUseCase;
         private readonly GetUnshippedOrdersPresenter _getUnshippedOrdersPresenter;
         private readonly IMarkOrderShippedUseCase _markOrderShippedUseCase;
-        private readonly MarkOrderShippedPresenter _markOrderShippedPresenter;
         private readonly ICheckoutUseCase _checkoutUseCase;
         private readonly CheckoutPresenter _checkoutPresenter;
 
         public OrderController(IGetUnshippedOrdersUseCase getUnshippedOrdersUseCase, GetUnshippedOrdersPresenter getUnshippedOrdersPresenter,
-            IMarkOrderShippedUseCase markOrderShippedUseCase, MarkOrderShippedPresenter markOrderShippedPresenter,
+            IMarkOrderShippedUseCase markOrderShippedUseCase,
             ICheckoutUseCase checkoutUseCase, CheckoutPresenter checkoutPresenter)
         {
             _getUnshippedOrdersUseCase = getUnshippedOrdersUseCase;
             _getUnshippedOrdersPresenter = getUnshippedOrdersPresenter;
             _markOrderShippedUseCase = markOrderShippedUseCase;
-            _markOrderShippedPresenter = markOrderShippedPresenter;
             _checkoutUseCase = checkoutUseCase;
             _checkoutPresenter = checkoutPresenter;            
         }
@@ -38,47 +36,42 @@ namespace Web.Controllers
         {
             await _getUnshippedOrdersUseCase.Handle(new GetUnshippedOrdersRequest(), _getUnshippedOrdersPresenter);
 
-            return View(_getUnshippedOrdersPresenter.UnshippedOrdersViewModel);
+            return View(_getUnshippedOrdersPresenter.ViewModel);
         }
 
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> MarkShipped(int orderId)
         {
-            await _markOrderShippedUseCase.Handle(new MarkOrderShippedRequest(orderId), _markOrderShippedPresenter);
+            await _markOrderShippedUseCase.Handle(new MarkOrderShippedRequest(orderId));
 
             return RedirectToAction(nameof(List));
         }
 
-        public ViewResult Checkout() => View(new OrderRequest());
+        public ViewResult Checkout() => View(new OrderModel());
 
         [HttpPost]
-        public async Task<IActionResult> Checkout(OrderRequest order)
+        public async Task<IActionResult> Checkout(OrderModel order)
         {           
-            if (ModelState.IsValid)
-            {
-                await _checkoutUseCase.Handle(new CheckoutRequest(
-                order.Name, order.Line1, order.State, order.City, order.Country, order.Zip, order.Line2, order.Line3, order.GiftWrap)
-                , _checkoutPresenter);
-
-                if (!_checkoutPresenter.Success)
-                {
-                    ModelState.AddModelError("", _checkoutPresenter.Message);
-                    return View(order);
-                }
-
-                return RedirectToAction(nameof(Completed));
-            }
-            else
+            if (!ModelState.IsValid)
             {
                 return View(order);
+            }            
+
+            if (!(await _checkoutUseCase.Handle(new CheckoutRequest(
+                order.Name, order.Line1, order.State, order.City, order.Country, order.Zip, order.Line2, order.Line3, order.GiftWrap)
+                , _checkoutPresenter)))
+            {
+                ModelState.AddModelError("", _checkoutPresenter.Message);
+                return View(order);
             }
+
+            return RedirectToAction(nameof(Completed));            
         }
 
         public ViewResult Completed()
         {
             return View();
         }
-
     }
 }

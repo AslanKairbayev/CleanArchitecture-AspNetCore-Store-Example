@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Web.Presenters
 {
-    public class GetCategoriesPresenter : IOutputPort<GetCategoriesResponse>
+    public sealed class GetCategoriesPresenter : IOutputPort<GetCategoriesResponse>
     {
         public IEnumerable<string> Categories { get; private set; }
 

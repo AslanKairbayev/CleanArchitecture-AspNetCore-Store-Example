@@ -23,41 +23,37 @@ namespace Web.Controllers
         private readonly IGetCartUseCase _getCartUseCase;
         private readonly GetCartPresenter _getCartPresenter;
         private readonly IAddToCartUseCase _addToCartUseCase;
-        private readonly AddToCartPresenter _addToCartPresenter;
         private readonly IRemoveFromCartUseCase _removeFromCartUseCase;
-        private readonly RemoveFromCartPresenter _removeFromCartPresenter;
 
         public CartController(IGetCartUseCase getCartUseCase, GetCartPresenter getCartPresenter
-            , IAddToCartUseCase addToCartUseCase, AddToCartPresenter addToCartPresenter
-            , IRemoveFromCartUseCase removeFromCartUseCase, RemoveFromCartPresenter removeFromCartPresenter)
+            , IAddToCartUseCase addToCartUseCase
+            , IRemoveFromCartUseCase removeFromCartUseCase)
         {
             _getCartUseCase = getCartUseCase;
             _getCartPresenter = getCartPresenter;
             _addToCartUseCase = addToCartUseCase;
-            _addToCartPresenter = addToCartPresenter;
             _removeFromCartUseCase = removeFromCartUseCase;
-            _removeFromCartPresenter = removeFromCartPresenter;
         }
 
         public async Task<ViewResult> Index(string returnUrl)
         {
             await _getCartUseCase.Handle(new GetCartRequest(), _getCartPresenter);
 
-            _getCartPresenter.CartIndexViewModel.ReturnUrl = returnUrl;
+            _getCartPresenter.ViewModel.ReturnUrl = returnUrl;
 
-            return View(_getCartPresenter.CartIndexViewModel);
+            return View(_getCartPresenter.ViewModel);
         }
 
         public async Task<RedirectToActionResult> AddToCart(int productId, string returnUrl)
         {
-            await _addToCartUseCase.Handle(new AddToCartRequest(productId), _addToCartPresenter);        
+            await _addToCartUseCase.Handle(new AddToCartRequest(productId));
 
             return RedirectToAction("Index", new { returnUrl });
         }
 
         public async Task<RedirectToActionResult> RemoveFromCart(int productId, string returnUrl)
         {
-            await _removeFromCartUseCase.Handle(new RemoveFromCartRequest(productId), _removeFromCartPresenter);
+            await _removeFromCartUseCase.Handle(new RemoveFromCartRequest(productId));
 
             return RedirectToAction("Index", new { returnUrl });
         }

@@ -12,17 +12,17 @@ namespace Web.Presenters
 {
     public sealed class GetCartPresenter : IOutputPort<GetCartResponse>
     {
-        public CartIndexViewModel CartIndexViewModel { get; }
+        public CartIndexViewModel ViewModel { get; }
 
         public GetCartPresenter()
         {
-            CartIndexViewModel = new CartIndexViewModel();
+            ViewModel = new CartIndexViewModel();
         }
 
         public void Handle(GetCartResponse response)
         {
-            CartIndexViewModel.Lines = response.Lines;
-            CartIndexViewModel.TotalValue = response.TotalValue;
+            ViewModel.Lines = response.Lines;
+            ViewModel.TotalValue = response.TotalValue;
         }
     }
 }

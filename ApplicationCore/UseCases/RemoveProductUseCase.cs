@@ -19,22 +19,18 @@ namespace Core.UseCases
             repository = repo;
         }
 
-        public async Task<bool> Handle(RemoveProductRequest request, IOutputPort<RemoveProductResponse> outputPort)
+        public async Task<bool> Handle(RemoveProductRequest request)
         {
             var product = await repository.GetProductById(request.ProductId);
 
-            if (product != null)
+            if (product == null)
             {
-                var response = await repository.Delete(product);
-
-                outputPort.Handle(response.Success ? new RemoveProductResponse(true) : new RemoveProductResponse(false, "Operation failed"));
-
-                return response.Success;
+                return false;
             }
+            
+            await repository.Delete(product);
 
-            outputPort.Handle(new RemoveProductResponse(false, $"ProductId - {request.ProductId} not found"));
-
-            return false;
+            return true;
         }
     }
 }

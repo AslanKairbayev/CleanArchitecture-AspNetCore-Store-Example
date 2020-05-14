@@ -20,92 +20,69 @@ namespace Web.Controllers
         private readonly GetProductsPresenter _getProductsPresenter;
         private readonly IGetProductDetailUseCase _getProductDetailUseCase;
         private readonly GetProductDetailPresenter _getProductDetailPresenter;
-        private readonly ICreateProductUseCase _createProductUseCase;
-        private readonly CreateProductPresenter _createProductPresenter;
+        private readonly ICreateNewProductUseCase _createProductUseCase;
         private readonly IUpdateProductDetailUseCase _updateProductDetailUseCase;
-        private readonly UpdateProductDetailPresenter _updateProductDetailPresenter;
         private readonly IRemoveProductUseCase _removeProductUseCase;
-        private readonly RemoveProductPresenter _removeProductPresenter;
-        private readonly IGetCategoriesUseCase _getCategoriesUseCase;
-        private readonly GetCategoriesPresenter _getCategoriesPresenter;
 
         public AdminController(IGetProductsUseCase getProductsUseCase, GetProductsPresenter getProductsPresenter, 
             IGetProductDetailUseCase getProductDetailUseCase, GetProductDetailPresenter getProductDetailPresenter,
-            ICreateProductUseCase createProductUseCase, CreateProductPresenter createProductPresenter,
-            IUpdateProductDetailUseCase updateProductDetailUseCase, UpdateProductDetailPresenter updateProductDetailPresenter,
-            IRemoveProductUseCase removeProductUseCase, RemoveProductPresenter removeProductPresenter,
-            IGetCategoriesUseCase getCategoriesUseCase, GetCategoriesPresenter getCategoriesPresenter)
+            ICreateNewProductUseCase createProductUseCase, 
+            IUpdateProductDetailUseCase updateProductDetailUseCase, 
+            IRemoveProductUseCase removeProductUseCase)
         {
             _getProductsUseCase = getProductsUseCase; _getProductsPresenter = getProductsPresenter;
             _getProductDetailUseCase = getProductDetailUseCase; _getProductDetailPresenter = getProductDetailPresenter;
-            _createProductUseCase = createProductUseCase; _createProductPresenter = createProductPresenter;
-            _updateProductDetailUseCase = updateProductDetailUseCase; _updateProductDetailPresenter = updateProductDetailPresenter;
-            _removeProductUseCase = removeProductUseCase; _removeProductPresenter = removeProductPresenter;
-            _getCategoriesUseCase = getCategoriesUseCase; _getCategoriesPresenter = getCategoriesPresenter;
+            _createProductUseCase = createProductUseCase;
+            _updateProductDetailUseCase = updateProductDetailUseCase; 
+            _removeProductUseCase = removeProductUseCase;
         }
 
         public async Task<ViewResult> Index()
         {
             await _getProductsUseCase.Handle(new GetProductsRequest(), _getProductsPresenter);
 
-            return View(_getProductsPresenter.Products);
+            return View(_getProductsPresenter.ViewModel);
         }
 
         public async Task<ViewResult> Edit(int productId)
         {
             await _getProductDetailUseCase.Handle(new GetProductDetailRequest(productId), _getProductDetailPresenter);
 
-            await _getCategoriesUseCase.Handle(new GetCategoriesRequest(), _getCategoriesPresenter);
-
-            ViewBag.Categories = _getCategoriesPresenter.Categories;
-
-            return View(_getProductDetailPresenter.EditProductViewModel);
+            return View(_getProductDetailPresenter.ViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditProduct product)
+        public async Task<IActionResult> Edit(ProductModel product)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (product.Id != 0)
-                {
-                    await _updateProductDetailUseCase.Handle(
-                        new UpdateProductDetailRequest(product.Id, product.Name, product.Description, product.Price, product.Category),
-                        _updateProductDetailPresenter);                    
-                }
-                else
-                {
-                    await _createProductUseCase.Handle(new CreateProductRequest(product.Name, product.Description, product.Price, product.Category),
-                        _createProductPresenter);
-                }
+                return View(product);
+            }
 
-                TempData["message"] = $"{product.Name} has been saved";
-
-                return RedirectToAction("Index");
+            if (product.Id != 0)
+            {
+                await _updateProductDetailUseCase.Handle(
+                    new UpdateProductDetailRequest(product.Id, product.Name, product.Description, product.Price, product.Category));
             }
             else
             {
-                await _getCategoriesUseCase.Handle(new GetCategoriesRequest(), _getCategoriesPresenter);
-
-                ViewBag.Categories = _getCategoriesPresenter.Categories;
-
-                return View(product);
+                await _createProductUseCase.Handle(new CreateProductRequest(product.Name, product.Description, product.Price, product.Category));
             }
+
+            TempData["message"] = $"{product.Name} has been saved";
+
+            return RedirectToAction("Index");
         }
 
-        public async Task<ViewResult> Create()
+        public ViewResult Create()
         {
-            await _getCategoriesUseCase.Handle(new GetCategoriesRequest(), _getCategoriesPresenter);
-
-            ViewBag.Categories = _getCategoriesPresenter.Categories;
-
-            return View("Edit", new EditProduct());
+            return View("Edit", new ProductModel());
         } 
 
         [HttpPost]
         public async Task<IActionResult> Delete(int productId)
         {
-            await _removeProductUseCase.Handle(new RemoveProductRequest(productId), _removeProductPresenter);
+            await _removeProductUseCase.Handle(new RemoveProductRequest(productId));
 
             TempData["message"] = $"Product Id - {productId} was deleted";
 

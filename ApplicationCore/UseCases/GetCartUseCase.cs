@@ -26,20 +26,11 @@ namespace Core.UseCases
         {
             var lines = _cartService.Lines;
 
-            if (lines.Any())
-            {
-                var totalValue = await _cartService.ComputeTotalValue();
+            var totalValue = await _cartService.ComputeTotalValue();
 
-                outputPort.Handle(new GetCartResponse(lines, totalValue, true));
+            outputPort.Handle(new GetCartResponse(lines, totalValue, true));
 
-                return true;
-            }
-            else
-            {
-                outputPort.Handle(new GetCartResponse(lines, 0, false, "Cart is Empty"));
-
-                return false;
-            }
-}
+            return true;
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Core.Dto.RepositoryResponses.OrderRepository;
-using Core.Entities;
+﻿using Core.Entities;
 using Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -32,21 +31,19 @@ namespace Infrastructure.Data.Repositories
             return await context.Orders.FirstOrDefaultAsync(f => f.Id == orderId);
         }
 
-        public async Task<CreateOrderResponse> Create(Order order)
+        public async Task Create(Order order)
         {
             context.Orders.Add(order);
             await context.SaveChangesAsync();
-
-            return new CreateOrderResponse(order.Id, true);
         }        
 
-        public async Task<MarkShippedResponse> MarkShipped(Order order)
+        public async Task MarkShipped(int orderId)
         {
-            order.Shipped = true;
+            var dbEntry = await GetOrderById(orderId);
+
+            dbEntry.Shipped = true;
 
             await context.SaveChangesAsync();
-
-            return new MarkShippedResponse(true);
         }
     }
 }

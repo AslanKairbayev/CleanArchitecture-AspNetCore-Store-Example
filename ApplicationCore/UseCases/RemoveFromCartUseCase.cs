@@ -27,22 +27,18 @@ namespace Core.UseCases
             _cartService = cartService;
         }
 
-        public async Task<bool> Handle(RemoveFromCartRequest request, IOutputPort<RemoveFromCartResponse> outputPort)
+        public async Task<bool> Handle(RemoveFromCartRequest request)
         {
             Product product = await productRepository.GetProductById(request.ProductId);
 
-            if (product != null)
+            if (product == null)
             {
-                await _cartService.RemoveLine(new ProductDto(product.Id, product.Name, product.Description, product.Price, null));
-
-                outputPort.Handle(new RemoveFromCartResponse(true));
-
-                return true;
+                return false;
             }
 
-            outputPort.Handle(new RemoveFromCartResponse(false, $"ProductId - {request.ProductId} not found"));
+            await _cartService.RemoveLine(new ProductDto(product.Id, product.Name, product.Description, product.Price, null));
 
-            return false;
+            return true;            
         }
     }
 }

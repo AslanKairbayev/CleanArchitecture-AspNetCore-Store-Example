@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Core.Dto.UseCaseRequests
 {
-    public class CreateProductRequest : IRequest<CreateProductResponse>
+    public class CreateProductRequest
     {
         public string Name { get; }
         public string Description { get; }

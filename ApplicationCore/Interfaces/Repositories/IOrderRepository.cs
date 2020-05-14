@@ -1,6 +1,4 @@
-﻿using Core.Dto.RepositoryResponses.OrderRepository;
-using Core.Dto.UseCaseResponses;
-using Core.Entities;
+﻿using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +10,7 @@ namespace Core.Interfaces.Repositories
     {
         Task<IEnumerable<Order>> UnshippedOrdersWithLines();
         Task<Order> GetOrderById(int orderId);
-        Task<CreateOrderResponse> Create(Order order);
-        Task<MarkShippedResponse> MarkShipped(Order order);
+        Task Create(Order order);
+        Task MarkShipped(int orderId);
     }
 }

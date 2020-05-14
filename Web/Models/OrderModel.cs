@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Web.Models
 {
-    public class OrderRequest
+    public class OrderModel
     {
         [Required(ErrorMessage = "Please enter a name")]
         public string Name { get; set; }

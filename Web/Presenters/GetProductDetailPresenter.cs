@@ -9,22 +9,22 @@ using Web.Models.ViewModels;
 
 namespace Web.Presenters
 {
-    public class GetProductDetailPresenter : IOutputPort<GetProductDetailResponse>
+    public sealed class GetProductDetailPresenter : IOutputPort<GetProductDetailResponse>
     {
-        public EditProduct EditProductViewModel { get; set; }
+        public ProductModel ViewModel { get; }
 
         public GetProductDetailPresenter()
         {
-            EditProductViewModel = new EditProduct();
+            ViewModel = new ProductModel();
         }
 
         public void Handle(GetProductDetailResponse response)
         {
-            EditProductViewModel.Id = response.Id;
-            EditProductViewModel.Name = response.Name;
-            EditProductViewModel.Description = response.Description;
-            EditProductViewModel.Price = response.Price;
-            EditProductViewModel.Category = response.Category;
+            ViewModel.Id = response.Id;
+            ViewModel.Name = response.Name;
+            ViewModel.Description = response.Description;
+            ViewModel.Price = response.Price;
+            ViewModel.Category = response.Category;
         }
     }
 }

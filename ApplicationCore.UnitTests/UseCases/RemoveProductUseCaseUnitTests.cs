@@ -1,5 +1,4 @@
-﻿using Core.Dto.RepositoryResponses.ProductRepository;
-using Core.Dto.UseCaseRequests;
+﻿using Core.Dto.UseCaseRequests;
 using Core.Dto.UseCaseResponses;
 using Core.Entities;
 using Core.Interfaces;
@@ -22,8 +21,7 @@ namespace Core.UnitTests
             var mockProductRepository = new Mock<IProductRepository>();
 
             mockProductRepository
-              .Setup(m => m.Delete(It.IsAny<Product>()))
-              .Returns(Task.FromResult(new DeleteProductResponse(true)));
+              .Setup(m => m.Delete(It.IsAny<Product>()));
 
             mockProductRepository
              .Setup(m => m.GetProductById(It.IsAny<int>()))
@@ -31,11 +29,7 @@ namespace Core.UnitTests
 
             var useCase = new RemoveProductUseCase(mockProductRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<RemoveProductResponse>>();
-
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<RemoveProductResponse>()));
-
-            var response = await useCase.Handle(new RemoveProductRequest(It.IsAny<int>()), mockOutputPort.Object);
+            var response = await useCase.Handle(new RemoveProductRequest(It.IsAny<int>()));
 
             Assert.True(response);
         }
@@ -46,8 +40,7 @@ namespace Core.UnitTests
             var mockProductRepository = new Mock<IProductRepository>();
 
             mockProductRepository
-              .Setup(m => m.Delete(It.IsAny<Product>()))
-              .Returns(Task.FromResult(new DeleteProductResponse(true)));
+              .Setup(m => m.Delete(It.IsAny<Product>()));
 
             mockProductRepository
              .Setup(m => m.GetProductById(It.IsAny<int>()))
@@ -55,11 +48,7 @@ namespace Core.UnitTests
 
             var useCase = new RemoveProductUseCase(mockProductRepository.Object);
 
-            var mockOutputPort = new Mock<IOutputPort<RemoveProductResponse>>();
-
-            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<RemoveProductResponse>()));
-
-            var response = await useCase.Handle(new RemoveProductRequest(It.IsAny<int>()), mockOutputPort.Object);
+            var response = await useCase.Handle(new RemoveProductRequest(It.IsAny<int>()));
 
             Assert.False(response);
         }

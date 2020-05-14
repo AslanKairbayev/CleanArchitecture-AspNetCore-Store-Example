@@ -1,5 +1,4 @@
-﻿using Core.Dto.RepositoryResponses.ProductRepository;
-using Core.Entities;
+﻿using Core.Entities;
 using Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -121,7 +120,7 @@ namespace Infrastructure.Data.FakeRepositories
                 .Count());
         }
 
-        public async Task<CreateProductGatewayResponse> Create(Product product)
+        public async Task Create(Product product)
         {
             var id = Products.LastOrDefault().Id;
 
@@ -129,17 +128,17 @@ namespace Infrastructure.Data.FakeRepositories
 
             Products.Add(product);
 
-            return await Task.FromResult(new CreateProductGatewayResponse(product.Id, true));
+            await Task.CompletedTask;
         }
 
-        public async Task<DeleteProductResponse> Delete(Product product)
+        public async Task Delete(Product product)
         {
             Products.Remove(product);
 
-            return await Task.FromResult(new DeleteProductResponse(true));
+            await Task.CompletedTask;
         }                     
 
-        public async Task<UpdateProductResponse> Update(Product product)
+        public async Task Update(Product product)
         {
             foreach (var p in Products)
             {
@@ -152,7 +151,7 @@ namespace Infrastructure.Data.FakeRepositories
                 }
             }
 
-            return await Task.FromResult(new UpdateProductResponse(true));
+            await Task.CompletedTask;
         }
         
     }

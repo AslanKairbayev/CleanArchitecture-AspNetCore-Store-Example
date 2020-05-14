@@ -15,14 +15,12 @@ namespace Web.Controllers
     public class AccountController : Controller
     {
         private readonly ILoginUseCase _loginUseCase;
-        private readonly LoginPresenter _loginPresenter;
         private readonly ILogoutUseCase _logoutUseCase;
 
-        public AccountController(ILoginUseCase loginUseCase, LoginPresenter loginPresenter,
+        public AccountController(ILoginUseCase loginUseCase,
             ILogoutUseCase logoutUseCase)
         {
             _loginUseCase = loginUseCase;
-            _loginPresenter = loginPresenter;
             _logoutUseCase = logoutUseCase;
         }
 
@@ -37,13 +35,11 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
-            if (ModelState.IsValid)
+            if (await _loginUseCase.Handle(new LoginRequest(loginModel.Name, loginModel.Password)) && ModelState.IsValid)
             {
-                if (await _loginUseCase.Handle(new LoginRequest(loginModel.Name, loginModel.Password), _loginPresenter))
-                {
-                    return Redirect(loginModel?.ReturnUrl ?? "/Admin/Index");
-                }                                                 
+                return Redirect(loginModel?.ReturnUrl ?? "/Admin/Index");
             }
+
             ModelState.AddModelError("", "Invalid name or password");
             return View(loginModel);
         }

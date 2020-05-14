@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Web.Models
 {
-    public class EditProduct
+    public class ProductModel
     {
         public int Id { get; set; }
 

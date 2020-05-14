@@ -31,7 +31,7 @@ namespace Core.UseCases
 
             if (!linesDto.Any())
             {
-                outputPort.Handle(new CheckoutResponse(0, false, "Your Cart is Empty"));
+                outputPort.Handle(new CheckoutResponse(false, "Your Cart is Empty"));
 
                 return false;
             }
@@ -50,7 +50,7 @@ namespace Core.UseCases
                     Quantity = l.Quantity });
             }
 
-            var response = await orderRepository.Create(new Order
+            await orderRepository.Create(new Order
             {
                 Name = request.Name,
                 Line1 = request.Line1,
@@ -64,14 +64,11 @@ namespace Core.UseCases
                 Lines = lines
             });
 
-            outputPort.Handle(response.Success ? new CheckoutResponse(response.Id, true) : new CheckoutResponse(0, false, "Operation failed"));
+            outputPort.Handle(new CheckoutResponse(true));
 
-            if (response.Success)
-                await cartService.Clear();
+            await cartService.Clear();
 
-            return response.Success;
-
-
+            return true;
         }
     }
 }

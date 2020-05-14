@@ -1,9 +1,10 @@
-﻿using Core.Dto.RepositoryResponses.CartRepository;
+﻿using Core.Dto;
 using Core.Dto.UseCaseRequests;
 using Core.Dto.UseCaseResponses;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Interfaces.Repositories;
+using Core.Interfaces.Services;
 using Core.UseCases;
 using Moq;
 using System;
@@ -16,56 +17,46 @@ namespace Core.UnitTests
 {
     public class RemoveFromCartUseCaseTests
     {
-        //[Fact]
-        //public async void Can_Remove_From_Cart()
-        //{
-        //    var mockProductRepository = new Mock<IProductRepository>();
+        [Fact]
+        public async void Can_Remove_From_Cart()
+        {
+            var mockProductRepository = new Mock<IProductRepository>();
 
-        //    mockProductRepository
-        //        .Setup(repo => repo.GetProductById(It.IsAny<int>()))
-        //        .Returns(Task.FromResult(new Product()));
+            mockProductRepository
+                .Setup(repo => repo.GetProductById(It.IsAny<int>()))
+                .Returns(Task.FromResult(new Product()));
 
-        //    var mockCartRepository = new Mock<ICartRepository>();
+            var mockCartService = new Mock<ICartService>();
 
-        //    mockCartRepository
-        //      .Setup(repo => repo.RemoveLine(It.IsAny<Product>()))
-        //      .Returns(Task.FromResult(new RemoveLineResponse(true)));
+            mockCartService
+              .Setup(repo => repo.RemoveLine(It.IsAny<ProductDto>()));
 
-        //    var useCase = new RemoveFromCartUseCase(mockProductRepository.Object, mockCartRepository.Object);
+            var useCase = new RemoveFromCartUseCase(mockProductRepository.Object, mockCartService.Object);
 
-        //    var mockOutputPort = new Mock<IOutputPort<RemoveFromCartResponse>>();
+            var response = await useCase.Handle(new RemoveFromCartRequest(It.IsAny<int>()));
 
-        //    mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<RemoveFromCartResponse>()));
+            Assert.True(response);
+        }
 
-        //    var response = await useCase.Handle(new RemoveFromCartRequest(It.IsAny<int>()), mockOutputPort.Object);
+        [Fact]
+        public async void CanT_Remove_From_Cart_When_Product_Not_Found()
+        {
+            var mockProductRepository = new Mock<IProductRepository>();
 
-        //    Assert.True(response);
-        //}
+            mockProductRepository
+                .Setup(repo => repo.GetProductById(It.IsAny<int>()))
+                .Returns(Task.FromResult(It.IsAny<Product>()));
 
-        //[Fact]
-        //public async void CanT_Remove_From_Cart_When_Product_Not_Found()
-        //{
-        //    var mockProductRepository = new Mock<IProductRepository>();
+            var mockCartService = new Mock<ICartService>();
 
-        //    mockProductRepository
-        //        .Setup(repo => repo.GetProductById(It.IsAny<int>()))
-        //        .Returns(Task.FromResult(It.IsAny<Product>()));
+            mockCartService
+              .Setup(repo => repo.RemoveLine(It.IsAny<ProductDto>()));
 
-        //    var mockCartRepository = new Mock<ICartRepository>();
+            var useCase = new RemoveFromCartUseCase(mockProductRepository.Object, mockCartService.Object);
 
-        //    mockCartRepository
-        //      .Setup(repo => repo.RemoveLine(It.IsAny<Product>()))
-        //      .Returns(Task.FromResult(new RemoveLineResponse(true)));
+            var response = await useCase.Handle(new RemoveFromCartRequest(It.IsAny<int>()));
 
-        //    var useCase = new RemoveFromCartUseCase(mockProductRepository.Object, mockCartRepository.Object);
-
-        //    var mockOutputPort = new Mock<IOutputPort<RemoveFromCartResponse>>();
-
-        //    mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<RemoveFromCartResponse>()));
-
-        //    var response = await useCase.Handle(new RemoveFromCartRequest(It.IsAny<int>()), mockOutputPort.Object);
-
-        //    Assert.False(response);
-        //}
+            Assert.False(response);
+        }
     }
 }

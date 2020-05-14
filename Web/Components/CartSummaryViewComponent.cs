@@ -25,7 +25,7 @@ namespace Web.Components
         {
             await _getCartUseCase.Handle(new GetCartRequest(), _getCartPresenter);
 
-            return View(_getCartPresenter.CartIndexViewModel);
+            return View(_getCartPresenter.ViewModel);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Core.Interfaces.UseCases
 {
-    public interface ILoginUseCase : IRequestHandler<LoginRequest, LoginResponse>
+    public interface ILoginUseCase : IRequestHandler<LoginRequest>
     {
     }
 }

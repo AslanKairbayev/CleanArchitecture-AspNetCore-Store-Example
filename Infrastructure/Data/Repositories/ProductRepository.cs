@@ -1,5 +1,4 @@
-﻿using Core.Dto.RepositoryResponses.ProductRepository;
-using Core.Entities;
+﻿using Core.Entities;
 using Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -53,16 +52,14 @@ namespace Infrastructure.Data.Repositories
             return await context.Products.FirstOrDefaultAsync(f => f.Id == productId);
         }
 
-        public async Task<CreateProductGatewayResponse> Create(Product product)
+        public async Task Create(Product product)
         {
-             context.Products.Add(product);
+            context.Products.Add(product);
 
-            await context.SaveChangesAsync();
-
-            return new CreateProductGatewayResponse(product.Id, true);             
+            await context.SaveChangesAsync();           
         }
 
-        public async Task<UpdateProductResponse> Update(Product product)
+        public async Task Update(Product product)
         {
             Product dbEntry = await GetProductById(product.Id);
 
@@ -72,17 +69,13 @@ namespace Infrastructure.Data.Repositories
             dbEntry.Category = product.Category;
 
             await context.SaveChangesAsync();
-
-            return new UpdateProductResponse(true);
         }
 
-        public async Task<DeleteProductResponse> Delete(Product product)
+        public async Task Delete(Product product)
         {
             context.Products.Remove(product);
-            
-            await context.SaveChangesAsync();
 
-            return new DeleteProductResponse(true);
-        }        
+            await context.SaveChangesAsync();
+        }
     }
 }

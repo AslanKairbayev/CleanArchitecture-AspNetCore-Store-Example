@@ -9,20 +9,20 @@ using Web.Models.ViewModels;
 
 namespace Web.Presenters
 {
-    public class GetUnshippedOrdersPresenter : IOutputPort<GetUnshippedOrdersResponse>
+    public sealed class GetUnshippedOrdersPresenter : IOutputPort<GetUnshippedOrdersResponse>
     {
-        public UnshippedOrdersViewModel UnshippedOrdersViewModel { get; }
+        public UnshippedOrdersViewModel ViewModel { get; }
 
         public GetUnshippedOrdersPresenter()
         {
-            UnshippedOrdersViewModel = new UnshippedOrdersViewModel();
+            ViewModel = new UnshippedOrdersViewModel();
         }
 
         public void Handle(GetUnshippedOrdersResponse response)
         {
-            UnshippedOrdersViewModel.Orders = response.Orders;
-            UnshippedOrdersViewModel.Success = response.Success;
-            UnshippedOrdersViewModel.Message = response.Message;
+            ViewModel.Orders = response.Orders;
+            ViewModel.Success = response.Success;
+            ViewModel.Message = response.Message;
         }
     }
 }

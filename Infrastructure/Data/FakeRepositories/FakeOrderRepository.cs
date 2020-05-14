@@ -1,5 +1,4 @@
-﻿using Core.Dto.RepositoryResponses.OrderRepository;
-using Core.Entities;
+﻿using Core.Entities;
 using Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
@@ -21,13 +20,13 @@ namespace Infrastructure.Data.FakeRepositories
             .Where(w => !w.Shipped));
         }
 
-        public async Task<CreateOrderResponse> Create(Order order)
+        public async Task Create(Order order)
         {
             order.Id = ++id;
 
             Orders.Add(order);
 
-            return await Task.FromResult(new CreateOrderResponse(order.Id, true));
+            await Task.CompletedTask;
         }
 
         public async Task<Order> GetOrderById(int orderId)
@@ -35,19 +34,18 @@ namespace Infrastructure.Data.FakeRepositories
             return await Task.FromResult(Orders.FirstOrDefault(f => f.Id == orderId));
         }
 
-        public async Task<MarkShippedResponse> MarkShipped(Order order)
+        public async Task MarkShipped(int orderId)
         {
             foreach (var o in Orders)
             {
-                if (o.Id == order.Id)
+                if (o.Id == orderId)
                 {
                     o.Shipped = true;
                 }
             }
 
-            return await Task.FromResult(new MarkShippedResponse(true));
+            await Task.CompletedTask;
         }
-
         
     }
 }

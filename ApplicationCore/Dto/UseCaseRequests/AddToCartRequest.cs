@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Core.Dto.UseCaseRequests
 {
-    public class AddToCartRequest : IRequest<AddToCartResponse>
+    public class AddToCartRequest
     {
         public int ProductId { get; }
 

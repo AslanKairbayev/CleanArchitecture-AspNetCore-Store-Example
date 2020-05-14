@@ -20,13 +20,11 @@ namespace Web.Controllers
             _getProductsByParamPresenter = getProductsByParamPresenter;            
         }
 
-        public async Task<IActionResult> List(string category, int productPage)
+        public async Task<ViewResult> List(string category, int productPage)
         {
             await _getProductsByParamUseCase.Handle(new GetProductsByParamRequest(productPage, category), _getProductsByParamPresenter);
 
-            return View(_getProductsByParamPresenter.ProductsListViewModel);
-        }
-
-        
+            return View(_getProductsByParamPresenter.ViewModel);
+        }        
     }
 }

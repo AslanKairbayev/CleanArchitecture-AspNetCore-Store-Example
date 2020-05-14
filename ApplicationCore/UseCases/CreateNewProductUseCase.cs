@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 
 namespace Core.UseCases
 {
-    public sealed class CreateProductUseCase : ICreateProductUseCase
+    public sealed class CreateNewProductUseCase : ICreateNewProductUseCase
     {
         private readonly IProductRepository repository;
 
-        public CreateProductUseCase(IProductRepository repo)
+        public CreateNewProductUseCase(IProductRepository repo)
         {
             repository = repo;
         }
 
-        public async Task<bool> Handle(CreateProductRequest request, IOutputPort<CreateProductResponse> outputPort)
+        public async Task<bool> Handle(CreateProductRequest request)
         {
-            var response = await repository.Create(new Product
+            await repository.Create(new Product
             {
                 Name = request.Name,
                 Description = request.Description,
@@ -30,9 +30,7 @@ namespace Core.UseCases
                 Category = request.Category
             });
 
-            outputPort.Handle(response.Success ? new CreateProductResponse(response.Id, true) : new CreateProductResponse(0, false, "Operation failed"));
-
-            return response.Success;
+            return true;
         }
     }
 }

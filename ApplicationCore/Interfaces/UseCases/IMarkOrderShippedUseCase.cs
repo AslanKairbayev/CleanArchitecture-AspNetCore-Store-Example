@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Core.Interfaces.UseCases
 {
-    public interface IMarkOrderShippedUseCase : IRequestHandler<MarkOrderShippedRequest, MarkOrderShippedResponse>
+    public interface IMarkOrderShippedUseCase : IRequestHandler<MarkOrderShippedRequest>
     {
     }
 }

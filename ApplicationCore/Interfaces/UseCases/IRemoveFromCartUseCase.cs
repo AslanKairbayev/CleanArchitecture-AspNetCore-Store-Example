@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Core.Interfaces.UseCases
 {
-    public interface IRemoveFromCartUseCase : IRequestHandler<RemoveFromCartRequest, RemoveFromCartResponse>
+    public interface IRemoveFromCartUseCase : IRequestHandler<RemoveFromCartRequest>
     {
 
     }

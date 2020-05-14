@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Web.Presenters
 {
-    public class GetProductsPresenter : IOutputPort<GetProductsResponse>
+    public sealed class GetProductsPresenter : IOutputPort<GetProductsResponse>
     {
-        public IEnumerable<ProductDto> Products { get; private set; }
+        public IEnumerable<ProductDto> ViewModel { get; private set; }
 
         public void Handle(GetProductsResponse response)
         {
-            Products = response.Products;
+            ViewModel = response.Products;
         }
     }
 }

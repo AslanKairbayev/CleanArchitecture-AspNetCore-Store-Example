@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Core.Dto.UseCaseRequests
 {
-    public class MarkOrderShippedRequest : IRequest<MarkOrderShippedResponse>
+    public class MarkOrderShippedRequest
     {
         public int OrderId { get; }
 

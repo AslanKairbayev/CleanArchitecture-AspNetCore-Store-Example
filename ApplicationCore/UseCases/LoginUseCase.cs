@@ -19,24 +19,23 @@ namespace Core.UseCases
             repository = repo;
         }
 
-        public async Task<bool> Handle(LoginRequest request, IOutputPort<LoginResponse> outputPort)
+        public async Task<bool> Handle(LoginRequest request)
         {
             var user = await repository.FindByName(request.UserName);
 
-            if (user != null)
+            if (user == null)
             {
-                await repository.SignOut();
-                if (await repository.SignIn(user, request.Password))
-                {
-                    outputPort.Handle(new LoginResponse(true));
-
-                    return true;
-                }
+                return false;
             }
 
-            outputPort.Handle(new LoginResponse(false, $"User {request.UserName} not found"));
+            await repository.SignOut();
 
-            return false;
+            if (await repository.SignIn(user, request.Password))
+            {
+                return true;
+            }
+            
+            return false;                       
         }
     }
 }

@@ -20,29 +20,25 @@ namespace Core.UseCases
             repository = repo;
         }
 
-        public async Task<bool> Handle(UpdateProductDetailRequest request, IOutputPort<UpdateProductDetailResponse> outputPort)
+        public async Task<bool> Handle(UpdateProductDetailRequest request)
         {
             var product = await repository.GetProductById(request.Id);
 
-            if (product != null)
+            if (product == null)
             {
-                var response = await repository.Update(new Product
-                {
-                    Id = request.Id,
-                    Name = request.Name,
-                    Description = request.Description,
-                    Price = request.Price,
-                    Category = request.Category
-                });
-
-                outputPort.Handle(response.Success ? new UpdateProductDetailResponse(true) : new UpdateProductDetailResponse(false, "Operation failed"));
-
-                return response.Success;
+                return false;               
             }
 
-            outputPort.Handle(new UpdateProductDetailResponse(false, $"ProductId - {request.Id} not found"));
+            await repository.Update(new Product
+            {
+                Id = request.Id,
+                Name = request.Name,
+                Description = request.Description,
+                Price = request.Price,
+                Category = request.Category
+            });
 
-            return false;
+            return true;
         }
     }
 }

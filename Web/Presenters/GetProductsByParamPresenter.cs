@@ -1,6 +1,8 @@
 ﻿using Core.Dto.UseCaseResponses;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,18 +15,18 @@ namespace Web.Presenters
 {
     public sealed class GetProductsByParamPresenter : IOutputPort<GetProductsByParamResponse>
     {
-        public ProductsListViewModel ProductsListViewModel { get; }
+        public ProductsListViewModel ViewModel { get; }
 
         public GetProductsByParamPresenter()
         {
-            ProductsListViewModel = new ProductsListViewModel();
+            ViewModel = new ProductsListViewModel();            
         }
 
         public void Handle(GetProductsByParamResponse response)
         {
-            ProductsListViewModel.Products = response.Products;
-            ProductsListViewModel.CurrentCategory = response.Category;
-            ProductsListViewModel.PagingInfo = new PagingInfo
+            ViewModel.Products = response.Products;
+            ViewModel.CurrentCategory = response.Category;
+            ViewModel.PagingInfo = new PagingInfo
             {
                 CurrentPage = response.Page,
                 ItemsPerPage = response.PageSize,

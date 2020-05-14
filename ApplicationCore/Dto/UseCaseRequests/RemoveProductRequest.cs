@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Core.Dto.UseCaseRequests
 {
-    public class RemoveProductRequest : IRequest<RemoveProductResponse>
+    public class RemoveProductRequest
     {
         public int ProductId { get; }
 

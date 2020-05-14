@@ -24,6 +24,8 @@ namespace Infrastructure.Identity.Repositories
         {
             var user = await userManager.FindByNameAsync(userName);
 
+            if (user == null) return null;
+
             return new User(user.UserName, user.Id, user.PasswordHash);
         }
 

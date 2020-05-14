@@ -37,20 +37,12 @@ namespace Web
             services.AddScoped<GetProductsByParamPresenter>();
             services.AddScoped<GetProductsPresenter>();
             services.AddScoped<GetProductDetailPresenter>();
-            services.AddScoped<CreateProductPresenter>();
-            services.AddScoped<UpdateProductDetailPresenter>();
-            services.AddScoped<RemoveProductPresenter>();
             services.AddScoped<GetCategoriesPresenter>();
 
             services.AddScoped<GetCartPresenter>();
-            services.AddScoped<AddToCartPresenter>();
-            services.AddScoped<RemoveFromCartPresenter>();
 
             services.AddScoped<GetUnshippedOrdersPresenter>();
             services.AddScoped<CheckoutPresenter>();
-            services.AddScoped<MarkOrderShippedPresenter>();
-
-            services.AddScoped<LoginPresenter>();
 
             services.AddScoped<ICartService, SessionCartService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

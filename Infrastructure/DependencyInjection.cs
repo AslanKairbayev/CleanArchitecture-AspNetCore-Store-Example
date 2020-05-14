@@ -35,7 +35,6 @@ namespace Infrastructure
 
             services.AddTransient<IUserRepository, UserRepository>();
 
-
             //services.AddSingleton<IProductRepository, FakeProductRepository>();
             //services.AddSingleton<IOrderRepository, FakeOrderRepository>();
 
