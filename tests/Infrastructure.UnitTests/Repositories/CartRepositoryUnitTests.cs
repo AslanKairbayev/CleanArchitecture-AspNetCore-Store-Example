@@ -1,7 +1,4 @@
-﻿using Core.Entities;
-using Core.Interfaces.Repositories;
-using Infrastructure.Data.Repositories;
-using Moq;
+﻿using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
