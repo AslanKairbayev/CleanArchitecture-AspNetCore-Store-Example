@@ -1,0 +1,1 @@
+CleanArchitecture-AspNetCoreMvc-Store
