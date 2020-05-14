@@ -2,7 +2,7 @@
 Starter project ASP.NET Core MVC using clean architecture
 
 # Setup
-- Uses MS SQL Server Developer Edition (Install separately using [this link](https://www.microsoft.com/en-us/sql-server/sql-server-downloads).
+- Uses MS SQL Server Developer Edition (Install separately using [this link](https://www.microsoft.com/en-us/sql-server/sql-server-downloads).)
 - Apply database migrations to create the db.  From a command line within the *Infrastructure* project folder use the dotnet CLI to run : <code>Infrastructure>**dotnet ef database update**</code>
 
 # Visual Studio
