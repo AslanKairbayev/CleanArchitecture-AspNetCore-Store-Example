@@ -14,6 +14,8 @@ using Web.Presenters;
 namespace Web.Controllers
 {
     [Authorize]
+    [ApiController]
+    [Route("api/[controller]")]
     public class AdminController : Controller
     {
         private readonly IGetProductsUseCase _getProductsUseCase;
@@ -37,56 +39,55 @@ namespace Web.Controllers
             _removeProductUseCase = removeProductUseCase;
         }
 
-        public async Task<ViewResult> Index()
+        [HttpGet("GetProducts")]
+        public async Task<IActionResult> Get()
         {
             await _getProductsUseCase.Handle(new GetProductsRequest(), _getProductsPresenter);
 
-            return View(_getProductsPresenter.ViewModel);
+            return Ok(_getProductsPresenter.ViewModel);
         }
 
-        public async Task<ViewResult> Edit(int productId)
+        [HttpGet("GetProduct{productId}")]
+        public async Task<IActionResult> Get(int productId)
         {
             await _getProductDetailUseCase.Handle(new GetProductDetailRequest(productId), _getProductDetailPresenter);
 
-            return View(_getProductDetailPresenter.ViewModel);
+            return Ok(_getProductDetailPresenter.ViewModel);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Edit(ProductModel product)
+        [HttpPost("CreateProduct")]
+        public async Task<IActionResult> Create([FromBody] ProductModel product)
         {
             if (!ModelState.IsValid)
             {
-                return View(product);
+                return BadRequest(ModelState);
             }
 
-            if (product.Id != 0)
-            {
-                await _updateProductDetailUseCase.Handle(
-                    new UpdateProductDetailRequest(product.Id, product.Name, product.Description, product.Price, product.Category));
-            }
-            else
-            {
-                await _createProductUseCase.Handle(new CreateProductRequest(product.Name, product.Description, product.Price, product.Category));
-            }
+            await _createProductUseCase.Handle(new CreateProductRequest(product.Name, product.Description, product.Price, product.Category));
 
-            TempData["message"] = $"{product.Name} has been saved";
-
-            return RedirectToAction("Index");
+            return Ok();
         }
 
-        public ViewResult Create()
+        [HttpPut("UpdateProduct")]
+        public async Task<IActionResult> Update([FromBody] ProductModel product)
         {
-            return View("Edit", new ProductModel());
-        } 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        [HttpPost]
+            await _updateProductDetailUseCase.Handle(
+                   new UpdateProductDetailRequest(product.Id, product.Name, product.Description, product.Price, product.Category));
+
+            return Ok();
+        }        
+
+        [HttpDelete("DeleteProduct{productId}")]
         public async Task<IActionResult> Delete(int productId)
         {
             await _removeProductUseCase.Handle(new RemoveProductRequest(productId));
 
-            TempData["message"] = $"Product Id - {productId} was deleted";
-
-            return RedirectToAction("Index");
+            return NoContent();
         }
     }
 }

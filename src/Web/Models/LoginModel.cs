@@ -14,7 +14,5 @@ namespace Web.Models
         [Required]
         [UIHint("password")]
         public string Password { get; set; }
-
-        public string ReturnUrl { get; set; } = "/";
     }
 }

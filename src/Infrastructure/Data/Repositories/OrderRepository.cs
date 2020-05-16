@@ -33,6 +33,7 @@ namespace Infrastructure.Data.Repositories
 
         public async Task Create(Order order)
         {
+            context.AttachRange(order.Lines.Select(l => l.Product));
             context.Orders.Add(order);
             await context.SaveChangesAsync();
         }        

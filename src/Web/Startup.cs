@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Web.Models;
 using Web.Presenters;
 using Web.Services;
@@ -47,14 +48,17 @@ namespace Web
             services.AddScoped<ICartService, SessionCartService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-
             services.AddMvc(mvcOtions =>
             {
                 mvcOtions.EnableEndpointRouting = false;
             });
+
             services.AddDistributedMemoryCache();
             services.AddSession();
-
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CleanArchitectureAspNetCoreWebAPI", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,31 +70,38 @@ namespace Web
             app.UseCookiePolicy();
             app.UseSession();
             app.UseAuthentication();
-
-
-            app.UseMvc(routes => {
-                routes.MapRoute(
-                    name: null,
-                    template: "{category}/Page{productPage:int}",
-                    defaults: new { controller = "Product", action = "List" });
-
-                routes.MapRoute(
-                    name: null,
-                    template: "Page{productPage:int}",
-                    defaults: new { controller = "Product", action = "List", productPage = 1 });
-
-                routes.MapRoute(
-                    name: null,
-                    template: "{category}",
-                    defaults: new { controller = "Product", action = "List", productPage = 1 });
-
-                routes.MapRoute(
-                    name: null,
-                    template: "",
-                    defaults: new { controller = "Product", action = "List", productPage = 1 });
-
-                routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CleanArchitectureAspNetCoreWebAPI V1");
             });
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+            app.UseMvc();
+
+            //app.UseMvc(routes => {
+            //    routes.MapRoute(
+            //        name: null,
+            //        template: "{category}/Page{productPage:int}",
+            //        defaults: new { controller = "Product", action = "List" });
+
+            //    routes.MapRoute(
+            //        name: null,
+            //        template: "Page{productPage:int}",
+            //        defaults: new { controller = "Product", action = "List", productPage = 1 });
+
+            //    routes.MapRoute(
+            //        name: null,
+            //        template: "{category}",
+            //        defaults: new { controller = "Product", action = "List", productPage = 1 });
+
+            //    routes.MapRoute(
+            //        name: null,
+            //        template: "",
+            //        defaults: new { controller = "Product", action = "List", productPage = 1 });
+
+            //    routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
+            //});
 
             SeedData.EnsurePopulated(app);
             SeedIdentity.EnsurePopulated(app);

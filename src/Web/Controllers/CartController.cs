@@ -18,6 +18,8 @@ using Web.Services;
 
 namespace Web.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class CartController : Controller
     {
         private readonly IGetCartUseCase _getCartUseCase;
@@ -35,27 +37,28 @@ namespace Web.Controllers
             _removeFromCartUseCase = removeFromCartUseCase;
         }
 
-        public async Task<ViewResult> Index(string returnUrl)
+        [HttpGet("GetCart")]
+        public async Task<IActionResult> GetCart()
         {
             await _getCartUseCase.Handle(new GetCartRequest(), _getCartPresenter);
 
-            _getCartPresenter.ViewModel.ReturnUrl = returnUrl;
-
-            return View(_getCartPresenter.ViewModel);
+            return Ok(_getCartPresenter.ViewModel);
         }
 
-        public async Task<RedirectToActionResult> AddToCart(int productId, string returnUrl)
+        [HttpPost("AddToCart{productId}")]
+        public async Task<IActionResult> AddToCart(int productId)
         {
             await _addToCartUseCase.Handle(new AddToCartRequest(productId));
 
-            return RedirectToAction("Index", new { returnUrl });
+            return Ok();
         }
 
-        public async Task<RedirectToActionResult> RemoveFromCart(int productId, string returnUrl)
+        [HttpDelete("RemoveFromCart{productId}")]
+        public async Task<IActionResult> RemoveFromCart(int productId)
         {
             await _removeFromCartUseCase.Handle(new RemoveFromCartRequest(productId));
 
-            return RedirectToAction("Index", new { returnUrl });
+            return Ok();
         }
     }
 }

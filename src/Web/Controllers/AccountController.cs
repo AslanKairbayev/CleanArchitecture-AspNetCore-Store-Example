@@ -12,6 +12,8 @@ using Web.Presenters;
 namespace Web.Controllers
 {
     [Authorize]
+    [ApiController]
+    [Route("api/[controller]")]
     public class AccountController : Controller
     {
         private readonly ILoginUseCase _loginUseCase;
@@ -24,30 +26,32 @@ namespace Web.Controllers
             _logoutUseCase = logoutUseCase;
         }
 
+        [HttpPost("Login")]
         [AllowAnonymous]
-        public ViewResult Login(string returnUrl)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
         {
-            return View(new LoginModel { ReturnUrl = returnUrl });
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel loginModel)
-        {
-            if (await _loginUseCase.Handle(new LoginRequest(loginModel.Name, loginModel.Password)) && ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return Redirect(loginModel?.ReturnUrl ?? "/Admin/Index");
+                return BadRequest(ModelState);
             }
 
-            ModelState.AddModelError("", "Invalid name or password");
-            return View(loginModel);
+            if (await _loginUseCase.Handle(new LoginRequest(loginModel.Name, loginModel.Password)))
+            {
+                return Ok();
+            }
+            else
+            {
+                return Unauthorized();
+            }
+            
         }
 
-        public async Task<RedirectResult> Logout(string returnUrl = "/")
+        [HttpPost("Logout")]
+        public async Task<IActionResult> Logout()
         {
             await _logoutUseCase.Handle(new LogoutRequest());
-            return Redirect(returnUrl);
+            return Ok();
         }
     }
 }

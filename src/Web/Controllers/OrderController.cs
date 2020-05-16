@@ -12,6 +12,8 @@ using Web.Presenters;
 
 namespace Web.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class OrderController : Controller
     {
         private readonly IGetUnshippedOrdersUseCase _getUnshippedOrdersUseCase;
@@ -32,46 +34,42 @@ namespace Web.Controllers
         }
 
         [Authorize]
-        public async Task<ViewResult> List()
+        [HttpGet("GetUnshippedOrders")]
+        public async Task<IActionResult> List()
         {
             await _getUnshippedOrdersUseCase.Handle(new GetUnshippedOrdersRequest(), _getUnshippedOrdersPresenter);
 
-            return View(_getUnshippedOrdersPresenter.ViewModel);
+            return Ok(_getUnshippedOrdersPresenter.ViewModel);
         }
 
-        [HttpPost]
+        [HttpPost("MarkShipped{orderId}")]
         [Authorize]
         public async Task<IActionResult> MarkShipped(int orderId)
         {
             await _markOrderShippedUseCase.Handle(new MarkOrderShippedRequest(orderId));
 
-            return RedirectToAction(nameof(List));
+            return Ok();
         }
 
-        public ViewResult Checkout() => View(new OrderModel());
-
-        [HttpPost]
-        public async Task<IActionResult> Checkout(OrderModel order)
+        [HttpPost("Checkout")]
+        public async Task<IActionResult> Checkout([FromBody] OrderModel order)
         {           
             if (!ModelState.IsValid)
             {
-                return View(order);
-            }            
+                return BadRequest(ModelState);
+            }
 
-            if (!(await _checkoutUseCase.Handle(new CheckoutRequest(
+            if ((await _checkoutUseCase.Handle(new CheckoutRequest(
                 order.Name, order.Line1, order.State, order.City, order.Country, order.Zip, order.Line2, order.Line3, order.GiftWrap)
                 , _checkoutPresenter)))
             {
-                ModelState.AddModelError("", _checkoutPresenter.Message);
-                return View(order);
+                return Ok();
             }
-
-            return RedirectToAction(nameof(Completed));            
-        }
-
-        public ViewResult Completed()
-        {
-            return View();
+            else
+            {
+                ModelState.AddModelError("", _checkoutPresenter.Message);
+                return BadRequest(ModelState);
+            }          
         }
     }
 }
