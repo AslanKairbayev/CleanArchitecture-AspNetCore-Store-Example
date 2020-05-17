@@ -1,9 +1,7 @@
 ﻿using Core.Entities;
 using Core.Interfaces.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Data.FakeRepositories
@@ -11,7 +9,6 @@ namespace Infrastructure.Data.FakeRepositories
     public class FakeOrderRepository : IOrderRepository
     {
         private readonly List<Order> Orders = new List<Order>();
-
         private int id = 0;
 
         public async Task<IEnumerable<Order>> UnshippedOrdersWithLines()
@@ -23,9 +20,7 @@ namespace Infrastructure.Data.FakeRepositories
         public async Task<int> Create(Order order)
         {
             order.Id = ++id;
-
             Orders.Add(order);
-
             return await Task.FromResult(order.Id);
         }
 
@@ -43,9 +38,7 @@ namespace Infrastructure.Data.FakeRepositories
                     o.Shipped = true;
                 }
             }
-
             await Task.CompletedTask;
-        }
-        
+        }        
     }
 }

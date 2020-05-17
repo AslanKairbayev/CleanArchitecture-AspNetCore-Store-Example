@@ -22,9 +22,7 @@ namespace Core.UseCases
         public async Task<bool> Handle(GetCategoriesRequest request, IOutputPort<GetCategoriesResponse> outputPort)
         {
             var categories = await repository.GetCategories();
-
             outputPort.Handle(new GetCategoriesResponse(categories, true));
-
             return true;
         }
     }

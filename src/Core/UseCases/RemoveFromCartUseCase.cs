@@ -1,15 +1,13 @@
 ﻿using Core.Dto;
 using Core.Dto.UseCaseRequests;
 using Core.Dto.UseCaseResponses;
-using Core.DTO;
-using Core.Entities;
 using Core.Interfaces;
 using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using Core.Interfaces.UseCases;
-using Core.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +26,12 @@ namespace Core.UseCases
 
         public async Task<bool> Handle(RemoveFromCartRequest request, IOutputPort<RemoveFromCartResponse> outputPort)
         {
+            var linesDto = _cartService.Lines;
+            if (!linesDto.Any())
+            {
+                outputPort.Handle(new RemoveFromCartResponse(false, "Your Cart is Empty"));
+                return false;
+            }
             var product = await productRepository.GetProductById(request.ProductId);
             if (product != null)
             {

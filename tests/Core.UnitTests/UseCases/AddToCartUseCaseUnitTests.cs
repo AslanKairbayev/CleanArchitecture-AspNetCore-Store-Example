@@ -21,40 +21,42 @@ namespace Core.UnitTests
         public async void Can_Add_To_Cart()
         {
             var mockProductRepository = new Mock<IProductRepository>();
-
             mockProductRepository
                 .Setup(repo => repo.GetProductById(It.IsAny<int>()))
                 .Returns(Task.FromResult(new Product()));
 
             var mockCartService = new Mock<ICartService>();
-
             mockCartService
               .Setup(repo => repo.AddItem(It.IsAny<ProductDto>(), It.IsAny<int>()));
 
+            var mockOutputPort = new Mock<IOutputPort<AddToCartResponse>>();
+            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<AddToCartResponse>()));
+
             var useCase = new AddToCartUseCase(mockProductRepository.Object, mockCartService.Object);
 
-            var response = await useCase.Handle(new AddToCartRequest(It.IsAny<int>()));
+            var response = await useCase.Handle(new AddToCartRequest(It.IsAny<int>()), mockOutputPort.Object);
 
             Assert.True(response);
         }
 
         [Fact]
-        public async void Cant_Add_To_Cart_When_Product_Not_Found()
+        public async void Cant_Add_To_Cart_When_Product_Was_Not_Found()
         {
             var mockProductRepository = new Mock<IProductRepository>();
-
             mockProductRepository
                 .Setup(repo => repo.GetProductById(It.IsAny<int>()))
                 .Returns(Task.FromResult(It.IsAny<Product>()));
 
             var mockCartService = new Mock<ICartService>();
-
             mockCartService
               .Setup(repo => repo.AddItem(It.IsAny<ProductDto>(), It.IsAny<int>()));
 
+            var mockOutputPort = new Mock<IOutputPort<AddToCartResponse>>();
+            mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<AddToCartResponse>()));
+
             var useCase = new AddToCartUseCase(mockProductRepository.Object, mockCartService.Object);
 
-            var response = await useCase.Handle(new AddToCartRequest(It.IsAny<int>()));
+            var response = await useCase.Handle(new AddToCartRequest(It.IsAny<int>()), mockOutputPort.Object);
 
             Assert.False(response);
         }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Core.UseCases
 {
-    public class GetProductDetailUseCase : IGetProductDetailUseCase
+    public sealed class GetProductDetailUseCase : IGetProductDetailUseCase
     {
         private readonly IProductRepository repository;
 
@@ -22,16 +22,12 @@ namespace Core.UseCases
         public async Task<bool> Handle(GetProductDetailRequest request, IOutputPort<GetProductDetailResponse> outputPort)
         {
             var product = await repository.GetProductById(request.Id);
-
             if (product != null)
             {
                 outputPort.Handle(new GetProductDetailResponse(product.Id, product.Name, product.Description, product.Price, product.Category, true));
-
                 return true;
             }
-
             outputPort.Handle(new GetProductDetailResponse(false, $"ProductId - {request.Id} was not found"));
-
             return false;
         }
     }

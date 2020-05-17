@@ -1,13 +1,10 @@
 ﻿using Core.Dto;
 using Core.Dto.UseCaseRequests;
 using Core.Dto.UseCaseResponses;
-using Core.DTO;
-using Core.Entities;
 using Core.Interfaces;
 using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using Core.Interfaces.UseCases;
-using Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;

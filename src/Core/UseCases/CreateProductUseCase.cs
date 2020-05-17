@@ -29,9 +29,7 @@ namespace Core.UseCases
                 Price = request.Price,
                 Category = request.Category
             });
-
             outputPort.Handle(new CreateProductResponse(id, true));
-
             return true;
         }
     }

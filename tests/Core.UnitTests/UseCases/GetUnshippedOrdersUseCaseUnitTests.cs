@@ -19,7 +19,6 @@ namespace Core.UnitTests
         public async void Can_Get_Unshipped_Orders()
         {
             var mockOrderRepository = new Mock<IOrderRepository>();
-
             mockOrderRepository
               .Setup(m => m.UnshippedOrdersWithLines())
               .Returns(GetUnshippedOrdersWithLines());
@@ -27,7 +26,6 @@ namespace Core.UnitTests
             var useCase = new GetUnshippedOrdersUseCase(mockOrderRepository.Object);
 
             var mockOutputPort = new Mock<IOutputPort<GetUnshippedOrdersResponse>>();
-
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<GetUnshippedOrdersResponse>()));
 
             var response = await useCase.Handle(new GetUnshippedOrdersRequest(), mockOutputPort.Object);
@@ -39,7 +37,6 @@ namespace Core.UnitTests
         public async void Cant_Get_Unshipped_Orders_When_No_Unshipped_Orders()
         {
             var mockOrderRepository = new Mock<IOrderRepository>();
-
             mockOrderRepository
               .Setup(m => m.UnshippedOrdersWithLines())
               .Returns(GetEmptyUnshippedOrdersWithLines());
@@ -47,7 +44,6 @@ namespace Core.UnitTests
             var useCase = new GetUnshippedOrdersUseCase(mockOrderRepository.Object);
 
             var mockOutputPort = new Mock<IOutputPort<GetUnshippedOrdersResponse>>();
-
             mockOutputPort.Setup(outputPort => outputPort.Handle(It.IsAny<GetUnshippedOrdersResponse>()));
 
             var response = await useCase.Handle(new GetUnshippedOrdersRequest(), mockOutputPort.Object);
@@ -58,15 +54,12 @@ namespace Core.UnitTests
         public async Task<IEnumerable<Order>> GetUnshippedOrdersWithLines()
         {
             var items = new List<Order>();
-
             items.Add(new Order() {Lines = new List<CartLine>() { new CartLine() {Product = new Product() } } });
-
             return await Task.FromResult(items);
         }
         public async Task<IEnumerable<Order>> GetEmptyUnshippedOrdersWithLines()
         {
             var items = new List<Order>();
-
             return await Task.FromResult(items);
         }
     }

@@ -28,16 +28,12 @@ namespace Core.UseCases
         public async Task<bool> Handle(CheckoutRequest request, IOutputPort<CheckoutResponse> outputPort)
         {
             var linesDto = cartService.Lines;
-
             if (!linesDto.Any())
             {
                 outputPort.Handle(new CheckoutResponse(0, false, "Your Cart is Empty"));
-
                 return false;
             }
-
             var lines = new List<CartLine>();
-
             foreach (var l in linesDto)
             {
                 lines.Add(new CartLine() { Product = new Product() {
@@ -49,7 +45,6 @@ namespace Core.UseCases
                 }, 
                     Quantity = l.Quantity });
             }
-
             var id = await orderRepository.Create(new Order
             {
                 Name = request.Name,
@@ -63,11 +58,8 @@ namespace Core.UseCases
                 GiftWrap = request.GiftWrap,
                 Lines = lines
             });
-
             outputPort.Handle(new CheckoutResponse(id, true));
-
             await cartService.Clear();
-
             return true;
         }
     }

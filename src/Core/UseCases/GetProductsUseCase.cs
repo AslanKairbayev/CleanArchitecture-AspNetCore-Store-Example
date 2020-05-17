@@ -1,7 +1,6 @@
 ﻿using Core.Dto;
 using Core.Dto.UseCaseRequests;
 using Core.Dto.UseCaseResponses;
-using Core.Entities;
 using Core.Interfaces;
 using Core.Interfaces.Repositories;
 using Core.Interfaces.UseCases;
@@ -25,16 +24,12 @@ namespace Core.Interactors
         public async Task<bool> Handle(GetProductsRequest request, IOutputPort<GetProductsResponse> outputPort)
         {
             var products = await repository.GetProducts();
-
             var productsDto = new List<ProductDto>();
-
             foreach (var p in products)
             {
                 productsDto.Add(new ProductDto(p.Id, p.Name, p.Description, p.Price, p.Category));
             }
-
             outputPort.Handle(new GetProductsResponse(productsDto, true));
-
             return true;
         }
     }

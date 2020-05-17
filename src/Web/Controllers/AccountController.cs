@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Core.Dto.UseCaseRequests;
 using Core.Interfaces.UseCases;
 using Microsoft.AspNetCore.Authorization;
@@ -29,7 +26,6 @@ namespace Web.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
         {
             if (!ModelState.IsValid)

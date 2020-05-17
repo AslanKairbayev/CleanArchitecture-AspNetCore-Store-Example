@@ -1,10 +1,8 @@
 ﻿using Core.Entities;
 using Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Repositories
@@ -42,9 +40,7 @@ namespace Infrastructure.Data.Repositories
         public async Task MarkShipped(int orderId)
         {
             var dbEntry = await GetOrderById(orderId);
-
             dbEntry.Shipped = true;
-
             await context.SaveChangesAsync();
         }
     }

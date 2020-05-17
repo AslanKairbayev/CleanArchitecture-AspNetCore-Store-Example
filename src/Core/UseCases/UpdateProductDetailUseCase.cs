@@ -23,7 +23,6 @@ namespace Core.UseCases
         public async Task<bool> Handle(UpdateProductDetailRequest request, IOutputPort<UpdateProductDetailResponse> outputPort)
         {
             var product = await repository.GetProductById(request.Id);
-
             if (product != null)
             {
                 await repository.Update(new Product
@@ -34,11 +33,9 @@ namespace Core.UseCases
                     Price = request.Price,
                     Category = request.Category
                 });
-
                 outputPort.Handle(new UpdateProductDetailResponse(true));
                 return true;
             }
-
             outputPort.Handle(new UpdateProductDetailResponse(false, $"ProductId - {request.Id} was not found"));
             return false;
         }

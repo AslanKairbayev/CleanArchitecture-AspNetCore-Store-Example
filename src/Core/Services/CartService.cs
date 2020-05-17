@@ -19,7 +19,6 @@ namespace Core.Services
             CartLineDto line = lineCollection
             .Where(p => p.ProductDto.Id == product.Id)
             .FirstOrDefault();
-
             if (line == null)
             {
                 lineCollection.Add(new CartLineDto(product, quantity));
@@ -28,14 +27,12 @@ namespace Core.Services
             {
                 line.Quantity += quantity;
             }
-
             await Task.CompletedTask;
         }
 
         public virtual async Task RemoveLine(ProductDto product)
         {
             lineCollection.RemoveAll(l => l.ProductDto.Id == product.Id);
-
             await Task.CompletedTask;
         }
         public virtual async Task<decimal> ComputeTotalValue() => await Task.FromResult(
@@ -44,9 +41,7 @@ namespace Core.Services
         public virtual async Task Clear()
         {
             lineCollection.Clear();
-
             await Task.CompletedTask;
         }
     }
-
 }

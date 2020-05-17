@@ -1,10 +1,7 @@
 ﻿using Core.Entities;
 using Core.Interfaces.Repositories;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Data.FakeRepositories
@@ -123,18 +120,14 @@ namespace Infrastructure.Data.FakeRepositories
         public async Task<int> Create(Product product)
         {
             var id = Products.LastOrDefault().Id;
-
             product.Id = ++id;
-
             Products.Add(product);
-
             return await Task.FromResult(product.Id);
         }
 
         public async Task Delete(Product product)
         {
             Products.Remove(product);
-
             await Task.CompletedTask;
         }                     
 
@@ -150,9 +143,7 @@ namespace Infrastructure.Data.FakeRepositories
                     p.Category = product.Category;
                 }
             }
-
             await Task.CompletedTask;
-        }
-        
+        }        
     }
 }

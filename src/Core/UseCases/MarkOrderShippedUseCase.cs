@@ -23,15 +23,12 @@ namespace Core.UseCases
         public async Task<bool> Handle(MarkOrderShippedRequest request, IOutputPort<MarkOrderShippedResponse> outputPort)
         {
             var order = await repository.GetOrderById(request.OrderId);
-
             if (order != null)
             {
                 await repository.MarkShipped(request.OrderId);
-
                 outputPort.Handle(new MarkOrderShippedResponse(true));
                 return true;
-            }            
-
+            }          
             outputPort.Handle(new MarkOrderShippedResponse(false, $"OrderId - {request.OrderId} was not found"));
             return false;
         }

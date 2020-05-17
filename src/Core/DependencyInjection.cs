@@ -1,9 +1,6 @@
 ﻿using Core.Interactors;
-using Core.Interfaces.Services;
 using Core.Interfaces.UseCases;
-using Core.Services;
 using Core.UseCases;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

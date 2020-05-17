@@ -24,18 +24,13 @@ namespace Core.UseCases
         public async Task<bool> Handle(GetProductsByParamRequest request, IOutputPort<GetProductsByParamResponse> outputPort)
         {
             var products = await repository.GetProductsByPaginationAndCategory(request.Page, request.PageSize, request.Category);
-
-            var productsDto = new List<ProductDto>();
-            
+            var productsDto = new List<ProductDto>();            
             foreach (var p in products)
             {
                 productsDto.Add(new ProductDto(p.Id, p.Name, p.Description, p.Price, p.Category));
-            }
-            
-            var totalItems = await repository.CountProductsByCategory(request.Category);
-            
-            outputPort.Handle(new GetProductsByParamResponse(productsDto, request.Page, request.PageSize, totalItems, request.Category, true));
-            
+            }            
+            var totalItems = await repository.CountProductsByCategory(request.Category);            
+            outputPort.Handle(new GetProductsByParamResponse(productsDto, request.Page, request.PageSize, totalItems, request.Category, true));            
             return true;          
         }
     }

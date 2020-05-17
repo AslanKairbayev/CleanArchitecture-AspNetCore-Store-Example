@@ -22,11 +22,9 @@ namespace Core.UseCases
         public async Task<bool> Handle(LoginRequest request, IOutputPort<LoginResponse> outputPort)
         {
             var user = await repository.FindByName(request.UserName);
-
             if (user != null)
             {
                 await repository.SignOut();
-
                 if (await repository.SignIn(user, request.Password))
                 {
                     outputPort.Handle(new LoginResponse(true));
@@ -37,8 +35,7 @@ namespace Core.UseCases
                     outputPort.Handle(new LoginResponse(false, "Invalid password"));
                     return false;
                 }
-            }            
-
+            }           
             outputPort.Handle(new LoginResponse(false, "Invalid username"));
             return false;
         }

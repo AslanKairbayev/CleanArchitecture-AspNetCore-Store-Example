@@ -20,7 +20,6 @@ namespace Core.UseCases
         public async Task<bool> Handle(LogoutRequest request)
         {
             await repository.SignOut();
-
             return true;
         }
     }

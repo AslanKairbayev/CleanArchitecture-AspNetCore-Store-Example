@@ -2,9 +2,6 @@
 using Core.Interfaces.Repositories;
 using Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Identity.Repositories
@@ -23,9 +20,7 @@ namespace Infrastructure.Identity.Repositories
         public async Task<User> FindByName(string userName)
         {
             var user = await userManager.FindByNameAsync(userName);
-
             if (user == null) return null;
-
             return new User(user.UserName, user.Id, user.PasswordHash);
         }
 

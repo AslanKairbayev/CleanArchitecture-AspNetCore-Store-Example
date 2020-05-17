@@ -1,10 +1,8 @@
 ﻿using Core.Entities;
 using Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Repositories
@@ -62,19 +60,16 @@ namespace Infrastructure.Data.Repositories
         public async Task Update(Product product)
         {
             Product dbEntry = await GetProductById(product.Id);
-
             dbEntry.Name = product.Name;
             dbEntry.Description = product.Description;
             dbEntry.Price = product.Price;
             dbEntry.Category = product.Category;
-
             await context.SaveChangesAsync();
         }
 
         public async Task Delete(Product product)
         {
             context.Products.Remove(product);
-
             await context.SaveChangesAsync();
         }
     }
