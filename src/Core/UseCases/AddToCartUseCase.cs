@@ -18,7 +18,6 @@ namespace Core.UseCases
     public sealed class AddToCartUseCase : IAddToCartUseCase
     {
         private readonly IProductRepository productRepository;
-
         private readonly ICartService _cartService;
 
         public AddToCartUseCase(IProductRepository repo, ICartService cartService)
@@ -27,18 +26,17 @@ namespace Core.UseCases
             _cartService = cartService;
         }
 
-        public async Task<bool> Handle(AddToCartRequest request)
+        public async Task<bool> Handle(AddToCartRequest request, IOutputPort<AddToCartResponse> outputPort)
         {
-            Product product = await productRepository.GetProductById(request.ProductId);
-
-            if (product == null)
+            var product = await productRepository.GetProductById(request.ProductId);
+            if (product != null)
             {
-                return false;
+                await _cartService.AddItem(new ProductDto(product.Id, product.Name, product.Description, product.Price, product.Category), 1);
+                outputPort.Handle(new AddToCartResponse(true));
+                return true;
             }
-
-            await _cartService.AddItem(new ProductDto(product.Id, product.Name, product.Description, product.Price, product.Category), 1);
-
-            return true;
+            outputPort.Handle(new AddToCartResponse(false, $"ProductId - {request.ProductId} was not found"));
+            return false;
         }
     }
 }

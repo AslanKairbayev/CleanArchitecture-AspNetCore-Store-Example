@@ -7,22 +7,24 @@ using System.Threading.Tasks;
 using Web.Models;
 using Web.Models.ViewModels;
 using Core.Dto;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Web.Presenters
 {
     public sealed class GetCartPresenter : IOutputPort<GetCartResponse>
     {
-        public CartIndexViewModel ViewModel { get; }
+        public JsonResult JsonResult { get; }
 
         public GetCartPresenter()
         {
-            ViewModel = new CartIndexViewModel();
+            JsonResult = new JsonResult(null);
         }
 
         public void Handle(GetCartResponse response)
         {
-            ViewModel.Lines = response.Lines;
-            ViewModel.TotalValue = response.TotalValue;
+            JsonResult.StatusCode = (int)(response.Success ? HttpStatusCode.OK : HttpStatusCode.BadRequest);
+            JsonResult.Value = response;
         }
     }
 }

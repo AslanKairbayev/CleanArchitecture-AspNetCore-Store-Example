@@ -52,11 +52,11 @@ namespace Infrastructure.Data.Repositories
             return await context.Products.FirstOrDefaultAsync(f => f.Id == productId);
         }
 
-        public async Task Create(Product product)
+        public async Task<int> Create(Product product)
         {
             context.Products.Add(product);
-
-            await context.SaveChangesAsync();           
+            await context.SaveChangesAsync();
+            return product.Id;            
         }
 
         public async Task Update(Product product)

@@ -1,26 +1,24 @@
-﻿using Core.Interfaces;
-using Core.Dto.UseCaseResponses;
+﻿using Core.Dto.UseCaseResponses;
+using Core.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Web.Models;
-using Web.Models.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Web.Presenters
 {
-    public sealed class GetProductDetailPresenter : IOutputPort<GetProductDetailResponse>
+    public sealed class LoginPresenter : IOutputPort<LoginResponse>
     {
         public JsonResult JsonResult { get; }
 
-        public GetProductDetailPresenter()
+        public LoginPresenter()
         {
             JsonResult = new JsonResult(null);
         }
 
-        public void Handle(GetProductDetailResponse response)
+        public void Handle(LoginResponse response)
         {
             JsonResult.StatusCode = (int)(response.Success ? HttpStatusCode.OK : HttpStatusCode.BadRequest);
             JsonResult.Value = response;

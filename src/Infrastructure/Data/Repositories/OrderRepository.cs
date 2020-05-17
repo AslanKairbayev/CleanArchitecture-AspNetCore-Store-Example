@@ -31,11 +31,12 @@ namespace Infrastructure.Data.Repositories
             return await context.Orders.FirstOrDefaultAsync(f => f.Id == orderId);
         }
 
-        public async Task Create(Order order)
+        public async Task<int> Create(Order order)
         {
             context.AttachRange(order.Lines.Select(l => l.Product));
             context.Orders.Add(order);
             await context.SaveChangesAsync();
+            return order.Id;
         }        
 
         public async Task MarkShipped(int orderId)

@@ -18,7 +18,6 @@ namespace Core.UseCases
     public sealed class RemoveFromCartUseCase : IRemoveFromCartUseCase
     {
         private readonly IProductRepository productRepository;
-
         private readonly ICartService _cartService;
 
         public RemoveFromCartUseCase(IProductRepository repo, ICartService cartService)
@@ -27,18 +26,17 @@ namespace Core.UseCases
             _cartService = cartService;
         }
 
-        public async Task<bool> Handle(RemoveFromCartRequest request)
+        public async Task<bool> Handle(RemoveFromCartRequest request, IOutputPort<RemoveFromCartResponse> outputPort)
         {
-            Product product = await productRepository.GetProductById(request.ProductId);
-
-            if (product == null)
+            var product = await productRepository.GetProductById(request.ProductId);
+            if (product != null)
             {
-                return false;
+                await _cartService.RemoveLine(new ProductDto(product.Id, product.Name, product.Description, product.Price, product.Category));
+                outputPort.Handle(new RemoveFromCartResponse(true));
+                return true;
             }
-
-            await _cartService.RemoveLine(new ProductDto(product.Id, product.Name, product.Description, product.Price, null));
-
-            return true;            
+            outputPort.Handle(new RemoveFromCartResponse(false, $"ProductId - {request.ProductId} was not found"));
+            return false;
         }
     }
 }

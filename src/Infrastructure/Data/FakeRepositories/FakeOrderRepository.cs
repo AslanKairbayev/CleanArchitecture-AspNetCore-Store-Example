@@ -20,13 +20,13 @@ namespace Infrastructure.Data.FakeRepositories
             .Where(w => !w.Shipped));
         }
 
-        public async Task Create(Order order)
+        public async Task<int> Create(Order order)
         {
             order.Id = ++id;
 
             Orders.Add(order);
 
-            await Task.CompletedTask;
+            return await Task.FromResult(order.Id);
         }
 
         public async Task<Order> GetOrderById(int orderId)

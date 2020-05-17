@@ -19,16 +19,18 @@ namespace Web.Controllers
         private readonly IGetUnshippedOrdersUseCase _getUnshippedOrdersUseCase;
         private readonly GetUnshippedOrdersPresenter _getUnshippedOrdersPresenter;
         private readonly IMarkOrderShippedUseCase _markOrderShippedUseCase;
+        private readonly MarkOrderShippedPresenter _markOrderShippedPresenter;
         private readonly ICheckoutUseCase _checkoutUseCase;
         private readonly CheckoutPresenter _checkoutPresenter;
 
         public OrderController(IGetUnshippedOrdersUseCase getUnshippedOrdersUseCase, GetUnshippedOrdersPresenter getUnshippedOrdersPresenter,
-            IMarkOrderShippedUseCase markOrderShippedUseCase,
+            IMarkOrderShippedUseCase markOrderShippedUseCase, MarkOrderShippedPresenter markOrderShippedPresenter,
             ICheckoutUseCase checkoutUseCase, CheckoutPresenter checkoutPresenter)
         {
             _getUnshippedOrdersUseCase = getUnshippedOrdersUseCase;
             _getUnshippedOrdersPresenter = getUnshippedOrdersPresenter;
             _markOrderShippedUseCase = markOrderShippedUseCase;
+            _markOrderShippedPresenter = markOrderShippedPresenter;
             _checkoutUseCase = checkoutUseCase;
             _checkoutPresenter = checkoutPresenter;            
         }
@@ -38,17 +40,15 @@ namespace Web.Controllers
         public async Task<IActionResult> List()
         {
             await _getUnshippedOrdersUseCase.Handle(new GetUnshippedOrdersRequest(), _getUnshippedOrdersPresenter);
-
-            return Ok(_getUnshippedOrdersPresenter.ViewModel);
+            return _getUnshippedOrdersPresenter.JsonResult;
         }
 
         [HttpPost("MarkShipped{orderId}")]
         [Authorize]
         public async Task<IActionResult> MarkShipped(int orderId)
         {
-            await _markOrderShippedUseCase.Handle(new MarkOrderShippedRequest(orderId));
-
-            return Ok();
+            await _markOrderShippedUseCase.Handle(new MarkOrderShippedRequest(orderId), _markOrderShippedPresenter);
+            return _markOrderShippedPresenter.JsonResult;
         }
 
         [HttpPost("Checkout")]
@@ -58,18 +58,9 @@ namespace Web.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            if ((await _checkoutUseCase.Handle(new CheckoutRequest(
-                order.Name, order.Line1, order.State, order.City, order.Country, order.Zip, order.Line2, order.Line3, order.GiftWrap)
-                , _checkoutPresenter)))
-            {
-                return Ok();
-            }
-            else
-            {
-                ModelState.AddModelError("", _checkoutPresenter.Message);
-                return BadRequest(ModelState);
-            }          
+            await _checkoutUseCase.Handle(
+                new CheckoutRequest(order.Name, order.Line1, order.State, order.City, order.Country, order.Zip, order.Line2, order.Line3, order.GiftWrap), _checkoutPresenter);
+            return _checkoutPresenter.JsonResult;           
         }
     }
 }

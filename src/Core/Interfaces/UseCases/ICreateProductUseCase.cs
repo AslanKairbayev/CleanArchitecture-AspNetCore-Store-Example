@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Core.Interfaces.UseCases
 {
-    public interface IRemoveProductUseCase : IRequestHandler<RemoveProductRequest, RemoveProductResponse>
+    public interface ICreateProductUseCase : IRequestHandler<CreateProductRequest, CreateProductResponse>
     {
     }
 }

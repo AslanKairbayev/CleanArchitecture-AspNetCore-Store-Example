@@ -20,18 +20,20 @@ namespace Core.UseCases
             repository = repo;
         }
 
-        public async Task<bool> Handle(MarkOrderShippedRequest request)
+        public async Task<bool> Handle(MarkOrderShippedRequest request, IOutputPort<MarkOrderShippedResponse> outputPort)
         {
-            Order order = await repository.GetOrderById(request.OrderId);
+            var order = await repository.GetOrderById(request.OrderId);
 
-            if (order == null)            
-            {                
-                return false;
-            }
+            if (order != null)
+            {
+                await repository.MarkShipped(request.OrderId);
 
-            await repository.MarkShipped(request.OrderId);
+                outputPort.Handle(new MarkOrderShippedResponse(true));
+                return true;
+            }            
 
-            return true;
+            outputPort.Handle(new MarkOrderShippedResponse(false, $"OrderId - {request.OrderId} was not found"));
+            return false;
         }
     }
 }

@@ -17,12 +17,13 @@ namespace Web.Controllers
     public class AccountController : Controller
     {
         private readonly ILoginUseCase _loginUseCase;
+        private readonly LoginPresenter _loginPresenter;
         private readonly ILogoutUseCase _logoutUseCase;
 
-        public AccountController(ILoginUseCase loginUseCase,
+        public AccountController(ILoginUseCase loginUseCase, LoginPresenter loginPresenter,
             ILogoutUseCase logoutUseCase)
         {
-            _loginUseCase = loginUseCase;
+            _loginUseCase = loginUseCase; _loginPresenter = loginPresenter;
             _logoutUseCase = logoutUseCase;
         }
 
@@ -35,16 +36,8 @@ namespace Web.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            if (await _loginUseCase.Handle(new LoginRequest(loginModel.Name, loginModel.Password)))
-            {
-                return Ok();
-            }
-            else
-            {
-                return Unauthorized();
-            }
-            
+            await _loginUseCase.Handle(new LoginRequest(loginModel.Name, loginModel.Password), _loginPresenter);
+            return _loginPresenter.JsonResult;         
         }
 
         [HttpPost("Logout")]

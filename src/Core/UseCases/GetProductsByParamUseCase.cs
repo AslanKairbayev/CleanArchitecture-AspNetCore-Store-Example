@@ -29,7 +29,7 @@ namespace Core.UseCases
             
             foreach (var p in products)
             {
-                productsDto.Add(new ProductDto(p.Id, p.Name, p.Description, p.Price, null));
+                productsDto.Add(new ProductDto(p.Id, p.Name, p.Description, p.Price, p.Category));
             }
             
             var totalItems = await repository.CountProductsByCategory(request.Category);

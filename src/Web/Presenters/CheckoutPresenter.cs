@@ -4,17 +4,24 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Web.Presenters
 {
     public sealed class CheckoutPresenter : IOutputPort<CheckoutResponse>
     {
-        public string Message { get; private set; }
+        public JsonResult JsonResult { get; }
+
+        public CheckoutPresenter()
+        {
+            JsonResult = new JsonResult(null);
+        }
 
         public void Handle(CheckoutResponse response)
         {
-            Message = response.Message;
+            JsonResult.StatusCode = (int)(response.Success ? HttpStatusCode.OK : HttpStatusCode.BadRequest);
+            JsonResult.Value = response;
         }
     }
 }

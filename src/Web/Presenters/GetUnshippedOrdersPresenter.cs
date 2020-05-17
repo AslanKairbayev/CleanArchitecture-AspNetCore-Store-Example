@@ -1,8 +1,10 @@
 ﻿using Core.Dto.UseCaseResponses;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Web.Models;
 using Web.Models.ViewModels;
@@ -11,18 +13,17 @@ namespace Web.Presenters
 {
     public sealed class GetUnshippedOrdersPresenter : IOutputPort<GetUnshippedOrdersResponse>
     {
-        public UnshippedOrdersViewModel ViewModel { get; }
+        public JsonResult JsonResult { get; }
 
         public GetUnshippedOrdersPresenter()
         {
-            ViewModel = new UnshippedOrdersViewModel();
+            JsonResult = new JsonResult(null);
         }
 
         public void Handle(GetUnshippedOrdersResponse response)
         {
-            ViewModel.Orders = response.Orders;
-            ViewModel.Success = response.Success;
-            ViewModel.Message = response.Message;
+            JsonResult.StatusCode = (int)(response.Success ? HttpStatusCode.OK : HttpStatusCode.BadRequest);
+            JsonResult.Value = response;
         }
     }
 }

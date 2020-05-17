@@ -13,9 +13,8 @@ namespace Core.Dto.UseCaseResponses
         public decimal Price { get; }
         public string Category { get; }
 
-        public GetProductDetailResponse(int id = 0, string name = null, string description = null, decimal price = 0, string category = null,
-            bool success = false, string message = null)
-            : base(success, message)
+        public GetProductDetailResponse(int id, string name, string description, decimal price, string category,
+            bool success = false, string message = null) : base(success, message)
         {
             Id = id;
             Name = name;
@@ -23,5 +22,7 @@ namespace Core.Dto.UseCaseResponses
             Price = price;
             Category = category;
         }
+
+        public GetProductDetailResponse(bool success = false, string message = null) : base(success, message) { }        
     }
 }

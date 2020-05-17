@@ -18,7 +18,7 @@ namespace Core
             services.AddScoped<IGetProductsByParamUseCase, GetProductsByParamUseCase>();
             services.AddScoped<IGetProductsUseCase, GetProductsUseCase>();
             services.AddScoped<IGetProductDetailUseCase, GetProductDetailUseCase>();
-            services.AddScoped<ICreateNewProductUseCase, CreateNewProductUseCase>();
+            services.AddScoped<ICreateProductUseCase, CreateProductUseCase>();
             services.AddScoped<IUpdateProductDetailUseCase, UpdateProductDetailUseCase>();
             services.AddScoped<IRemoveProductUseCase, RemoveProductUseCase>();
             services.AddScoped<IGetCategoriesUseCase, GetCategoriesUseCase>();

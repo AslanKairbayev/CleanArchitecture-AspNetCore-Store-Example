@@ -120,7 +120,7 @@ namespace Infrastructure.Data.FakeRepositories
                 .Count());
         }
 
-        public async Task Create(Product product)
+        public async Task<int> Create(Product product)
         {
             var id = Products.LastOrDefault().Id;
 
@@ -128,7 +128,7 @@ namespace Infrastructure.Data.FakeRepositories
 
             Products.Add(product);
 
-            await Task.CompletedTask;
+            return await Task.FromResult(product.Id);
         }
 
         public async Task Delete(Product product)

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Core.Dto.UseCaseRequests
 {
-    public class LoginRequest
+    public class LoginRequest : IRequest<LoginResponse>
     {
         public string UserName { get; }
         public string Password { get; }

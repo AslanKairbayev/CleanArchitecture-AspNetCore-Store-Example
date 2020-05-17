@@ -18,10 +18,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.4.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\lib\" />
-    <Folder Include="wwwroot\js\" />
-  </ItemGroup>
-
 </Project>

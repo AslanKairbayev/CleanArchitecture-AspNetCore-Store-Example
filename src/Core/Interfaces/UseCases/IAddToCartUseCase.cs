@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Core.Interfaces.UseCases
 {
-    public interface IAddToCartUseCase : IRequestHandler<AddToCartRequest>
+    public interface IAddToCartUseCase : IRequestHandler<AddToCartRequest, AddToCartResponse>
     {
 
     }

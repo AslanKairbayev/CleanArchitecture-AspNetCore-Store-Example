@@ -15,23 +15,17 @@ namespace Web.Presenters
 {
     public sealed class GetProductsByParamPresenter : IOutputPort<GetProductsByParamResponse>
     {
-        public ProductsListViewModel ViewModel { get; }
+        public JsonResult JsonResult { get; }
 
         public GetProductsByParamPresenter()
         {
-            ViewModel = new ProductsListViewModel();            
+            JsonResult = new JsonResult(null);
         }
 
         public void Handle(GetProductsByParamResponse response)
         {
-            ViewModel.Products = response.Products;
-            ViewModel.CurrentCategory = response.Category;
-            ViewModel.PagingInfo = new PagingInfo
-            {
-                CurrentPage = response.Page,
-                ItemsPerPage = response.PageSize,
-                TotalItems = response.TotalItems
-            };
+            JsonResult.StatusCode = (int)(response.Success ? HttpStatusCode.OK : HttpStatusCode.BadRequest);
+            JsonResult.Value = response;
         }
     }
 }

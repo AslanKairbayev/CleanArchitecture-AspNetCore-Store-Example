@@ -22,37 +22,38 @@ namespace Web.Controllers
         private readonly GetProductsPresenter _getProductsPresenter;
         private readonly IGetProductDetailUseCase _getProductDetailUseCase;
         private readonly GetProductDetailPresenter _getProductDetailPresenter;
-        private readonly ICreateNewProductUseCase _createProductUseCase;
+        private readonly ICreateProductUseCase _createProductUseCase;
+        private readonly CreateProductPresenter _createProductPresenter;
         private readonly IUpdateProductDetailUseCase _updateProductDetailUseCase;
+        private readonly UpdateProductDetailPresenter _updateProductDetailPresenter;
         private readonly IRemoveProductUseCase _removeProductUseCase;
+        private readonly RemoveProductPresenter _removeProductPresenter;
 
         public AdminController(IGetProductsUseCase getProductsUseCase, GetProductsPresenter getProductsPresenter, 
             IGetProductDetailUseCase getProductDetailUseCase, GetProductDetailPresenter getProductDetailPresenter,
-            ICreateNewProductUseCase createProductUseCase, 
-            IUpdateProductDetailUseCase updateProductDetailUseCase, 
-            IRemoveProductUseCase removeProductUseCase)
+            ICreateProductUseCase createProductUseCase, CreateProductPresenter createProductPresenter, 
+            IUpdateProductDetailUseCase updateProductDetailUseCase, UpdateProductDetailPresenter updateProductDetailPresenter,
+            IRemoveProductUseCase removeProductUseCase, RemoveProductPresenter removeProductPresenter)
         {
             _getProductsUseCase = getProductsUseCase; _getProductsPresenter = getProductsPresenter;
             _getProductDetailUseCase = getProductDetailUseCase; _getProductDetailPresenter = getProductDetailPresenter;
-            _createProductUseCase = createProductUseCase;
-            _updateProductDetailUseCase = updateProductDetailUseCase; 
-            _removeProductUseCase = removeProductUseCase;
+            _createProductUseCase = createProductUseCase; _createProductPresenter = createProductPresenter;
+            _updateProductDetailUseCase = updateProductDetailUseCase; _updateProductDetailPresenter = updateProductDetailPresenter;
+            _removeProductUseCase = removeProductUseCase; _removeProductPresenter = removeProductPresenter;
         }
 
         [HttpGet("GetProducts")]
         public async Task<IActionResult> Get()
         {
             await _getProductsUseCase.Handle(new GetProductsRequest(), _getProductsPresenter);
-
-            return Ok(_getProductsPresenter.ViewModel);
+            return _getProductsPresenter.JsonResult;
         }
 
         [HttpGet("GetProduct{productId}")]
         public async Task<IActionResult> Get(int productId)
         {
             await _getProductDetailUseCase.Handle(new GetProductDetailRequest(productId), _getProductDetailPresenter);
-
-            return Ok(_getProductDetailPresenter.ViewModel);
+            return _getProductDetailPresenter.JsonResult;
         }
 
         [HttpPost("CreateProduct")]
@@ -62,10 +63,9 @@ namespace Web.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            await _createProductUseCase.Handle(new CreateProductRequest(product.Name, product.Description, product.Price, product.Category));
-
-            return Ok();
+            await _createProductUseCase.Handle(
+                new CreateProductRequest(product.Name, product.Description, product.Price, product.Category), _createProductPresenter);
+            return _createProductPresenter.JsonResult;
         }
 
         [HttpPut("UpdateProduct")]
@@ -75,19 +75,16 @@ namespace Web.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             await _updateProductDetailUseCase.Handle(
-                   new UpdateProductDetailRequest(product.Id, product.Name, product.Description, product.Price, product.Category));
-
-            return Ok();
+                new UpdateProductDetailRequest(product.Id, product.Name, product.Description, product.Price, product.Category), _updateProductDetailPresenter);
+            return _updateProductDetailPresenter.JsonResult;
         }        
 
         [HttpDelete("DeleteProduct{productId}")]
         public async Task<IActionResult> Delete(int productId)
         {
-            await _removeProductUseCase.Handle(new RemoveProductRequest(productId));
-
-            return NoContent();
+            await _removeProductUseCase.Handle(new RemoveProductRequest(productId), _removeProductPresenter);
+            return _removeProductPresenter.JsonResult;
         }
     }
 }

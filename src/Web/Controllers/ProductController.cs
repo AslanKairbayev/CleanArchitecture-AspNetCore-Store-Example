@@ -24,11 +24,10 @@ namespace Web.Controllers
         }
 
         [HttpGet("GetProductsByParam")]
-        public async Task<IActionResult> Get(string category, int page)
+        public async Task<IActionResult> Get(string category = null, int page = 1)
         {
             await _getProductsByParamUseCase.Handle(new GetProductsByParamRequest(page, category), _getProductsByParamPresenter);
-
-            return Ok(_getProductsByParamPresenter.ViewModel);
+            return _getProductsByParamPresenter.JsonResult;
         }        
     }
 }

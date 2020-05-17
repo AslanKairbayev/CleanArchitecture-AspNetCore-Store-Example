@@ -30,7 +30,7 @@ namespace Core.UseCases
                 return true;
             }
 
-            outputPort.Handle(new GetProductDetailResponse());
+            outputPort.Handle(new GetProductDetailResponse(false, $"ProductId - {request.Id} was not found"));
 
             return false;
         }

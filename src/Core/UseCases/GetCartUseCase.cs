@@ -24,12 +24,17 @@ namespace Core.UseCases
         }
         public async Task<bool> Handle(GetCartRequest request, IOutputPort<GetCartResponse> outputPort)
         {
-            var lines = _cartService.Lines;
+            var linesDto = _cartService.Lines;
+
+            if (!linesDto.Any())
+            {
+                outputPort.Handle(new GetCartResponse(null, 0, false, "Your Cart is Empty"));
+                return false;
+            }
 
             var totalValue = await _cartService.ComputeTotalValue();
 
-            outputPort.Handle(new GetCartResponse(lines, totalValue, true));
-
+            outputPort.Handle(new GetCartResponse(linesDto, totalValue, true));
             return true;
         }
     }

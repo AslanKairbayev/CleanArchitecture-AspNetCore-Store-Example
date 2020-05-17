@@ -10,7 +10,7 @@ namespace Core.Interfaces.Repositories
     {
         Task<IEnumerable<Order>> UnshippedOrdersWithLines();
         Task<Order> GetOrderById(int orderId);
-        Task Create(Order order);
+        Task<int> Create(Order order);
         Task MarkShipped(int orderId);
     }
 }

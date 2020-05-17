@@ -31,7 +31,7 @@ namespace Core.UseCases
 
             if (!linesDto.Any())
             {
-                outputPort.Handle(new CheckoutResponse(false, "Your Cart is Empty"));
+                outputPort.Handle(new CheckoutResponse(0, false, "Your Cart is Empty"));
 
                 return false;
             }
@@ -50,7 +50,7 @@ namespace Core.UseCases
                     Quantity = l.Quantity });
             }
 
-            await orderRepository.Create(new Order
+            var id = await orderRepository.Create(new Order
             {
                 Name = request.Name,
                 Line1 = request.Line1,
@@ -64,7 +64,7 @@ namespace Core.UseCases
                 Lines = lines
             });
 
-            outputPort.Handle(new CheckoutResponse(true));
+            outputPort.Handle(new CheckoutResponse(id, true));
 
             await cartService.Clear();
 
